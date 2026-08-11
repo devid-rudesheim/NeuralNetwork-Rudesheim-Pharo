@@ -39,11 +39,30 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 					spec repository: 'github://devid-rudesheim/OpenCL-Rudesheim-Pharo:main'
 				];
 
+				baseline: 'Soil'
+				with:
+				[
+					spec repository: 'github://ApptiveGrid/Soil/src'
+				];
+
+				project: 'SoilCore'
+				copyFrom: 'Soil'
+				with:
+				[
+					spec loads: #( 'Soil-Core' )
+				];
+
+				baseline: 'OSSubprocess'
+				with:
+				[
+					spec repository: 'github://pharo-contributions/OSSubprocess:master/repository'
+				];
+
 				package: 'Rudesheim-NeuralNetwork-Private'
 				with:
 				[
 					spec
-						requires: #( 'RudesheimUtility' 'RudesheimKernel' )
+						requires: #( 'RudesheimUtility' 'RudesheimKernel' 'SoilCore' 'OSSubprocess' )
 				];
 
 				package: 'Rudesheim-NeuralNetwork'

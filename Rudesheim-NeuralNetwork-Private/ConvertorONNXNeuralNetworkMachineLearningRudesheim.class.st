@@ -243,19 +243,26 @@ object: anObject [
 
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> onnxToSTONScriptFileReference [
-	^
-	(
+	|
+		repository
+	|
+
+	repository :=
 		IceRepository registry
 			detect:
 			[ :each |
-				each
-					name
-					= 'rudesheim'.
+				each name = 'NeuralNetwork-Rudesheim-Pharo'.
 			]
-	)
-		location
-		/ 'tool'
-		/ 'onnx_to_ston.py'.
+			ifNone:
+			[
+				IceRepository registry
+					detect:
+					[ :each |
+						each name = 'rudesheim'.
+					]
+			].
+
+	^ repository location / 'tool' / 'onnx_to_ston.py'.
 ]
 
 { #category : 'as yet unclassified' }

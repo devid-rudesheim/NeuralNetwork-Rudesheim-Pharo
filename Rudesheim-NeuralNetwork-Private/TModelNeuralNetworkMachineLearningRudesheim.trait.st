@@ -57,14 +57,10 @@ TModelNeuralNetworkMachineLearningRudesheim classSide >> species [
 { #category : 'evaluating' }
 TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
 	"A resolved node value may be a live OpenCL buffer (see
-	note/opencl-layer-buffer-passthrough-design.md); the model's public
-	contract is a plain Array, so the final value is downloaded here (a
-	no-op for a Pure-backend value that's already an Array). Every node
-	value this forward pass resolved (cached in aValueCacheIdentityDictionary,
-	including the output node's own value) is then released when it provides a
-	release hook. Nothing in the traversal above releases a shared/cached node
-	value itself, only ever a private buffer a Layer uploaded just for its own
-	use."
+	note/opencl-layer-buffer-passthrough-design.md). The caller decides when
+	to materialize it with asArray. Every cached node value except the returned
+	final value is released here; ownership of the returned value moves to the
+	caller."
 
 	|
 		aValueCacheIdentityDictionary
@@ -73,20 +69,36 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencial
 
 	aValueCacheIdentityDictionary := IdentityDictionary new.
 	result :=
-		(
-			self outputNode
-				resolvedValueGivenInput:	anInputNumbersSequencialCollection
-				cache:						aValueCacheIdentityDictionary
-		) asArray.
+		self outputNode
+			resolvedValueGivenInput:	anInputNumbersSequencialCollection
+			cache:						aValueCacheIdentityDictionary.
 	aValueCacheIdentityDictionary valuesDo:
 	[ :each |
-		(each respondsTo: #releaseRudesheim)
-			ifTrue:
+		each == result
+			ifFalse:
 			[
 				each releaseRudesheim.
 			].
 	].
 	^ result
+]
+
+{ #category : 'evaluating' }
+TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
+
+	|
+		result
+	|
+
+	result := self forward: aSequenceableCollection.
+	^
+	[
+		result asArray
+	]
+		ensure:
+		[
+			result releaseRudesheim.
+		]
 ]
 
 { #category : 'accessing' }

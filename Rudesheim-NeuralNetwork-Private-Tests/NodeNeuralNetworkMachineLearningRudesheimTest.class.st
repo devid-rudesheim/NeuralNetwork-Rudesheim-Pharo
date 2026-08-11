@@ -43,7 +43,7 @@ NodeNeuralNetworkMachineLearningRudesheimTest >> testChainForwardMatchesFlatLaye
 	expected := layers inject: input into: [ :predictions :eachLayer | eachLayer forward: predictions ].
 	model := nn Model neuralNetworkLayers: layers.
 
-	self assert: (model forward: input) equals: expected
+	self assert: (model forward: input) asArray equals: expected
 ]
 
 { #category : 'tests' }
