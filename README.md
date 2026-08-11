@@ -191,12 +191,23 @@ model := modelRecord nextModelAs: nn Model.
 model value: inputValues.
 ```
 
+The backend argument is part of the current ONNX conversion API.
+A future version should make the imported Soil model record backend-neutral, so the same import can be written without the backend argument:
+
+```smalltalk
+modelRecord :=
+	nn ONNX Convertor
+		file: 'resnet50-v2-7.onnx'
+		toSoil: 'resnet50-v2-7.soil'.
+```
+
 The converter script emits flat tensor payloads and stores tensor shape separately.
 Backends reconstruct row-based or nested views at model-load time when they need them.
 
 ## Future Goals
 
 - Remove the Python dependency from ONNX import by moving the ONNX decoder/import path into Pharo.
+- Make ONNX import backend-neutral so OpenCL-backed use does not require `backend:` at conversion time.
 - Add Apple Neural Engine support as an execution backend where the platform allows it.
 - Support LLM-oriented model structures and inference workflows.
 - Persist trained model results back into a database-backed model store.
