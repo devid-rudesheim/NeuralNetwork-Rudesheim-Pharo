@@ -3,6 +3,9 @@
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
 
+The runtime model code is Pharo.
+Python is used only as an import helper for ONNX files: `tool/onnx_to_ston.py` decodes ONNX protobuf data into a STON document that Pharo then imports into Soil.
+
 The public evaluation entry point for model users is `value:`.
 `forward:` is still used internally and in lower-level tests, but its returned object is not guaranteed as a stable public contract for now.
 In particular, OpenCL-backed paths may return native-backed buffers before materialization.
@@ -190,6 +193,13 @@ model value: inputValues.
 
 The converter script emits flat tensor payloads and stores tensor shape separately.
 Backends reconstruct row-based or nested views at model-load time when they need them.
+
+## Future Goals
+
+- Remove the Python dependency from ONNX import by moving the ONNX decoder/import path into Pharo.
+- Add Apple Neural Engine support as an execution backend where the platform allows it.
+- Support LLM-oriented model structures and inference workflows.
+- Export trained model results to portable external formats.
 
 ## Usage Constraints
 
