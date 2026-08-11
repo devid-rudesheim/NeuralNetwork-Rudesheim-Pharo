@@ -199,6 +199,7 @@ Backends reconstruct row-based or nested views at model-load time when they need
 - Remove the Python dependency from ONNX import by moving the ONNX decoder/import path into Pharo.
 - Add Apple Neural Engine support as an execution backend where the platform allows it.
 - Support LLM-oriented model structures and inference workflows.
+- Persist trained model results back into a database-backed model store.
 - Export trained model results to portable external formats.
 
 ## Usage Constraints
@@ -210,6 +211,7 @@ Backends reconstruct row-based or nested views at model-load time when they need
 - `Add` nodes merge two predecessor outputs by concatenating them before the Add layer computes pairwise element addition.
 - `Conv2D`, `MaxPool2D`, and `GlobalAveragePool` use flat input/output number sequences. Spatial shape is carried by `WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim`.
 - Pure `Conv2D` and pure `GlobalAveragePool` are currently forward-only inference layers. OpenCL-backed layers have additional backward coverage, but the training surface is still evolving.
+- Training returns the updated model in memory. Persisting trained model results back into Soil or another database-backed store is not supported yet.
 - BatchNormalization represents ONNX inference-time per-channel affine scale/shift. It is not a training-mode BatchNorm layer that recomputes batch statistics.
 - ONNX support is intentionally limited to the layer names known to `knownLayerKindSelectors`: `Gemm`, `Relu`, `Conv`, `MaxPool`, `Add`, `BatchNormalization`, and `GlobalAveragePool`. Unsupported ONNX layer names raise an error.
 - ONNX conversion invokes a local `python3` command through OSSubprocess and runs the bundled `tool/onnx_to_ston.py` script.
