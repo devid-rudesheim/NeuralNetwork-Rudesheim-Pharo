@@ -22,5 +22,5 @@ PureNeuralNetworkMachineLearningRudesheim class >> Layer [
 { #category : 'namespace' }
 PureNeuralNetworkMachineLearningRudesheim class >> Model [
 
-	^ ModelNeuralNetworkMachineLearningRudesheim
+	^ ModelPureNeuralNetworkMachineLearningRudesheim
 ]

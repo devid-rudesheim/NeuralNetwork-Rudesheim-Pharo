@@ -46,8 +46,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> mnistP
 				ONNX
 				Convertor
 				file:	self mnistOnnxFileReference
-				toSoil:	soilFileReference
-				backend:	PureNeuralNetworkMachineLearningRudesheim.
+				toSoil:	soilFileReference.
 		].
 
 	^ soilFileReference.
@@ -120,8 +119,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> resnet
 				ONNX
 				Convertor
 				file:	self resnet50OnnxFileReference
-				toSoil:	soilFileReference
-				backend:	PureNeuralNetworkMachineLearningRudesheim.
+				toSoil:	soilFileReference.
 		].
 
 	^ soilFileReference.
@@ -197,7 +195,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> defaultTimeL
 ]
 
 { #category : 'as yet unclassified' }
-ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testBackendModelAccessorsReturnSharedModelClass [
+ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testBackendModelAccessorsReturnBackendModelClasses [
 	|
 		nn
 	|
@@ -209,14 +207,14 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testBackendM
 		nn
 			Pure
 			Model
-		equals:	ModelNeuralNetworkMachineLearningRudesheim.
+		equals:	ModelPureNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
 		nn
 			OpenCL
 			Model
-		equals:	ModelNeuralNetworkMachineLearningRudesheim.
+		equals:	ModelOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }
@@ -580,7 +578,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 		nn
 			Soil
 			GraphNodeRecord
-			layerClass:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
 			predecessorRecords:	#()
 			tensorDescriptorRecords:	{branchAWeights .  branchABiases}.
 
@@ -612,7 +610,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 		nn
 			Soil
 			GraphNodeRecord
-			layerClass:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
 			predecessorRecords:	#()
 			tensorDescriptorRecords:	{branchBWeights .  branchBBiases}.
 
@@ -620,7 +618,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 		nn
 			Soil
 			GraphNodeRecord
-			layerClass:	AddLayerOpenCLNeuralNetworkMachineLearningRudesheim
+			layerClass:	AddLayerNeuralNetworkMachineLearningRudesheim
 			predecessorRecords:	{branchANode .  branchBNode}
 			tensorDescriptorRecords:	#().
 
@@ -642,6 +640,14 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 			nn
 				OpenCL
 				Model.
+
+	self
+		assert:	model backend
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:	model outputNode layer
+		equals:	AddLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 
 	output :=
 		(
@@ -697,7 +703,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 		nn
 			Soil
 			GraphNodeRecord
-			layerClass:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
 			predecessorRecords:	#()
 			tensorDescriptorRecords:	{weightsDescriptor .  biasesDescriptor}.
 
@@ -713,6 +719,13 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 			nn
 				OpenCL
 				Model.
+
+	self
+		assert:	model backend
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:	( model outputNode layer isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim ).
 
 	output :=
 		(

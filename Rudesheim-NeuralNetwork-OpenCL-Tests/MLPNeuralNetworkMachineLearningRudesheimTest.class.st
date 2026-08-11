@@ -78,6 +78,26 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesGivenBa
 ]
 
 { #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesBackendModelClass [
+
+	|
+		model
+		nn
+	|
+
+	nn := Rudesheim MachineLearning NeuralNetwork.
+	model :=
+		self targetClass
+			nextModelAs:	
+			nn
+				OpenCL
+				Model.
+
+	self assert: model backend equals: OpenCLNeuralNetworkMachineLearningRudesheim.
+	self assert: ( model neuralNetworkLayers first isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim )
+]
+
+{ #category : 'tests' }
 MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureProducesFreshModelEachCall [
 
 	|

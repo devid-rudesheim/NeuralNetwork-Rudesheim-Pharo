@@ -84,8 +84,18 @@ ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> metadata [
 ]
 
 { #category : 'private' }
+ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> layerClassForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+backend:													aTBackendNeuralNetworkMachineLearningRudesheim [
+
+	^ ONNXNeuralNetworkMachineLearningRudesheim
+		layerClassForName:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerClass nameForONNX
+		backend:			aTBackendNeuralNetworkMachineLearningRudesheim
+]
+
+{ #category : 'private' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nodeForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-cache:	anIdentityDictionary [
+cache:					anIdentityDictionary
+backend:				aTBackendNeuralNetworkMachineLearningRudesheim [
 
 	^ anIdentityDictionary
 		at:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
@@ -94,7 +104,11 @@ cache:	anIdentityDictionary [
 			Rudesheim MachineLearning NeuralNetwork Node
 				layer:
 					(
-						aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerClass
+						(
+							self
+								layerClassForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+								backend:						aTBackendNeuralNetworkMachineLearningRudesheim
+						)
 							fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
 					)
 				predecessors:
@@ -105,6 +119,7 @@ cache:	anIdentityDictionary [
 								self
 									nodeForGraphNodeRecord:	eachPredecessorRecord
 									cache:					anIdentityDictionary
+									backend:				aTBackendNeuralNetworkMachineLearningRudesheim
 							]
 					)
 		]
@@ -118,6 +133,7 @@ ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nextModelAs:	aClass [
 			self
 				nodeForGraphNodeRecord:	self outputGraphNodeRecord
 				cache:					IdentityDictionary new
+				backend:				aClass backend
 		)
 ]
 

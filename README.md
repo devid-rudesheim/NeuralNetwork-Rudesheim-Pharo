@@ -127,18 +127,19 @@ model value: #( 1.0 0.0 )
 
 The MLP architecture builds a fresh three-layer model each time.
 
-After loading the OpenCL group, the same architecture can choose the OpenCL backend:
+After loading the OpenCL group, the same architecture can choose the OpenCL backend by passing the backend model class to `nextModelAs:`:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
 
 model :=
 	nn Architecture MLP
-		nextModelAs: nn Model
-		backend: nn OpenCL.
+		nextModelAs: nn OpenCL Model.
 
 model value: #( 1.0 0.0 )
 ```
+
+The older `nextModelAs:backend:` form remains available for compatibility.
 
 ## Training
 
@@ -195,7 +196,7 @@ result :=
 
 ## ONNX and Soil
 
-ONNX conversion stores an internal graph representation in Soil and returns a model record:
+ONNX conversion stores a backend-neutral internal graph representation in Soil and returns a model record:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
@@ -209,7 +210,7 @@ model := modelRecord nextModelAs: nn Model.
 model value: inputValues.
 ```
 
-For OpenCL-backed ONNX models, pass the backend during conversion:
+Choose the execution backend when reading the model record:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
@@ -217,30 +218,22 @@ nn := Rudesheim MachineLearning NeuralNetwork.
 modelRecord :=
 	nn ONNX Convertor
 		file: 'resnet50-v2-7.onnx'
-		toSoil: 'resnet50-v2-7.soil'
-		backend: nn OpenCL.
+		toSoil: 'resnet50-v2-7.soil'.
 
-model := modelRecord nextModelAs: nn Model.
+model := modelRecord nextModelAs: nn OpenCL Model.
 model value: inputValues.
 ```
 
-The backend argument is part of the current ONNX conversion API.
-A future version should make the imported Soil model record backend-neutral, so the same import can be written without the backend argument:
-
-```smalltalk
-modelRecord :=
-	nn ONNX Convertor
-		file: 'resnet50-v2-7.onnx'
-		toSoil: 'resnet50-v2-7.soil'.
-```
+Use `nn Pure Model` at the same read point to build a Pure-backed model from the same Soil record.
 
 The converter script emits flat tensor payloads and stores tensor shape separately.
 Backends reconstruct row-based or nested views at model-load time when they need them.
 
-## Future Goals
+## Feature Goals
 
 - Remove the Python dependency from ONNX import by moving the ONNX decoder/import path into Pharo.
-- Make ONNX import backend-neutral so OpenCL-backed use does not require `backend:` at conversion time.
+- Keep ONNX import backend-neutral so the same Soil model record can be read with `nn Pure Model` or `nn OpenCL Model`.
+- Add computation cluster support for partitioned models and coordinated multi-host execution.
 - Add Apple Neural Engine support as an execution backend where the platform allows it.
 - Support LLM-oriented model structures and inference workflows.
 - Persist trained model results back into a database-backed model store.
@@ -258,8 +251,3 @@ Backends reconstruct row-based or nested views at model-load time when they need
 - Training returns the updated model in memory. Persisting trained model results back into Soil or another database-backed store is not supported yet.
 - BatchNormalization represents ONNX inference-time per-channel affine scale/shift. It is not a training-mode BatchNorm layer that recomputes batch statistics.
 - ONNX support is intentionally limited to the layer names known to `knownLayerKindSelectors`: `Gemm`, `Relu`, `Conv`, `MaxPool`, `Add`, `BatchNormalization`, and `GlobalAveragePool`. Unsupported ONNX layer names raise an error.
-- ONNX conversion invokes a local `python3` command through OSSubprocess and runs the bundled `tool/onnx_to_ston.py` script.
-- Soil persists tensor payloads flat to avoid creating large numbers of nested Array objects during serialization.
-- OpenCL behavior depends on the host runtime, device, and driver. The code keeps intermediate OpenCL buffers on-device where possible, but native resource behavior can still be platform-specific.
-- `value:` materializes the result and owns release of the value returned by `forward:`. It does not remove every platform-specific OpenCL risk.
-- Repeated evaluation of the same OpenCL-backed model has known native-resource risk in the current implementation. Rebuild a fresh model from the model source if repeated OpenCL inference shows instability.

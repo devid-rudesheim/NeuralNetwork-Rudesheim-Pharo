@@ -29,7 +29,7 @@ TArchitectureNeuralNetworkMachineLearningRudesheim classSide >> nextModelAs: aCl
 
 	^ self
 		nextModelAs:	aClass
-		backend:		TBackendNeuralNetworkMachineLearningRudesheim default
+		backend:		aClass backend
 ]
 
 { #category : 'reading' }

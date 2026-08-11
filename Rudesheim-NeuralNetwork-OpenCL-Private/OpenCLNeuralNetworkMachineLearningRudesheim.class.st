@@ -24,7 +24,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> Layer [
 
 { #category : 'as yet unclassified' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Model [
-	^ ModelNeuralNetworkMachineLearningRudesheim.
+	^ ModelOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }

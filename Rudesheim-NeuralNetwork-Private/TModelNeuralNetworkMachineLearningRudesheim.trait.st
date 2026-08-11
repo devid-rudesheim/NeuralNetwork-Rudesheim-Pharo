@@ -11,7 +11,13 @@ TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers:	aS
 
 	^ self
 		neuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim
-		backend:				TBackendNeuralNetworkMachineLearningRudesheim default
+		backend:				self backend
+]
+
+{ #category : 'accessing' }
+TModelNeuralNetworkMachineLearningRudesheim classSide >> backend [
+
+	^ TBackendNeuralNetworkMachineLearningRudesheim default
 ]
 
 { #category : 'instance creation' }
@@ -29,7 +35,7 @@ TModelNeuralNetworkMachineLearningRudesheim classSide >> outputNode:	aTNodeNeura
 
 	^ self
 		outputNode:	aTNodeNeuralNetworkMachineLearningRudesheim
-		backend:		TBackendNeuralNetworkMachineLearningRudesheim default
+		backend:		self backend
 ]
 
 { #category : 'instance creation' }
