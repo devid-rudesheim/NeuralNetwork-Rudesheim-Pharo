@@ -197,15 +197,26 @@ result :=
 
 ## ONNX and Soil
 
-ONNX conversion stores a backend-neutral internal graph representation in Soil and returns a model record:
+ONNX conversion stores a backend-neutral internal graph representation in Soil.
+Open the Soil database and read the model record from its root:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
 
+nn ONNX Convertor
+	file: 'mnist-8.onnx'
+	toSoil: 'mnist-8.soil'.
+
 modelRecord :=
-	nn ONNX Convertor
-		file: 'mnist-8.onnx'
-		toSoil: 'mnist-8.soil'.
+	(Soil openOnPath: 'mnist-8.soil' asFileReference)
+		intoRHScope
+		do:
+		[ :soil |
+			| root |
+
+			root := soil newTransaction root.
+			root at: (root symbolByName: 'default').
+		].
 
 model := modelRecord nextModelAs: nn Pure Model.
 model value: inputValues.
@@ -216,10 +227,20 @@ Choose the execution backend when reading the model record:
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
 
+nn ONNX Convertor
+	file: 'resnet50-v2-7.onnx'
+	toSoil: 'resnet50-v2-7.soil'.
+
 modelRecord :=
-	nn ONNX Convertor
-		file: 'resnet50-v2-7.onnx'
-		toSoil: 'resnet50-v2-7.soil'.
+	(Soil openOnPath: 'resnet50-v2-7.soil' asFileReference)
+		intoRHScope
+		do:
+		[ :soil |
+			| root |
+
+			root := soil newTransaction root.
+			root at: (root symbolByName: 'default').
+		].
 
 model := modelRecord nextModelAs: nn OpenCL Model.
 model value: inputValues.
