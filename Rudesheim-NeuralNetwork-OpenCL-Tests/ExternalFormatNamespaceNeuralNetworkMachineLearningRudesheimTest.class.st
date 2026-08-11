@@ -233,7 +233,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'Gemm'
 		)
-		equals:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -241,7 +241,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'Relu'
 		)
-		equals:	ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	ReLULayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -249,7 +249,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'Conv'
 		)
-		equals:	Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	Conv2DLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -257,7 +257,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'MaxPool'
 		)
-		equals:	MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	MaxPool2DLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -265,7 +265,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'Add'
 		)
-		equals:	AddLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	AddLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -273,7 +273,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'BatchNormalization'
 		)
-		equals:	BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		assert:	
@@ -281,7 +281,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 			nn ONNX
 				layerClassForName:	'GlobalAveragePool'
 		)
-		equals:	GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+		equals:	GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
 		should:
