@@ -43,7 +43,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				with:
 				[
 					spec
-						requires: #( 'RudesheimUtility' 'RudesheimKernel' 'RudesheimOpenCL' )
+						requires: #( 'RudesheimUtility' 'RudesheimKernel' )
 				];
 
 				package: 'Rudesheim-NeuralNetwork'
@@ -60,11 +60,32 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 						requires: #( 'Rudesheim-NeuralNetwork-Private' )
 				];
 
+				package: 'Rudesheim-NeuralNetwork-OpenCL-Private'
+				with:
+				[
+					spec
+						requires: #( 'Rudesheim-NeuralNetwork-Private' 'RudesheimOpenCL' )
+				];
+
+				package: 'Rudesheim-NeuralNetwork-ONNX-OpenCL'
+				with:
+				[
+					spec
+						requires: #( 'Rudesheim-NeuralNetwork-ONNX' 'Rudesheim-NeuralNetwork-OpenCL-Private' )
+				];
+
 				package: 'Rudesheim-NeuralNetwork-Private-Tests'
 				with:
 				[
 					spec
 						requires: #( 'Rudesheim-NeuralNetwork' 'Rudesheim-NeuralNetwork-ONNX' 'RudesheimUtilityTests' )
+				];
+
+				package: 'Rudesheim-NeuralNetwork-OpenCL-Tests'
+				with:
+				[
+					spec
+						requires: #( 'Rudesheim-NeuralNetwork-OpenCL-Private' 'Rudesheim-NeuralNetwork-ONNX-OpenCL' 'Rudesheim-NeuralNetwork-Private-Tests' )
 				];
 
 				package: 'Rudesheim-NeuralNetwork-Tests'
@@ -80,8 +101,17 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				group:		#onnx
 				with:		#( 'Rudesheim-NeuralNetwork-ONNX' );
 
+				group:		#opencl
+				with:		#( 'Rudesheim-NeuralNetwork-OpenCL-Private' );
+
+				group:		#onnxOpenCL
+				with:		#( 'Rudesheim-NeuralNetwork-ONNX-OpenCL' );
+
 				group:		#tests
 				with:		#( 'Rudesheim-NeuralNetwork-Private-Tests' 'Rudesheim-NeuralNetwork-Tests' );
+
+				group:		#openclTests
+				with:		#( 'Rudesheim-NeuralNetwork-OpenCL-Tests' );
 
 				group:		#default
 				with:		#( #core ).

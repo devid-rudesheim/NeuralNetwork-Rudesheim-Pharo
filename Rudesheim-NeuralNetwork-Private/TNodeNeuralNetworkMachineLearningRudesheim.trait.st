@@ -277,17 +277,24 @@ TNodeNeuralNetworkMachineLearningRudesheim >> valueFromPredecessorValues: aPrede
 		ifTrue: [ ^ aPredecessorValuesSequenceableCollection first ].
 
 	"Merges a branching node's 2+ predecessor outputs into the one flat value its
-	layer expects (currently always AddLayer, per its class comment). This is a
-	polymorphic conversion, not a kind check: rudesheimConcatenatedWith: lets two
-	live OpenCL buffers merge entirely on the GPU side without ever downloading
-	either to the host (see note/opencl-layer-buffer-passthrough-design.md,
-	'AddLayerの分岐合流'), while a plain Array just falls back to ordinary Array
-	concatenation -- either way this method stays oblivious to which backend
-	produced the values. It does not release anything: a predecessor buffer may
-	still have another downstream consumer sharing the same cached node value,
-	so ownership of the release stays with TModel>>forward:'s end-of-pass cache
-	cleanup."
+	layer expects (currently always AddLayer, per its class comment). If the
+	value provides an OpenCL-side concatenation hook, use it; otherwise fall back
+	to ordinary host-side sequence concatenation. It does not release anything: a
+	predecessor buffer may still have another downstream consumer sharing the
+	same cached node value, so ownership of the release stays with
+	TModel>>forward:'s end-of-pass cache cleanup."
 	^ aPredecessorValuesSequenceableCollection allButFirst
 		inject: aPredecessorValuesSequenceableCollection first
-		into: [ :combined :each | combined rudesheimConcatenatedWith: each ]
+		into:
+		[ :combined :each |
+			(combined respondsTo: #rudesheimConcatenatedWith:)
+				ifTrue:
+				[
+					combined rudesheimConcatenatedWith: each
+				]
+				ifFalse:
+				[
+					combined , each asArray
+				]
+		]
 ]

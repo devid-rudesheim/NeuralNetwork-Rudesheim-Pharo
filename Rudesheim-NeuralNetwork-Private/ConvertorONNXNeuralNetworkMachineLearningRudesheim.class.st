@@ -160,7 +160,7 @@ tensorDescriptorRecords: aTensorDescriptorRecordsSequenceableCollection [
 		graphNodeRecordFromSTONEntry:	aSTONNodeEntryArray
 		builtNodeRecords:	aBuiltNodeRecordsSequenceableCollection
 		tensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection
-		backend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+		backend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }
@@ -300,7 +300,7 @@ fromONNXFileReference: aFileReference [
 	^ self
 		populateGraphFor:	aModelRecordSoilNeuralNetworkMachineLearningRudesheim
 		fromONNXFileReference:	aFileReference
-		backend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+		backend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }
@@ -433,7 +433,7 @@ progress: aBlock [
 		toSoil:	aSoil
 		sourceFileReference:	aFileReference
 		progress:	aBlock
-		backend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+		backend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }

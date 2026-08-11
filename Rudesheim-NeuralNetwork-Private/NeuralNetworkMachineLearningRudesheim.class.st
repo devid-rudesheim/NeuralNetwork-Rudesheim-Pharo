@@ -48,12 +48,6 @@ NeuralNetworkMachineLearningRudesheim class >> Node [
 ]
 
 { #category : 'namespace' }
-NeuralNetworkMachineLearningRudesheim class >> OpenCL [
-
-	^ OpenCLNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Predictions [
 
 	^ PredictionsNeuralNetworkMachineLearningRudesheim

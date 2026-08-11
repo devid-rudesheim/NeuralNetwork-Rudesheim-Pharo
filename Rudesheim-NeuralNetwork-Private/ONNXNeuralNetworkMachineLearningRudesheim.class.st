@@ -21,7 +21,7 @@ ONNXNeuralNetworkMachineLearningRudesheim class >> Convertor [
 { #category : 'as yet unclassified' }
 ONNXNeuralNetworkMachineLearningRudesheim class >> knownLayerClasses [
 	^ self
-		knownLayerClassesForBackend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+		knownLayerClassesForBackend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }
@@ -43,7 +43,7 @@ ONNXNeuralNetworkMachineLearningRudesheim class >> knownLayerKindSelectors [
 ONNXNeuralNetworkMachineLearningRudesheim class >> layerClassForName: aNameString [
 	^ self
 		layerClassForName:	aNameString
-		backend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+		backend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'as yet unclassified' }

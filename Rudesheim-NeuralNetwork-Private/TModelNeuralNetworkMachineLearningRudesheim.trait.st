@@ -61,11 +61,10 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencial
 	contract is a plain Array, so the final value is downloaded here (a
 	no-op for a Pure-backend value that's already an Array). Every node
 	value this forward pass resolved (cached in aValueCacheIdentityDictionary,
-	including the output node's own value) is then released -- see
-	SequenceableCollection>>releaseRudesheim / BufferOpenCLRudesheim>>releaseRudesheim
-	for why this is the single, safe place to do that: nothing in the
-	traversal above releases a shared/cached node value itself, only ever a
-	private buffer a Layer uploaded just for its own use."
+	including the output node's own value) is then released when it provides a
+	release hook. Nothing in the traversal above releases a shared/cached node
+	value itself, only ever a private buffer a Layer uploaded just for its own
+	use."
 
 	|
 		aValueCacheIdentityDictionary
@@ -79,7 +78,14 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencial
 				resolvedValueGivenInput:	anInputNumbersSequencialCollection
 				cache:						aValueCacheIdentityDictionary
 		) asArray.
-	aValueCacheIdentityDictionary valuesDo: [ :each | each releaseRudesheim ].
+	aValueCacheIdentityDictionary valuesDo:
+	[ :each |
+		(each respondsTo: #releaseRudesheim)
+			ifTrue:
+			[
+				each releaseRudesheim.
+			].
+	].
 	^ result
 ]
 
