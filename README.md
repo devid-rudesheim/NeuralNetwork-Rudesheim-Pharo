@@ -208,8 +208,7 @@ nn ONNX Convertor
 	toSoil: 'mnist-8.soil'.
 
 modelRecord :=
-	(Soil openOnPath: 'mnist-8.soil' asFileReference)
-		intoRHScope
+	(Soil openOnPath: 'mnist-8.soil' asFileReference) intoRHScope
 		do:
 		[ :soil |
 			| root |
@@ -232,8 +231,7 @@ nn ONNX Convertor
 	toSoil: 'resnet50-v2-7.soil'.
 
 modelRecord :=
-	(Soil openOnPath: 'resnet50-v2-7.soil' asFileReference)
-		intoRHScope
+	(Soil openOnPath: 'resnet50-v2-7.soil' asFileReference) intoRHScope
 		do:
 		[ :soil |
 			| root |
