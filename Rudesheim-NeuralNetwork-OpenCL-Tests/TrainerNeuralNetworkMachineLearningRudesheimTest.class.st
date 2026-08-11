@@ -33,11 +33,13 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> testCriterionCanBeProvidedFr
 TrainerNeuralNetworkMachineLearningRudesheimTest >> testCriterionCanBeSelectedFromModelBackend [
 
 	|
-		nn
-		model
-		dataset
-		result
-	|
+	nn
+	model
+	dataset
+	result
+|
+
+	self timeLimit: 30 seconds.
 
 	nn := Rudesheim MachineLearning NeuralNetwork.
 	model :=
@@ -175,6 +177,8 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> runXOR0 [
 { #category : 'tests' }
 TrainerNeuralNetworkMachineLearningRudesheimTest >> testXOR0 [
 
+	self timeLimit: 2 minutes.
+
 	self runXOR0.
 ]
 
@@ -214,6 +218,8 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> testTrainingConvergesOnBranc
 		model
 		trainedModel
 	|
+
+	self timeLimit: 2 minutes.
 
 	nn := Rudesheim MachineLearning NeuralNetwork.
 
