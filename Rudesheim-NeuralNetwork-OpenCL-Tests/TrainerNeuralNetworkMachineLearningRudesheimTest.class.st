@@ -15,6 +15,12 @@ TrainerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 	^ Rudesheim MachineLearning NeuralNetwork Trainer.
 ]
 
+{ #category : 'running' }
+TrainerNeuralNetworkMachineLearningRudesheimTest >> defaultTimeLimit [
+
+	^ 2 minutes.
+]
+
 { #category : 'tests' }
 TrainerNeuralNetworkMachineLearningRudesheimTest >> testCriterionCanBeProvidedFromArchitectureBackend [
 
