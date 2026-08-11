@@ -26,7 +26,7 @@ The default group loads the pure Smalltalk runtime and the Soil/OSSubprocess dep
 - Python 3 is required only when converting ONNX files through `Rudesheim MachineLearning NeuralNetwork ONNX Convertor file:toSoil:`.
 - OpenCL support requires `load: #(opencl)` and a native OpenCL runtime visible to the host process.
 - OpenCL tests and OpenCL-backed inference need at least one usable OpenCL platform/device.
-- The current split repository does not include `tool/onnx_to_ston.py`; the ONNX converter currently looks for that script in an Iceberg repository named `rudesheim`.
+- ONNX conversion uses the bundled `tool/onnx_to_ston.py` script. The script uses only Python's standard library.
 
 ## Dependencies
 
@@ -202,7 +202,7 @@ Backends reconstruct row-based or nested views at model-load time when they need
 - Pure `Conv2D` and pure `GlobalAveragePool` are currently forward-only inference layers. OpenCL-backed layers have additional backward coverage, but the training surface is still evolving.
 - BatchNormalization represents ONNX inference-time per-channel affine scale/shift. It is not a training-mode BatchNorm layer that recomputes batch statistics.
 - ONNX support is intentionally limited to the layer names known to `knownLayerKindSelectors`: `Gemm`, `Relu`, `Conv`, `MaxPool`, `Add`, `BatchNormalization`, and `GlobalAveragePool`. Unsupported ONNX layer names raise an error.
-- ONNX conversion currently invokes a local `python3` command through OSSubprocess and expects the converter script to be available from the `rudesheim` Iceberg repository.
+- ONNX conversion invokes a local `python3` command through OSSubprocess and runs the bundled `tool/onnx_to_ston.py` script.
 - Soil persists tensor payloads flat to avoid creating large numbers of nested Array objects during serialization.
 - OpenCL behavior depends on the host runtime, device, and driver. The code keeps intermediate OpenCL buffers on-device where possible, but native resource behavior can still be platform-specific.
 - `value:` materializes the result and owns release of the value returned by `forward:`. It does not remove every platform-specific OpenCL risk.
