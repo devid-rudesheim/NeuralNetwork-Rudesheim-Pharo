@@ -207,17 +207,15 @@ nn ONNX Convertor
 	file: 'mnist-8.onnx'
 	toSoil: 'mnist-8.soil'.
 
-modelRecord :=
-	(Soil openOnPath: 'mnist-8.soil' asFileReference) intoRHScope
-		do:
-		[ :soil |
-			| root |
+(Soil openOnPath: 'mnist-8.soil' asFileReference) intoRHScope
+	do:
+	[ :soil |
+		| modelRecord model |
 
-			root := soil newTransaction root.
-			root at: (root symbolByName: 'default').
-		].
+		modelRecord := soil newTransaction root at: (root symbolByName: 'default').
+		model := modelRecord nextModelAs: nn Pure Model.
+	].
 
-model := modelRecord nextModelAs: nn Pure Model.
 model value: inputValues.
 ```
 
@@ -230,17 +228,16 @@ nn ONNX Convertor
 	file: 'resnet50-v2-7.onnx'
 	toSoil: 'resnet50-v2-7.soil'.
 
-modelRecord :=
-	(Soil openOnPath: 'resnet50-v2-7.soil' asFileReference) intoRHScope
-		do:
-		[ :soil |
-			| root |
 
-			root := soil newTransaction root.
-			root at: (root symbolByName: 'default').
-		].
+(Soil openOnPath: 'resnet50-v2-7.soil' asFileReference) intoRHScope
+	do:
+	[ :soil |
+		| modelRecord model |
 
-model := modelRecord nextModelAs: nn OpenCL Model.
+		modelRecord := soil newTransaction root at: (root symbolByName: 'default').
+		model := modelRecord nextModelAs: nn OpenCL Model.
+	].
+
 model value: inputValues.
 ```
 
