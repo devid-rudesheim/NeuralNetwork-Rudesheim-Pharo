@@ -20,7 +20,7 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelForwardShap
 		output
 	|
 
-	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
+	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
 	output := ( model forward: #( 1.0 0.0 ) ) asArray.
 
 	self assert: output size equals: 2
@@ -35,7 +35,7 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueReturn
 		output
 	|
 
-	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
+	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
 	input := #( 1.0 0.0 ).
 	output := model forward: input.
 
@@ -56,7 +56,7 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelLayerCount 
 		model
 	|
 
-	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
+	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
 
 	self assert: model neuralNetworkLayers size equals: 3
 ]
@@ -75,6 +75,17 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesGivenBa
 
 	self assert: model backend equals: OpenCLNeuralNetworkMachineLearningRudesheim.
 	self assert: ( model neuralNetworkLayers first isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim )
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelRequiresBackendModelClass [
+
+	self
+		should:
+		[
+			self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
+		]
+		raise:	Error
 ]
 
 { #category : 'tests' }
@@ -105,8 +116,8 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureProducesFreshMod
 		right
 	|
 
-	left := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
-	right := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
+	left := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
+	right := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
 
 	self deny: left neuralNetworkLayers first weightsRows equals: right neuralNetworkLayers first weightsRows
 ]

@@ -49,7 +49,7 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> testCriterionCanBeSelectedFr
 
 	nn := Rudesheim MachineLearning NeuralNetwork.
 	model :=
-		nn Model
+		nn Pure Model
 			neuralNetworkLayers:
 			{
 				nn Layer LinearTransform
@@ -101,7 +101,7 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> runXOR0 [
 		trainer
 			train:
 			(
-				nn Model
+				nn Pure Model
 					neuralNetworkLayers:
 					{
 						nn Layer LinearTransform
@@ -268,7 +268,7 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> testTrainingConvergesOnBranc
 
 	nodeARelu := nn Node layer: reluA predecessor: ( nn Node layer: layerA ).
 	model :=
-		nn Model
+		nn OpenCL Model
 			outputNode:
 			(
 				nn Node

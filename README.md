@@ -99,7 +99,7 @@ nn := Rudesheim MachineLearning NeuralNetwork.
 layer := nn Layer.
 
 model :=
-	nn Model
+	nn Pure Model
 		neuralNetworkLayers:
 		{
 			layer LinearTransform
@@ -120,7 +120,7 @@ Use the built-in MLP architecture when randomized weights are acceptable:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
-model := nn Architecture MLP nextModelAs: nn Model.
+model := nn Architecture MLP nextModelAs: nn Pure Model.
 
 model value: #( 1.0 0.0 )
 ```
@@ -140,6 +140,7 @@ model value: #( 1.0 0.0 )
 ```
 
 The older `nextModelAs:backend:` form remains available for compatibility.
+Do not pass bare `nn Model` to `nextModelAs:`; use `nn Pure Model` or `nn OpenCL Model` so the backend is explicit.
 
 ## Training
 
@@ -151,7 +152,7 @@ nn := Rudesheim MachineLearning NeuralNetwork.
 layer := nn Layer.
 
 model :=
-	nn Model
+	nn Pure Model
 		neuralNetworkLayers:
 		{
 			layer LinearTransform
@@ -206,7 +207,7 @@ modelRecord :=
 		file: 'mnist-8.onnx'
 		toSoil: 'mnist-8.soil'.
 
-model := modelRecord nextModelAs: nn Model.
+model := modelRecord nextModelAs: nn Pure Model.
 model value: inputValues.
 ```
 

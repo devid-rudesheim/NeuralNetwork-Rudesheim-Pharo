@@ -23,7 +23,7 @@ Class {
 ModelNeuralNetworkMachineLearningRudesheim >> backend [
 
 	^ backend
-		ifNil: [ backend := TBackendNeuralNetworkMachineLearningRudesheim default ]
+		ifNil: [ self error: 'Model backend must be explicit; use nn Pure Model or nn OpenCL Model' ]
 ]
 
 { #category : 'accessing' }

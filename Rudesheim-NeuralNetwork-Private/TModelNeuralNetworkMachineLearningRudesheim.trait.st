@@ -17,7 +17,7 @@ TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers:	aS
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim classSide >> backend [
 
-	^ TBackendNeuralNetworkMachineLearningRudesheim default
+	^ self subclassResponsibility
 ]
 
 { #category : 'instance creation' }
