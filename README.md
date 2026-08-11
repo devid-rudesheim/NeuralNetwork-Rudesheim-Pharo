@@ -28,7 +28,7 @@ The default group loads the pure Smalltalk runtime and the Soil/OSSubprocess dep
 - Pharo with Metacello.
 - Python 3 is required only when converting ONNX files through `Rudesheim MachineLearning NeuralNetwork ONNX Convertor file:toSoil:`.
 - OpenCL support requires `load: #(opencl)` and a native OpenCL runtime visible to the host process.
-- OpenCL tests and OpenCL-backed inference need at least one usable OpenCL platform/device.
+- OpenCL-backed inference needs at least one usable OpenCL platform/device.
 - ONNX conversion uses the bundled `tool/onnx_to_ston.py` script. The script uses only Python's standard library.
 
 ## Dependencies
@@ -82,32 +82,12 @@ Metacello new
 	load: #(onnx opencl onnxOpenCL)
 ```
 
-Core tests:
-
-```smalltalk
-Metacello new
-	baseline: 'RudesheimNeuralNetwork';
-	repository: 'github://devid-rudesheim/NeuralNetwork-Rudesheim-Pharo:main';
-	load: #(tests)
-```
-
-OpenCL tests:
-
-```smalltalk
-Metacello new
-	baseline: 'RudesheimNeuralNetwork';
-	repository: 'github://devid-rudesheim/NeuralNetwork-Rudesheim-Pharo:main';
-	load: #(opencl onnxOpenCL openclTests)
-```
-
 ## Groups
 
 - `core`: pure Smalltalk neural-network runtime, graph model, trainer, Soil model records, and ONNX converter classes.
 - `onnx`: ONNX layer-name extensions for pure backend classes.
 - `opencl`: OpenCL-backed layers and criteria.
 - `onnxOpenCL`: ONNX layer-name extensions for OpenCL backend classes.
-- `tests`: SUnit tests for the pure Smalltalk runtime.
-- `openclTests`: SUnit tests for the OpenCL runtime.
 - `default`: aliases `core`.
 
 ## Basic Use
@@ -158,6 +138,59 @@ model :=
 		backend: nn OpenCL.
 
 model value: #( 1.0 0.0 )
+```
+
+## Training
+
+`Trainer` consumes a model and a collection of `Predictions`.
+It returns `{ averageLoss. trainedModel }`; use the trained model from the returned pair for later evaluation.
+
+```smalltalk
+nn := Rudesheim MachineLearning NeuralNetwork.
+layer := nn Layer.
+
+model :=
+	nn Model
+		neuralNetworkLayers:
+		{
+			layer LinearTransform
+				weightsRows: #( ( 0.5 0.3 ) )
+				biases: #( 0.0 )
+		}.
+
+dataset :=
+{
+	nn Predictions
+		inputPredictions: #( 1.0 0.0 )
+		outputPredictions: #( 1.0 )
+}.
+
+trainer :=
+	nn Trainer new
+		epochs: 100;
+		learningRate: 0.05;
+		yourself.
+
+result :=
+	trainer
+		train: model
+		withDataset: dataset.
+
+trainedModel := result last.
+trainedModel value: #( 1.0 0.0 )
+```
+
+When training a model with a selected backend, the criterion can be selected from the model backend:
+
+```smalltalk
+result :=
+	trainer
+		train: model
+		withDataset: dataset
+		byCriterion:
+		[ :criterion |
+			criterion MSE
+		].
 ```
 
 ## ONNX and Soil
@@ -230,22 +263,3 @@ Backends reconstruct row-based or nested views at model-load time when they need
 - OpenCL behavior depends on the host runtime, device, and driver. The code keeps intermediate OpenCL buffers on-device where possible, but native resource behavior can still be platform-specific.
 - `value:` materializes the result and owns release of the value returned by `forward:`. It does not remove every platform-specific OpenCL risk.
 - Repeated evaluation of the same OpenCL-backed model has known native-resource risk in the current implementation. Rebuild a fresh model from the model source if repeated OpenCL inference shows instability.
-
-## Run Tests
-
-After loading the test groups, run:
-
-```smalltalk
-TestSuite new
-	addTest: (RPackageOrganizer default packageNamed: 'Rudesheim-NeuralNetwork-Tests') asTestSuite;
-	addTest: (RPackageOrganizer default packageNamed: 'Rudesheim-NeuralNetwork-Private-Tests') asTestSuite;
-	run
-```
-
-For OpenCL coverage, also load `openclTests` and run:
-
-```smalltalk
-TestSuite new
-	addTest: (RPackageOrganizer default packageNamed: 'Rudesheim-NeuralNetwork-OpenCL-Tests') asTestSuite;
-	run
-```
