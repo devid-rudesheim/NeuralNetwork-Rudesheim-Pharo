@@ -144,7 +144,7 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> runXOR0 [
 				(
 					model
 						forward: each0 first
-				)
+				) asArray
 					collect:
 					[ :each1 |
 						each1
@@ -300,7 +300,7 @@ TrainerNeuralNetworkMachineLearningRudesheimTest >> testTrainingConvergesOnBranc
 		source
 			collect:
 			[ :each0 |
-				( trainedModel forward: each0 first )
+				( trainedModel forward: each0 first ) asArray
 					collect:	[ :each1 | each1 round: 2 ]
 			]
 	)

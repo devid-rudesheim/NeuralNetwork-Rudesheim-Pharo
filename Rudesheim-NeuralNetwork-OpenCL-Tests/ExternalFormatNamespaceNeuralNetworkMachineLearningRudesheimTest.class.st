@@ -350,8 +350,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 					withAll:	0.1.
 
 			prediction :=
-				model
-					forward:	input.
+				(
+					model
+						forward:	input
+				) asArray.
 		].
 
 	self
@@ -642,8 +644,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 				Model.
 
 	output :=
-		model
-			forward:	#(3.0 4.0).
+		(
+			model
+				forward:	#(3.0 4.0)
+		) asArray.
 
 	self
 		assert:	output
@@ -711,8 +715,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 				Model.
 
 	output :=
-		model
-			forward:	#(1.0 2.0).
+		(
+			model
+				forward:	#(1.0 2.0)
+		) asArray.
 
 	self
 		assert:	output
@@ -1082,8 +1088,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 					withAll:	0.1.
 
 			prediction :=
-				model
-					forward:	input.
+				(
+					model
+						forward:	input
+				) asArray.
 		].
 
 	self
