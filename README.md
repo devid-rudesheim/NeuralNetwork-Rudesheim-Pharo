@@ -210,13 +210,14 @@ nn ONNX Convertor
 (Soil openOnPath: 'mnist-8.soil' asFileReference) intoRHScope
 	do:
 	[ :soil |
-		| modelRecord model |
+		| modelRecord model root |
 
-		modelRecord := soil newTransaction root at: (root symbolByName: 'default').
+		root := soil newTransaction root.
+		modelRecord := root at: (root symbolByName: 'default').
 		model := modelRecord nextModelAs: nn Pure Model.
+		model value: inputValues.
 	].
 
-model value: inputValues.
 ```
 
 Choose the execution backend when reading the model record:
@@ -228,17 +229,16 @@ nn ONNX Convertor
 	file: 'resnet50-v2-7.onnx'
 	toSoil: 'resnet50-v2-7.soil'.
 
-
 (Soil openOnPath: 'resnet50-v2-7.soil' asFileReference) intoRHScope
 	do:
 	[ :soil |
-		| modelRecord model |
+		| modelRecord model root |
 
-		modelRecord := soil newTransaction root at: (root symbolByName: 'default').
+		root := soil newTransaction root.
+		modelRecord := root at: (root symbolByName: 'default').
 		model := modelRecord nextModelAs: nn OpenCL Model.
+		model value: inputValues.
 	].
-
-model value: inputValues.
 ```
 
 Use `nn Pure Model` at the same read point to build a Pure-backed model from the same Soil record.
