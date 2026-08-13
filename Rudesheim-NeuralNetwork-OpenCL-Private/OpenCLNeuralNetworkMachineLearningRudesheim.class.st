@@ -75,9 +75,11 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 { #category : 'class initialization' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> initialize [ 
 
-	devices			:= nil.
-	context			:= nil.
-	commandQueue		:= nil.
+	self
+		startUp: true.
+	
+	SessionManager default
+		registerSystemClassNamed: self name
 ]
 
 { #category : 'accessing' }
@@ -476,5 +478,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 { #category : 'class initialization' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp:	anIsImageStartingBoolean [
 
-	self initialize.
+	devices			:= nil.
+	context			:= nil.
+	commandQueue		:= nil.
 ]
