@@ -215,7 +215,7 @@ nn ONNX Convertor
 		root := soil newTransaction root.
 		modelRecord := root at: (root symbolByName: 'default').
 		model := modelRecord nextModelAs: nn Pure Model.
-		model value: inputValues.
+		model value: ( ( 1 to: 1 * 28 * 28) collect: [ :unused | 0.0 ] ).
 	].
 
 ```
@@ -237,7 +237,7 @@ nn ONNX Convertor
 		root := soil newTransaction root.
 		modelRecord := root at: (root symbolByName: 'default').
 		model := modelRecord nextModelAs: nn OpenCL Model.
-		model value: inputValues.
+		model value: ( ( 1 to: 3 * 224 * 224) collect: [ :unused | 0.0 ] ).
 	].
 ```
 
