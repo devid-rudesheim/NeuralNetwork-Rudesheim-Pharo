@@ -72,6 +72,14 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 		].
 ]
 
+{ #category : 'class initialization' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> initialize [ 
+
+	devices			:= nil.
+	context			:= nil.
+	commandQueue		:= nil.
+]
+
 { #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> kernelAt: aNameString
 parameterTypes: aCTypeSequencialCollection [
@@ -463,4 +471,10 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 		cachedCLProgramFor:	self devices
 		fromSources:	{self kernelSource}
 		withOptions:	''.
+]
+
+{ #category : 'class initialization' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp:	anIsImageStartingBoolean [
+
+	self initialize.
 ]
