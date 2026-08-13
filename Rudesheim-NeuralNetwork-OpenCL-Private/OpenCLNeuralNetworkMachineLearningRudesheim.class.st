@@ -12,22 +12,22 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Criterion [
 	^ CriterionOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Layer [
 	^ LayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Model [
 	^ ModelOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> commandQueue [
 	^ commandQueue
 		ifNil:
@@ -38,7 +38,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> commandQueue [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> context [
 	^ context
 		ifNil:
@@ -51,19 +51,19 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> context [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> default [
 	^ PureNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> device [
 	^ self
 		devices
 		first.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 	^ devices
 		ifNil:
@@ -72,7 +72,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> kernelAt: aNameString
 parameterTypes: aCTypeSequencialCollection [
 	^ self context
@@ -81,7 +81,7 @@ parameterTypes: aCTypeSequencialCollection [
 		withParameterTypes:	aCTypeSequencialCollection.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> kernelSource [
 	^ '
 kernel void GemvForward(
@@ -457,7 +457,7 @@ kernel void BatchNormalizationParamGradient(
 '.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 	^ self context
 		cachedCLProgramFor:	self devices
