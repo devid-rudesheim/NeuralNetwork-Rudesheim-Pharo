@@ -237,7 +237,12 @@ kernel void Conv2dForward
 			int
 				iy = (int)( oy * stride_height + ky ) - pad_top;
 
-			if( 0 > iy || iy >= (int)in_height )
+			if( 0 > iy )
+			{
+				continue;
+			}
+
+			if( iy >= (int)in_height )
 			{
 				continue;
 			}
@@ -247,7 +252,12 @@ kernel void Conv2dForward
 				int
 					ix = (int)( ox * stride_width + kx ) - pad_left;
 
-				if( 0 > ix || ix >= (int)in_width )
+				if( 0 > ix )
+				{
+					continue;
+				}
+
+				if( ix >= (int)in_width )
 				{
 					continue;
 				}
@@ -309,7 +319,12 @@ kernel void Conv2dWeightGradient
 		oc = get_global_id( 0 ),
 		ic = get_global_id( 1 );
 
-	if( oc >= out_channels || ic >= in_channels )
+	if( oc >= out_channels )
+	{
+		return;
+	}
+
+	if( ic >= in_channels )
 	{
 		return;
 	}
@@ -332,7 +347,12 @@ kernel void Conv2dWeightGradient
 				int
 					iy = (int)( oy * stride_height + ky ) - pad_top;
 
-				if( 0 > iy || iy >= (int)in_height )
+				if( 0 > iy )
+				{
+					continue;
+				}
+
+				if( iy >= (int)in_height )
 				{
 					continue;
 				}
@@ -342,7 +362,12 @@ kernel void Conv2dWeightGradient
 					int
 						ix = (int)( ox * stride_width + kx ) - pad_left;
 
-					if( 0 > ix || ix >= (int)in_width )
+					if( 0 > ix )
+					{
+						continue;
+					}
+
+					if( ix >= (int)in_width )
 					{
 						continue;
 					}
@@ -377,7 +402,17 @@ kernel void Conv2dInputGradient
 		iy = get_global_id( 1 ),
 		ix = get_global_id( 2 );
 
-	if( ic >= in_channels || iy >= in_height || ix >= in_width )
+	if( ic >= in_channels )
+	{
+		return;
+	}
+
+	if( iy >= in_height )
+	{
+		return;
+	}
+
+	if( ix >= in_width )
 	{
 		return;
 	}
@@ -394,7 +429,12 @@ kernel void Conv2dInputGradient
 		int
 			numerator_y = (int)iy + pad_top - (int)ky;
 
-		if( 0 > numerator_y || 0 != numerator_y % (int)stride_height )
+		if( 0 > numerator_y )
+		{
+			continue;
+		}
+
+		if( 0 != numerator_y % (int)stride_height )
 		{
 			continue;
 		}
@@ -402,7 +442,12 @@ kernel void Conv2dInputGradient
 		int
 			oy = numerator_y / (int)stride_height;
 
-		if( 0 > oy || oy >= (int)out_height )
+		if( 0 > oy )
+		{
+			continue;
+		}
+
+		if( oy >= (int)out_height )
 		{
 			continue;
 		}
@@ -412,7 +457,12 @@ kernel void Conv2dInputGradient
 			int
 				numerator_x = (int)ix + pad_left - (int)kx;
 
-			if( 0 > numerator_x || 0 != numerator_x % (int)stride_width )
+			if( 0 > numerator_x )
+			{
+				continue;
+			}
+
+			if( 0 != numerator_x % (int)stride_width )
 			{
 				continue;
 			}
@@ -420,7 +470,12 @@ kernel void Conv2dInputGradient
 			int
 				ox = numerator_x / (int)stride_width;
 
-			if( 0 > ox || ox >= (int)out_width )
+			if( 0 > ox )
+			{
+				continue;
+			}
+
+			if( ox >= (int)out_width )
 			{
 				continue;
 			}
@@ -464,7 +519,12 @@ kernel void Pool2dForward
 		int
 			iy = (int)( oy * stride_height + ky ) - pad_top;
 
-		if( 0 > iy || iy >= (int)in_height )
+		if( 0 > iy )
+		{
+			continue;
+		}
+
+		if( iy >= (int)in_height )
 		{
 			continue;
 		}
@@ -474,7 +534,12 @@ kernel void Pool2dForward
 			int
 				ix = (int)( ox * stride_width + kx ) - pad_left;
 
-			if( 0 > ix || ix >= (int)in_width )
+			if( 0 > ix )
+			{
+				continue;
+			}
+
+			if( ix >= (int)in_width )
 			{
 				continue;
 			}
@@ -518,7 +583,12 @@ kernel void Pool2dBackward
 		int
 			numerator_y = (int)iy + pad_top - (int)ky;
 
-		if( 0 > numerator_y || 0 != numerator_y % (int)stride_height )
+		if( 0 > numerator_y )
+		{
+			continue;
+		}
+
+		if( 0 != numerator_y % (int)stride_height )
 		{
 			continue;
 		}
@@ -526,7 +596,12 @@ kernel void Pool2dBackward
 		int
 			oy = numerator_y / (int)stride_height;
 
-		if( 0 > oy || oy >= (int)out_height )
+		if( 0 > oy )
+		{
+			continue;
+		}
+
+		if( oy >= (int)out_height )
 		{
 			continue;
 		}
@@ -536,7 +611,12 @@ kernel void Pool2dBackward
 			int
 				numerator_x = (int)ix + pad_left - (int)kx;
 
-			if( 0 > numerator_x || 0 != numerator_x % (int)stride_width )
+			if( 0 > numerator_x )
+			{
+				continue;
+			}
+
+			if( 0 != numerator_x % (int)stride_width )
 			{
 				continue;
 			}
@@ -544,7 +624,12 @@ kernel void Pool2dBackward
 			int
 				ox = numerator_x / (int)stride_width;
 
-			if( 0 > ox || ox >= (int)out_width )
+			if( 0 > ox )
+			{
+				continue;
+			}
+
+			if( ox >= (int)out_width )
 			{
 				continue;
 			}
@@ -566,7 +651,12 @@ kernel void Pool2dBackward
 				int
 					iy2 = (int)( (uint)oy * stride_height + ky2 ) - pad_top;
 
-				if( 0 > iy2 || iy2 >= (int)in_height )
+				if( 0 > iy2 )
+				{
+					continue;
+				}
+
+				if( iy2 >= (int)in_height )
 				{
 					continue;
 				}
@@ -576,7 +666,12 @@ kernel void Pool2dBackward
 					int
 						ix2 = (int)( (uint)ox * stride_width + kx2 ) - pad_left;
 
-					if( 0 > ix2 || ix2 >= (int)in_width )
+					if( 0 > ix2 )
+					{
+						continue;
+					}
+
+					if( ix2 >= (int)in_width )
 					{
 						continue;
 					}
@@ -593,9 +688,12 @@ kernel void Pool2dBackward
 				}
 			}
 
-			if( best_y == iy && best_x == ix )
+			if( best_y == iy )
 			{
-				total += gradient[( c * out_height + (uint)oy ) * out_width + (uint)ox];
+				if( best_x == ix )
+				{
+					total += gradient[( c * out_height + (uint)oy ) * out_width + (uint)ox];
+				}
 			}
 		}
 	}
@@ -695,7 +793,12 @@ kernel void BatchNormalizationInputGradient
 		c = get_global_id( 0 ),
 		p = get_global_id( 1 );
 
-	if( c >= channels || p >= spatial_count )
+	if( c >= channels )
+	{
+		return;
+	}
+
+	if( p >= spatial_count )
 	{
 		return;
 	}
