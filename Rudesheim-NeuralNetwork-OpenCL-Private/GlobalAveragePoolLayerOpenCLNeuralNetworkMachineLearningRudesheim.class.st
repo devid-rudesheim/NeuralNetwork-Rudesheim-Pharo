@@ -13,6 +13,26 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
+{ #category : 'instance creation' }
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ self window: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
+]
+
+{ #category : 'accessing' }
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+
+	^ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim
+]
+
+{ #category : 'instance creation' }
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ super new
+		setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
+		yourself
+]
+
 { #category : 'evaluating' }
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
@@ -54,26 +74,6 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 			gradientBuffer release.
 			inputGradientBuffer release.
 		].
-]
-
-{ #category : 'instance creation' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self window: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
-]
-
-{ #category : 'accessing' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
-
-	^ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'instance creation' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ super new
-		setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
-		yourself
 ]
 
 { #category : 'evaluating' }
