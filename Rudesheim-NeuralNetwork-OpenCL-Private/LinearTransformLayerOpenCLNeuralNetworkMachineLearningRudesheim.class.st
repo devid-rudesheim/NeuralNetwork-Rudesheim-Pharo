@@ -13,12 +13,6 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'accessing' }
-LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
-
-	^ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
-]
-
 { #category : 'instance creation' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 
@@ -27,6 +21,12 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoi
 			Rudesheim MachineLearning NeuralNetwork Soil WeightsSource
 				tensorDescriptorRecords:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
 		)
+]
+
+{ #category : 'accessing' }
+LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+
+	^ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
 ]
 
 { #category : 'accessing' }
@@ -206,6 +206,18 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anIn
 		].
 ]
 
+{ #category : 'releasing' }
+LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
+	"withUpdatedWeightsRows:learningRate: builds a whole new instance (with its
+	own new weightsBuffer/biasesBuffer) rather than mutating this one in place
+	-- release this instance's own buffers once it has been superseded, so
+	repeated training steps (Node>>rebuiltUsingParameterDeltas:learningRate:cache:)
+	don't leak one weightsBuffer/biasesBuffer pair per step."
+
+	weightsBuffer releaseRudesheim.
+	biasesBuffer releaseRudesheim.
+]
+
 { #category : 'initialization' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeightsRows: aWeightRowsSequencialCollection biases: aBiasesSequencialCollection [
 
@@ -270,16 +282,4 @@ learningRate:				aRateFloat [
 				value:	self biases
 				value:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim biases
 		)
-]
-
-{ #category : 'releasing' }
-LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
-	"withUpdatedWeightsRows:learningRate: builds a whole new instance (with its
-	own new weightsBuffer/biasesBuffer) rather than mutating this one in place
-	-- release this instance's own buffers once it has been superseded, so
-	repeated training steps (Node>>rebuiltUsingParameterDeltas:learningRate:cache:)
-	don't leak one weightsBuffer/biasesBuffer pair per step."
-
-	weightsBuffer releaseRudesheim.
-	biasesBuffer releaseRudesheim.
 ]

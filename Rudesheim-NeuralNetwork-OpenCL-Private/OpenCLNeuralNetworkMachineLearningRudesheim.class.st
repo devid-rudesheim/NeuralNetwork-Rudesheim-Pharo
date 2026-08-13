@@ -12,47 +12,22 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Criterion [
 	^ CriterionOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Layer [
 	^ LayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> Model [
 	^ ModelOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> addAndClassifySelector: selector
-withMethod: compiledMethod
-inProtocol: aProtocol [
-	self localMethodDict
-		at:	selector
-		put:	compiledMethod.
-
-	super
-		addAndClassifySelector:	selector
-		withMethod:	compiledMethod
-		inProtocol:	aProtocol.
-
-	TraitChange
-		addSelector:	selector
-		on:	self.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> allTraits [
-	^ self
-		traitComposition
-		allTraits.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> commandQueue [
 	^ commandQueue
 		ifNil:
@@ -63,7 +38,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> commandQueue [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> context [
 	^ context
 		ifNil:
@@ -76,19 +51,19 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> context [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> default [
 	^ PureNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> device [
 	^ self
 		devices
 		first.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 	^ devices
 		ifNil:
@@ -97,229 +72,17 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> doRebuildMethodDictionary [
-	|
-		selectors
-		removedSelectors
-		modified
-	|
+{ #category : 'class initialization' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> initialize [ 
 
-	modified := false.
-
-	self methodDict
-		valuesDo:
-		[ :m |
-			m traitSource
-				ifNil:
-				[
-					self localMethodDict
-						at:	m selector
-						put:	m.
-				].
-		].
-
-	selectors :=
-		self
-			traitComposition
-			selectors
-			reject:
-			[ :e |
-				self localMethodDict
-					includesKey:	e.
-			].
-
-	selectors
-		do:
-		[ :e |
-			modified := modified | (self traitComposition installSelector: e into: self replacing: false).
-		].
-
-	removedSelectors :=
-		self
-			methodDict
-			keys
-			reject:
-			[ :aSelector |
-				(
-					selectors
-						includes:	aSelector
-				)
-					or:
-					[
-						self localMethodDict
-							includesKey:	aSelector.
-					].
-			].
-
-	modified := modified | removedSelectors isNotEmpty.
-
-	removedSelectors
-		do:
-		[ :aSelector |
-			self methodDict
-				removeKey:	aSelector.
-
-			self
-				removeFromProtocols:	aSelector.
-		].
-
-	^ modified.
+	self
+		startUp: true.
+	
+	SessionManager default
+		registerSystemClassNamed: self name
 ]
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> fileOutLocalMethodsInProtocol: protocol
-on: aFileStream [
-	aFileStream cr.
-
-	protocol methodSelectors
-		select:
-		[ :selector |
-			(
-				self
-					isLocalSelector:	selector
-			)
-				or:
-				[
-					(
-						self
-							traitComposition
-							selectors
-							includes:	selector
-					)
-						not.
-				].
-		]
-		thenDo:
-		[ :selector |
-			self
-				printMethodChunk:	selector
-				on:	aFileStream.
-		].
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> findOriginClassOf: aMethod [
-	(
-		aMethod
-			hasProperty:	#traitSource
-	)
-		ifTrue:
-		[
-			^ aMethod
-				traitSource
-				innerClass.
-		].
-
-	(
-		self
-			includesLocalSelector:	aMethod selector
-	)
-		ifTrue:
-		[
-			^ self.
-		].
-
-	^
-	(
-		self traitComposition
-			traitDefining:	aMethod selector
-			ifNone:
-			[
-				^ self.
-			]
-	)
-		innerClass.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> findOriginMethodOf: aMethod [
-	(
-		self
-			includesLocalSelector:	aMethod selector
-	)
-		ifTrue:
-		[
-			^ aMethod.
-		].
-
-	(
-		aMethod
-			hasProperty:	#traitSource
-	)
-		ifTrue:
-		[
-			|
-				newSelector
-			|
-
-			newSelector :=
-				self traitComposition
-					originSelectorOf:	aMethod selector.
-
-			^ aMethod traitSource
-				compiledMethodAt:	newSelector
-				ifAbsent:
-				[
-					aMethod.
-				].
-		].
-
-	^
-	(
-		self traitComposition
-			traitDefining:	aMethod selector
-			ifNone:
-			[
-				self.
-			]
-	)
-		compiledMethodAt:	aMethod selector
-		ifAbsent:
-		[
-			^ aMethod.
-		].
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> hasTraitComposition [
-	^ self
-		traitComposition
-		isEmpty
-		not.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> includesLocalSelector: aSymbol [
-	^ self
-		isLocalSelector:	aSymbol.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> includesTrait: aTrait [
-	^ self traitComposition
-		includesTrait:	aTrait.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> isAliasSelector: aSymbol [
-	^ self traitComposition
-		isAliasSelector:	aSymbol.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> isLocalAliasSelector: aSymbol [
-	^ self traitComposition
-		isLocalAliasSelector:	aSymbol.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> isLocalSelector: aSelector [
-	^ self localMethodDict
-		includesKey:	aSelector.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> kernelAt: aNameString
 parameterTypes: aCTypeSequencialCollection [
 	^ self context
@@ -328,7 +91,7 @@ parameterTypes: aCTypeSequencialCollection [
 		withParameterTypes:	aCTypeSequencialCollection.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> kernelSource [
 	^ '
 kernel void GemvForward(
@@ -704,34 +467,7 @@ kernel void BatchNormalizationParamGradient(
 '.
 ]
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> localMethodDict [
-	^ self
-		class
-		baseLocalMethods.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> localMethodDict: aMethodDictionary [
-	^ self class
-		baseLocalMethods:	aMethodDictionary.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> localMethods [
-	^ self
-		localMethodDict
-		values.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> localSelectors [
-	^ self
-		localMethodDict
-		keys.
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 	^ self context
 		cachedCLProgramFor:	self devices
@@ -739,173 +475,10 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 		withOptions:	''.
 ]
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> rebuildMethodDictionary [
-	^ self doRebuildMethodDictionary.
-]
+{ #category : 'class initialization' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp:	anIsImageStartingBoolean [
 
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> recategorizeSelector: selector
-from: oldProtocol
-to: newProtocol [
-	|
-		originalProtocol
-	|
-
-	newProtocol
-		ifNil:
-		[
-			^ self.
-		].
-
-	originalProtocol :=
-		(
-			self
-				protocolOfSelector:	selector
-		)
-			ifNil:
-			[
-				^ self.
-			].
-
-	originalProtocol
-		name
-		= oldProtocol name
-		ifTrue:
-		[
-			self
-				classify:	selector
-				under:	newProtocol name.
-		].
-
-	(
-		self traitComposition
-			reverseAlias:	selector
-	)
-		do:
-		[ :selectorAlias |
-			self
-				recategorizeSelector:	selectorAlias
-				from:	oldProtocol
-				to:	newProtocol.
-
-			self
-				notifyOfRecategorizedSelector:	selectorAlias
-				from:	oldProtocol
-				to:	newProtocol.
-		].
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> recompile: selector
-from: oldClass [
-	super
-		recompile:	selector
-		from:	oldClass.
-
-	TraitChange
-		addSelector:	selector
-		on:	self.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> removeFromComposition: aTrait [
-	self
-		setTraitComposition:	
-		(
-			self traitComposition
-				copyWithoutTrait:	aTrait asTraitComposition
-		).
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> removeFromSystem: logged [
-	|
-		mySubclasses
-	|
-
-	self traitComposition
-		removeUser:	self.
-
-	self
-		class
-		traitComposition
-		removeUser:	self class.
-
-	TraitedClass
-		removeUser:	self class.
-
-	mySubclasses := self subclasses.
-
-	super
-		removeFromSystem:	logged.
-
-	mySubclasses
-		do:
-		[ :each |
-			each
-				class
-				initializeBasicMethods.
-		].
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> removeSelector: aSelector [
-	super
-		removeSelector:	aSelector.
-
-	self localMethodDict
-		removeKey:	aSelector
-		ifAbsent:
-		[
-		].
-
-	TraitChange
-		removeSelector:	aSelector
-		on:	self.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> traitComposition [
-	^ self
-		class
-		baseComposition.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> traitComposition: aComposition [
-	aComposition
-		asTraitComposition
-		allTraits
-		do:
-		[ :aMaybeTrait |
-			aMaybeTrait isTrait
-				ifFalse:
-				[
-					self
-						error:	'All the members of the trait composition should be traits'.
-				].
-		].
-
-	self class
-		baseComposition:	aComposition.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> traitCompositionString [
-	^ self
-		traitComposition
-		asString.
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> traitUsers [
-	^ #().
-]
-
-{ #category : 'as yet unclassified' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> traits [
-	^ self
-		traitComposition
-		traits.
+	devices			:= nil.
+	context			:= nil.
+	commandQueue		:= nil.
 ]

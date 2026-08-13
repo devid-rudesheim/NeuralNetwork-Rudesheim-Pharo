@@ -55,12 +55,6 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		].
 ]
 
-{ #category : 'instance creation' }
-AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self
-]
-
 { #category : 'evaluating' }
 AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNumbersSequencialCollection [
 
@@ -148,6 +142,12 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 				].
 			kernelEvent release.
 		].
+]
+
+{ #category : 'instance creation' }
+AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ self
 ]
 
 { #category : 'converting' }

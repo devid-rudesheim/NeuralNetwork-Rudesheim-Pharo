@@ -15,12 +15,43 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'releasing' }
-BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
-	"See LinearTransformLayerOpenCL>>releaseRudesheim for why this exists."
+{ #category : 'instance creation' }
+BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 
-	scaleBuffer releaseRudesheim.
-	shiftBuffer releaseRudesheim.
+	|
+		scaleDescriptor
+		shiftDescriptor
+	|
+
+	scaleDescriptor :=
+		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
+			detect: [ :each | each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim ].
+	shiftDescriptor :=
+		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
+			detect: [ :each | each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim ].
+
+	^ self
+		scale:	scaleDescriptor payload
+		shift:	shiftDescriptor payload
+		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
+]
+
+{ #category : 'accessing' }
+BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> scale:	aScaleSequenceableCollection
+shift:	aShiftSequenceableCollection
+window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ super new
+		setScale:	aScaleSequenceableCollection
+		shift:		aShiftSequenceableCollection
+		window:		aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
+		yourself
+]
+
+{ #category : 'accessing' }
+BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+
+	^ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim
 ]
 
 { #category : 'evaluating' }
@@ -100,45 +131,6 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	
 		].
 ]
 
-{ #category : 'instance creation' }
-BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	|
-		scaleDescriptor
-		shiftDescriptor
-	|
-
-	scaleDescriptor :=
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
-			detect: [ :each | each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim ].
-	shiftDescriptor :=
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
-			detect: [ :each | each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim ].
-
-	^ self
-		scale:	scaleDescriptor payload
-		shift:	shiftDescriptor payload
-		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
-]
-
-{ #category : 'accessing' }
-BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> scale:	aScaleSequenceableCollection
-shift:	aShiftSequenceableCollection
-window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ super new
-		setScale:	aScaleSequenceableCollection
-		shift:		aShiftSequenceableCollection
-		window:		aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
-		yourself
-]
-
-{ #category : 'accessing' }
-BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
-
-	^ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim
-]
-
 { #category : 'evaluating' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
 
@@ -209,6 +201,14 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	a
 				].
 			kernelEvent release.
 		].
+]
+
+{ #category : 'releasing' }
+BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
+	"See LinearTransformLayerOpenCL>>releaseRudesheim for why this exists."
+
+	scaleBuffer releaseRudesheim.
+	shiftBuffer releaseRudesheim.
 ]
 
 { #category : 'accessing' }

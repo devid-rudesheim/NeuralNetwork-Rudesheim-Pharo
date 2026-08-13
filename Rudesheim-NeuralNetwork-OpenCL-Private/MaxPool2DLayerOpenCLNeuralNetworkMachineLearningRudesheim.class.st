@@ -13,6 +13,32 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
+{ #category : 'as yet unclassified' }
+MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self
+		window:	
+		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+			layerAttributesRecords
+			first.
+]
+
+{ #category : 'as yet unclassified' }
+MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
+	^ 'MaxPool'.
+]
+
+{ #category : 'as yet unclassified' }
+MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+	^ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
+]
+
+{ #category : 'as yet unclassified' }
+MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
+	^ super new
+		setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
+		yourself.
+]
+
 { #category : 'evaluating' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
@@ -80,32 +106,6 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 			gradientBuffer release.
 			inputGradientBuffer release.
 		].
-]
-
-{ #category : 'as yet unclassified' }
-MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-	^ self
-		window:	
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-			layerAttributesRecords
-			first.
-]
-
-{ #category : 'as yet unclassified' }
-MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-	^ 'MaxPool'.
-]
-
-{ #category : 'as yet unclassified' }
-MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
-	^ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
-]
-
-{ #category : 'as yet unclassified' }
-MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-	^ super new
-		setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
-		yourself.
 ]
 
 { #category : 'as yet unclassified' }

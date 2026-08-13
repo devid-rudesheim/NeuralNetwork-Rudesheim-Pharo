@@ -16,12 +16,43 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'accessing' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
+{ #category : 'instance creation' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 
-	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		readFloatsFrom:	biasesBuffer
-		count:				outChannels
+	|
+		weightsDescriptor
+		biasesDescriptor
+	|
+
+	weightsDescriptor :=
+		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
+			detect: [ :each | each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim ].
+	biasesDescriptor :=
+		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
+			detect: [ :each | each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim ].
+
+	^ self
+		weights:	weightsDescriptor payload
+		biases:		biasesDescriptor payload
+		window:		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
+]
+
+{ #category : 'accessing' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+
+	^ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
+]
+
+{ #category : 'instance creation' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> weights:	aWeightsSequenceableCollection
+biases:	aBiasesSequenceableCollection
+window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ super new
+		setWeights:	aWeightsSequenceableCollection
+		biases:		aBiasesSequenceableCollection
+		window:		aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
+		yourself
 ]
 
 { #category : 'evaluating' }
@@ -188,43 +219,12 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 		].
 ]
 
-{ #category : 'instance creation' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	|
-		weightsDescriptor
-		biasesDescriptor
-	|
-
-	weightsDescriptor :=
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
-			detect: [ :each | each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim ].
-	biasesDescriptor :=
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
-			detect: [ :each | each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim ].
-
-	^ self
-		weights:	weightsDescriptor payload
-		biases:		biasesDescriptor payload
-		window:		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
-]
-
 { #category : 'accessing' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
-	^ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'instance creation' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> weights:	aWeightsSequenceableCollection
-biases:	aBiasesSequenceableCollection
-window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ super new
-		setWeights:	aWeightsSequenceableCollection
-		biases:		aBiasesSequenceableCollection
-		window:		aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
-		yourself
+	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+		readFloatsFrom:	biasesBuffer
+		count:				outChannels
 ]
 
 { #category : 'evaluating' }
@@ -319,6 +319,14 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 		].
 ]
 
+{ #category : 'releasing' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
+	"See LinearTransformLayerOpenCL>>releaseRudesheim for why this exists."
+
+	weightsBuffer releaseRudesheim.
+	biasesBuffer releaseRudesheim.
+]
+
 { #category : 'initialization' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeights:	aWeightsSequenceableCollection
 biases:	aBiasesSequenceableCollection
@@ -331,6 +339,14 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 
 	weightsBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aWeightsSequenceableCollection asArray.
 	biasesBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aBiasesSequenceableCollection asArray
+]
+
+{ #category : 'accessing' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
+
+	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+		readFloatsFrom:	weightsBuffer
+		count:				outChannels * window inputChannels * window kernelRows * window kernelColumns
 ]
 
 { #category : 'converting' }
@@ -360,20 +376,4 @@ learningRate:				aRateFloat [
 				value:	aConv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim biases
 		)
 		window:	window
-]
-
-{ #category : 'releasing' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
-	"See LinearTransformLayerOpenCL>>releaseRudesheim for why this exists."
-
-	weightsBuffer releaseRudesheim.
-	biasesBuffer releaseRudesheim.
-]
-
-{ #category : 'accessing' }
-Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
-
-	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		readFloatsFrom:	weightsBuffer
-		count:				outChannels * window inputChannels * window kernelRows * window kernelColumns
 ]

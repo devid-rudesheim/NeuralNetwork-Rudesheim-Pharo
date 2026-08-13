@@ -7,12 +7,6 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
-{ #category : 'instance creation' }
-ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self
-]
-
 { #category : 'evaluating' }
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
@@ -134,4 +128,10 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 				].
 			kernelEvent release.
 		].
+]
+
+{ #category : 'instance creation' }
+ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+
+	^ self
 ]
