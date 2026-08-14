@@ -1,0 +1,13 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'RudesheimNeuralNetwork',
+      #groups : [ 'tests' ]
+    }
+  ],
+  #testing : {
+    #include : {
+      #packages : [ 'Rudesheim-NeuralNetwork-Tests', 'Rudesheim-NeuralNetwork-Private-Tests' ]
+    }
+  }
+}

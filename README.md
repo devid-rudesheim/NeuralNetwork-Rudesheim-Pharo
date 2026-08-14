@@ -1,5 +1,10 @@
 # Rudesheim Neural Network for Pharo
 
+[![GitHub release](https://img.shields.io/github/release/devid-rudesheim/NeuralNetwork-Rudesheim-Pharo.svg)](https://github.com/devid-rudesheim/NeuralNetwork-Rudesheim-Pharo/releases/latest)
+[![Unit Tests](https://github.com/devid-rudesheim/NeuralNetwork-Rudesheim-Pharo/actions/workflows/tests.yml/badge.svg)](https://github.com/devid-rudesheim/NeuralNetwork-Rudesheim-Pharo/actions/workflows/tests.yml)
+
+[![Pharo 13](https://img.shields.io/badge/Pharo-13-informational)](https://pharo.org)
+
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
 
