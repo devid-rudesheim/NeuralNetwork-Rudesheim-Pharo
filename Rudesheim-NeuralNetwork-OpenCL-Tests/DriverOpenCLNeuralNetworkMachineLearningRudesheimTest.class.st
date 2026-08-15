@@ -15,21 +15,24 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueIsMemoized [
 
 	self
-		assert:	( self basicTarget commandQueue == self basicTarget commandQueue ).
+		assert:	self basicTarget commandQueue
+		equals:	self basicTarget commandQueue.
 ]
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextIsMemoized [
 
 	self
-		assert:	( self basicTarget context == self basicTarget context ).
+		assert:	self basicTarget context
+		equals:	self basicTarget context.
 ]
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testDeviceIsFirstOfDevices [
 
 	self
-		assert:	( self basicTarget device == self basicTarget devices first ).
+		assert:	self basicTarget device
+		equals:	self basicTarget devices first.
 ]
 
 { #category : 'tests' }

@@ -18,22 +18,16 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> tearDown [
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueDelegatesToDriver [
 
 	self
-		assert:
-		(
-			OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-				== OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue
-		).
+		assert:	OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue.
 ]
 
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextDelegatesToDriver [
 
 	self
-		assert:
-		(
-			OpenCLNeuralNetworkMachineLearningRudesheim context
-				== OpenCLNeuralNetworkMachineLearningRudesheim driver context
-		).
+		assert:	OpenCLNeuralNetworkMachineLearningRudesheim context
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver context.
 ]
 
 { #category : 'tests' }
@@ -47,5 +41,6 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testStartUpResetsDriver [
 		startUp:	false.
 
 	self
-		deny:	( OpenCLNeuralNetworkMachineLearningRudesheim context == firstContext ).
+		deny:	OpenCLNeuralNetworkMachineLearningRudesheim context
+		equals:	firstContext.
 ]
