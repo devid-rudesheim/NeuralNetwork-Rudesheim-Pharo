@@ -19,6 +19,16 @@ Class {
 	#package : 'Rudesheim-NeuralNetwork-Private'
 }
 
+{ #category : 'testing' }
+ModelRecordSoilNeuralNetworkMachineLearningRudesheim class >> isSoilClusterRoot [
+	"Soil should partition each model record into its own on-disk cluster rather than
+	inlining it into whatever graph references it (e.g. StoreRootSoilNeuralNetworkMachineLearningRudesheim's
+	models Dictionary). Without this, reading any single model from a store deserializes
+	every model that store holds."
+
+	^ true
+]
+
 { #category : 'adding' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> addGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 
