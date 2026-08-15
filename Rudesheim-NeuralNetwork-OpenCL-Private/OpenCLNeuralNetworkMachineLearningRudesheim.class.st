@@ -41,6 +41,11 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> default [
 ]
 
 { #category : 'accessing' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> defaultDriver [
+	^ DriverOpenCLNeuralNetworkMachineLearningRudesheim new.
+]
+
+{ #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> device [
 	^ self driver device.
 ]
@@ -55,7 +60,7 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> driver [
 	^ driver
 		ifNil:
 		[
-			driver := DriverOpenCLNeuralNetworkMachineLearningRudesheim new.
+			driver := self defaultDriver.
 		].
 ]
 

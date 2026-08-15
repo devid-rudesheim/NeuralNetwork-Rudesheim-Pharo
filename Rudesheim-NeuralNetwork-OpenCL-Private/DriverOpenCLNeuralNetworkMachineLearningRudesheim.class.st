@@ -15,9 +15,7 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheim >> commandQueue [
 	^ commandQueue
 		ifNil:
 		[
-			commandQueue :=
-				self context
-					newCLCommandQueueFor:	self device.
+			commandQueue := self defaultCommandQueue.
 		].
 ]
 
@@ -26,12 +24,27 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheim >> context [
 	^ context
 		ifNil:
 		[
-			context :=
-				Rudesheim
-					OpenCL
-					Context
-					clContextFor:	self devices.
+			context := self defaultContext.
 		].
+]
+
+{ #category : 'accessing' }
+DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultCommandQueue [
+	^ self context
+		newCLCommandQueueFor:	self device.
+]
+
+{ #category : 'accessing' }
+DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultContext [
+	^ Rudesheim
+		OpenCL
+		Context
+		clContextFor:	self devices.
+]
+
+{ #category : 'accessing' }
+DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultDevices [
+	^ Rudesheim OpenCL Platform clPlatforms first clDevices.
 ]
 
 { #category : 'accessing' }
@@ -46,6 +59,6 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheim >> devices [
 	^ devices
 		ifNil:
 		[
-			devices := Rudesheim OpenCL Platform clPlatforms first clDevices.
+			devices := self defaultDevices.
 		].
 ]
