@@ -30,7 +30,8 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelKeyFromFileRefe
 ]
 
 { #category : 'accessing' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelRecordAt: aKeyString inRoot: aStoreRootSoilNeuralNetworkMachineLearningRudesheim [
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelRecordAt: aKeyString
+inRoot: aStoreRootSoilNeuralNetworkMachineLearningRudesheim [
 	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim
 		at:
 		(
