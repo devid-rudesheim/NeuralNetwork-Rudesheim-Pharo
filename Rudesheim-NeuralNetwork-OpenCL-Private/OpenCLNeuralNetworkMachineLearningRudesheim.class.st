@@ -4,9 +4,7 @@ Class {
 	#traits : 'TBackendNeuralNetworkMachineLearningRudesheim',
 	#classTraits : 'TBackendNeuralNetworkMachineLearningRudesheim classTrait',
 	#classInstVars : [
-		'devices',
-		'context',
-		'commandQueue'
+		'driver'
 	],
 	#category : 'Rudesheim-NeuralNetwork-OpenCL-Private',
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
@@ -29,26 +27,12 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> Model [
 
 { #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> commandQueue [
-	^ commandQueue
-		ifNil:
-		[
-			commandQueue :=
-				self context
-					newCLCommandQueueFor:	self device.
-		].
+	^ self driver commandQueue.
 ]
 
 { #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> context [
-	^ context
-		ifNil:
-		[
-			context :=
-				Rudesheim
-					OpenCL
-					Context
-					clContextFor:	self devices.
-		].
+	^ self driver context.
 ]
 
 { #category : 'accessing' }
@@ -58,17 +42,20 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> default [
 
 { #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> device [
-	^ self
-		devices
-		first.
+	^ self driver device.
 ]
 
 { #category : 'accessing' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> devices [
-	^ devices
+	^ self driver devices.
+]
+
+{ #category : 'accessing' }
+OpenCLNeuralNetworkMachineLearningRudesheim class >> driver [
+	^ driver
 		ifNil:
 		[
-			devices := Rudesheim OpenCL Platform clPlatforms first clDevices.
+			driver := DriverOpenCLNeuralNetworkMachineLearningRudesheim new.
 		].
 ]
 
@@ -856,7 +843,5 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 { #category : 'class initialization' }
 OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp:	anIsImageStartingBoolean [
 
-	devices			:= nil.
-	context			:= nil.
-	commandQueue		:= nil.
+	driver := nil.
 ]
