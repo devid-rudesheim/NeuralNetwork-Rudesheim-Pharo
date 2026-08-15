@@ -5,6 +5,8 @@
 
 [![Pharo 13](https://img.shields.io/badge/Pharo-13-informational)](https://pharo.org)
 
+> **CI status:** the Unit Tests workflow currently fails on GitHub Actions. `NodeNeuralNetworkMachineLearningRudesheimTest>>testChainForwardMatchesFlatLayerFold` errors with `Array does not understand #releaseRudesheim`, raised from `ModelNeuralNetworkMachineLearningRudesheim>>forward:` while releasing intermediate node outputs. This is a real code defect (not an environment limitation) and is not yet fixed.
+
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
 
@@ -31,6 +33,7 @@ The default group loads the pure Smalltalk runtime and the Soil/OSSubprocess dep
 ## Requirements
 
 - Pharo with Metacello.
+- Windows is not supported: the default group loads `SoilCore`, and [Soil itself does not support Windows yet](https://github.com/ApptiveGrid/Soil#readme). The supported environment is a POSIX-like operating system.
 - Python 3 is required only when converting ONNX files through `Rudesheim MachineLearning NeuralNetwork ONNX Convertor file:toSoil:`.
 - OpenCL support requires `load: #(opencl)` and a native OpenCL runtime visible to the host process.
 - OpenCL-backed inference needs at least one usable OpenCL platform/device.
