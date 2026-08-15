@@ -19,8 +19,10 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueDelegatesToDr
 
 	self
 		assert:
-			( OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-				== OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue ).
+		(
+			OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+				== OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue
+		).
 ]
 
 { #category : 'tests' }
@@ -28,8 +30,10 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextDelegatesToDriver 
 
 	self
 		assert:
-			( OpenCLNeuralNetworkMachineLearningRudesheim context
-				== OpenCLNeuralNetworkMachineLearningRudesheim driver context ).
+		(
+			OpenCLNeuralNetworkMachineLearningRudesheim context
+				== OpenCLNeuralNetworkMachineLearningRudesheim driver context
+		).
 ]
 
 { #category : 'tests' }
