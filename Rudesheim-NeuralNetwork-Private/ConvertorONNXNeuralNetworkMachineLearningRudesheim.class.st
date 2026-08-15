@@ -24,12 +24,12 @@ toSoil: aSoil [
 	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelKeyFromFileReference: aFileReferenceObject [
 	^ aFileReferenceObject asFileReference withoutExtension basename.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelRecordAt: aKeyString inRoot: aStoreRootSoilNeuralNetworkMachineLearningRudesheim [
 	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim
 		at:
@@ -54,7 +54,7 @@ toSoil: aSoilFileReferenceObject [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
 at: aKeyString [
@@ -80,7 +80,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
 at: aKeyString
@@ -139,7 +139,7 @@ progress: aBlock [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
 at: aKeyString
@@ -231,7 +231,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
 at: aKeyString
@@ -537,7 +537,7 @@ sourceFileReference: aFileReference [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
 at: aKeyString
@@ -552,7 +552,7 @@ sourceFileReference: aFileReference [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
 at: aKeyString
@@ -578,7 +578,7 @@ progress: aBlock [
 		backend:	PureNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
 at: aKeyString
@@ -615,7 +615,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
 at: aKeyString
@@ -716,7 +716,7 @@ toFile: aFileReferenceObject [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoilFileReferenceObject
 toFile: aFileReferenceObject
 at: aKeyString [
@@ -763,7 +763,7 @@ progress: aBlock [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoilFileReferenceObject
 toFile: aFileReferenceObject
 at: aKeyString
@@ -798,7 +798,7 @@ progress: aBlock [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoil
 toWriteStream: aWriteStream
 at: aKeyString [
@@ -811,7 +811,7 @@ at: aKeyString [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoil
 toWriteStream: aWriteStream
 at: aKeyString
