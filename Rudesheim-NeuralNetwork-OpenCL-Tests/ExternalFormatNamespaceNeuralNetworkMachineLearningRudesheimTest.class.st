@@ -808,6 +808,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 		Convertor
 		file:	fileReference fullName
 		toSoil:	soilFileReference fullName
+		at:	'rudesheim-onnx-payload'
 		progress:
 		[ :event :object |
 			events
@@ -819,6 +820,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 		Convertor
 		soil:	soilFileReference fullName
 		toFile:	outputFileReference fullName
+		at:	'rudesheim-onnx-payload'
 		progress:
 		[ :event :object |
 			events

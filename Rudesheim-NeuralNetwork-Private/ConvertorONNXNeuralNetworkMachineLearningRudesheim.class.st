@@ -555,6 +555,19 @@ sourceFileReference: aFileReference [
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
+at: aKeyString
+progress: aBlock [
+	^ self
+		readStream:	aReadStream
+		toSoil:	aSoil
+		at:	aKeyString
+		sourceFileReference:	nil
+		progress:	aBlock.
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
+toSoil: aSoil
 sourceFileReference: aFileReference
 progress: aBlock [
 	^ self
