@@ -206,7 +206,9 @@ result :=
 ## ONNX and Soil
 
 ONNX conversion stores a backend-neutral internal graph representation in Soil.
-Open the Soil database and read the model record from its root:
+The model record's key defaults to the ONNX file's base name (without extension) — converting
+`mnist-8.onnx` stores the record under `'mnist-8'`. Open the Soil database and read the model
+record from its root using that same key:
 
 ```smalltalk
 nn := Rudesheim MachineLearning NeuralNetwork.
@@ -221,7 +223,7 @@ nn ONNX Convertor
 		| modelRecord model root |
 
 		root := soil newTransaction root.
-		modelRecord := root at: (root symbolByName: 'default').
+		modelRecord := root at: (root symbolByName: 'mnist-8').
 		model := modelRecord nextModelAs: nn Pure Model.
 		model value: ( ( 1 to: 1 * 28 * 28) collect: [ :unused | 0.0 ] ).
 	].
@@ -243,13 +245,32 @@ nn ONNX Convertor
 		| modelRecord model root |
 
 		root := soil newTransaction root.
-		modelRecord := root at: (root symbolByName: 'default').
+		modelRecord := root at: (root symbolByName: 'resnet50-v2-7').
 		model := modelRecord nextModelAs: nn OpenCL Model.
 		model value: ( ( 1 to: 3 * 224 * 224) collect: [ :unused | 0.0 ] ).
 	].
 ```
 
 Use `nn Pure Model` at the same read point to build a Pure-backed model from the same Soil record.
+
+Pass `at:` to store or read a model record under an explicit key instead of the file-name-derived
+one — useful when a single Soil database should hold more than one named model:
+
+```smalltalk
+nn ONNX Convertor
+	file: 'mnist-8.onnx'
+	toSoil: 'mnist-8.soil'
+	at: 'my-model-name'.
+
+(Soil openOnPath: 'mnist-8.soil' asFileReference) intoRHScope
+	do:
+	[ :soil |
+		| modelRecord root |
+
+		root := soil newTransaction root.
+		modelRecord := root at: (root symbolByName: 'my-model-name').
+	].
+```
 
 The converter script emits flat tensor payloads and stores tensor shape separately.
 Backends reconstruct row-based or nested views at model-load time when they need them.

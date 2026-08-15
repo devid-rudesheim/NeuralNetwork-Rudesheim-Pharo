@@ -332,7 +332,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'mnist-8'
 					).
 
 			model :=
@@ -411,7 +411,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'mnist-8'
 					).
 
 			self
@@ -503,7 +503,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTOnn
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'mnist-8'
 					).
 
 			self
@@ -808,6 +808,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 		Convertor
 		file:	fileReference fullName
 		toSoil:	soilFileReference fullName
+		at:	'rudesheim-onnx-payload'
 		progress:
 		[ :event :object |
 			events
@@ -819,6 +820,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 		Convertor
 		soil:	soilFileReference fullName
 		toFile:	outputFileReference fullName
+		at:	'rudesheim-onnx-payload'
 		progress:
 		[ :event :object |
 			events
@@ -897,7 +899,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 				at:	
 				(
 					root
-						symbolByName:	'default'
+						symbolByName:	(fileReference withoutExtension basename)
 				).
 
 		self
@@ -997,6 +999,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXStre
 			Convertor
 			readStream:	readStream
 			toSoil:	soil
+			at:	'stream-model'
 			progress:
 			[ :event :object |
 				events
@@ -1012,6 +1015,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXStre
 			Convertor
 			soil:	soil
 			toWriteStream:	outputStream
+			at:	'stream-model'
 			progress:
 			[ :event :object |
 				events
@@ -1082,7 +1086,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'resnet50-v2-7'
 					).
 
 			model :=
@@ -1164,7 +1168,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'resnet50-v2-7'
 					).
 
 			model :=
@@ -1236,7 +1240,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'resnet50-v2-7'
 					).
 
 			self
@@ -1303,7 +1307,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 					at:	
 					(
 						root
-							symbolByName:	'default'
+							symbolByName:	'resnet50-v2-7'
 					).
 
 			self
