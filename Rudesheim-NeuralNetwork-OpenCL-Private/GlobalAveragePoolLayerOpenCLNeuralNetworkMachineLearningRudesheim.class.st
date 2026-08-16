@@ -48,8 +48,14 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 	channels := window inputChannels.
 	spatialCount := window inputRows * window inputColumns.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray elementType: TFBasicType float.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: channels * spatialCount elementType: TFBasicType float.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
+			elementType:	TFBasicType float.
+	inputGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	channels * spatialCount
+			elementType:	TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'GlobalAvgPoolBackward'
@@ -91,7 +97,10 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
 	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
 	outputCount := window inputChannels.
-	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: outputCount elementType: TFBasicType float.
+	outputBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	outputCount
+			elementType:	TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;

@@ -49,9 +49,18 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 	inputs := aBackwordContextNeuralNetworkMachineLearningRudesheim inputPredictions.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
 
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: gradient asArray elementType: TFBasicType float.
-	inputsBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: inputs asArray elementType: TFBasicType float.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: columns elementType: TFBasicType float.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	gradient asArray
+			elementType:	TFBasicType float.
+	inputsBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	inputs asArray
+			elementType:	TFBasicType float.
+	inputGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	columns
+			elementType:	TFBasicType float.
 
 	kernel1 :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
@@ -70,7 +79,10 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 		forNDRange:				{ { columns } }
 		withArguments:			{ weightsBuffer. gradientBuffer. inputGradientBuffer. rows. columns }.
 
-	weightGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: rows * columns elementType: TFBasicType float.
+	weightGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	rows * columns
+			elementType:	TFBasicType float.
 	kernel2 :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'OuterProduct'
@@ -137,7 +149,10 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anIn
 
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
 	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
-	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: rows elementType: TFBasicType float.
+	outputBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	rows
+			elementType:	TFBasicType float.
 	outputBuffer
 		count:		rows;
 		queue:		queue;
@@ -232,8 +247,14 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeightsRow
 			inject:	OrderedCollection new
 			into:	[ :flat :row | flat addAll: row asArray; yourself ].
 
-	weightsBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: flatWeights asArray elementType: TFBasicType float.
-	biasesBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: aBiasesSequencialCollection asArray elementType: TFBasicType float
+	weightsBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	flatWeights asArray
+			elementType:	TFBasicType float.
+	biasesBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aBiasesSequencialCollection asArray
+			elementType:	TFBasicType float
 ]
 
 { #category : 'accessing' }

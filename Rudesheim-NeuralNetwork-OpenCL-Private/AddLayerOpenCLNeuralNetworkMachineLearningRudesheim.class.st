@@ -23,8 +23,14 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 
 	halfCount := aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient size.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray elementType: TFBasicType float.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: halfCount * 2 elementType: TFBasicType float.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
+			elementType:	TFBasicType float.
+	inputGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	halfCount * 2
+			elementType:	TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'AddBackward'
@@ -72,7 +78,10 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 	see the comment on this same pattern in ReLULayerOpenCL>>forward:."
 	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
 	outputCount := inputBuffer count // 2.
-	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: outputCount elementType: TFBasicType float.
+	outputBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	outputCount
+			elementType:	TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
