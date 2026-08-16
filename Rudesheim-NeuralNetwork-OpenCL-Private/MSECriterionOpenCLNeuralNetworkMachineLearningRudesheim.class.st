@@ -56,7 +56,10 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 			forNDRange:				{ { count } }
 			withArguments:			{ predictionsBuffer. targetsBuffer. gradientBuffer. ( 2.0 / count ). count }.
 
-		queue readFloatsFrom: gradientBuffer count: count
+		queue
+			readFrom:	gradientBuffer
+			count:	count
+			elementType:	TFBasicType float
 	]
 		ensure:
 		[

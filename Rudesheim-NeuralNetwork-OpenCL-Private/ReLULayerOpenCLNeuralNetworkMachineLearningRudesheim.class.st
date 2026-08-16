@@ -55,7 +55,12 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 			forNDRange:				{ { count } }
 			withArguments:			{ inputBuffer. gradientBuffer. inputGradientBuffer. count }.
 
-		{ queue readFloatsFrom: inputGradientBuffer count: count }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	count
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[

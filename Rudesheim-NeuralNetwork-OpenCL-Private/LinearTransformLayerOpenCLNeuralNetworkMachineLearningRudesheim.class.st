@@ -99,12 +99,19 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 		forNDRange:				{ { rows. columns } }
 		withArguments:			{ inputsBuffer. gradientBuffer. weightGradientBuffer. columns }.
 
-	flatWeightGradient := queue readFloatsFrom: weightGradientBuffer count: rows * columns.
+	flatWeightGradient :=
+		queue
+			readFrom:	weightGradientBuffer
+			count:	rows * columns
+			elementType:	TFBasicType float.
 
 	^
 	[
 		{
-			queue readFloatsFrom: inputGradientBuffer count: columns.
+			queue
+				readFrom:	inputGradientBuffer
+				count:	columns
+				elementType:	TFBasicType float.
 			self species
 				weightsRows:
 				(
@@ -116,7 +123,13 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 								to:			rowIndex * columns
 						]
 				)
-				biases: ( queue readFloatsFrom: gradientBuffer count: rows ).
+				biases:
+				(
+					queue
+						readFrom:	gradientBuffer
+						count:	rows
+						elementType:	TFBasicType float
+				).
 		}
 	]
 		ensure:
@@ -132,8 +145,9 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
 	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		readFloatsFrom:	biasesBuffer
-		count:				rows
+		readFrom:	biasesBuffer
+		count:	rows
+		elementType:	TFBasicType float
 ]
 
 { #category : 'evaluating' }
@@ -266,7 +280,11 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weightsRows [
 	|
 
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	flat := queue readFloatsFrom: weightsBuffer count: rows * columns.
+	flat :=
+		queue
+			readFrom:	weightsBuffer
+			count:	rows * columns
+			elementType:	TFBasicType float.
 
 	^ ( 1 to: rows )
 		collect:

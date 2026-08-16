@@ -52,7 +52,12 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		splits this doubled-length input gradient back into the two predecessors' own
 		lengths -- the exact inverse of how valueFromPredecessorValues:givenInput: concatenated
 		them going forward."
-		{ queue readFloatsFrom: inputGradientBuffer count: halfCount * 2 }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	halfCount * 2
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[

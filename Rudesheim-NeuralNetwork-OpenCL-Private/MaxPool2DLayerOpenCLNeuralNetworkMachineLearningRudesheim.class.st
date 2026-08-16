@@ -107,7 +107,12 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 				window paddingLeftColumns.
 			}.
 
-		{ queue readFloatsFrom: inputGradientBuffer count: inputCount }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	inputCount
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[

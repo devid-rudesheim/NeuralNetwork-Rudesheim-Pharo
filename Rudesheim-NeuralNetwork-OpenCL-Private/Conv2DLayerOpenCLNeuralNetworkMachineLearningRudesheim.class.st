@@ -217,10 +217,25 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 			}.
 
 		{
-			queue readFloatsFrom: inputGradientBuffer count: inputCount.
+			queue
+				readFrom:	inputGradientBuffer
+				count:	inputCount
+				elementType:	TFBasicType float.
 			Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
-				weights:	( queue readFloatsFrom: weightGradientBuffer count: weightCount )
-				biases:		( queue readFloatsFrom: biasGradientBuffer count: outChannels )
+				weights:
+				(
+					queue
+						readFrom:	weightGradientBuffer
+						count:	weightCount
+						elementType:	TFBasicType float
+				)
+				biases:
+				(
+					queue
+						readFrom:	biasGradientBuffer
+						count:	outChannels
+						elementType:	TFBasicType float
+				)
 				window:		window.
 		}
 	]
@@ -238,8 +253,9 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
 	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		readFloatsFrom:	biasesBuffer
-		count:				outChannels
+		readFrom:	biasesBuffer
+		count:	outChannels
+		elementType:	TFBasicType float
 ]
 
 { #category : 'evaluating' }
@@ -369,8 +385,9 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
 
 	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		readFloatsFrom:	weightsBuffer
-		count:				outChannels * window inputChannels * window kernelRows * window kernelColumns
+		readFrom:	weightsBuffer
+		count:	outChannels * window inputChannels * window kernelRows * window kernelColumns
+		elementType:	TFBasicType float
 ]
 
 { #category : 'converting' }

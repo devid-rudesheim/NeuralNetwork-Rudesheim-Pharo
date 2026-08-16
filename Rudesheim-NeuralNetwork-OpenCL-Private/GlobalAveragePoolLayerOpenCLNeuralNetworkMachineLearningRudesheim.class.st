@@ -73,7 +73,12 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 			forNDRange:				{ { channels. spatialCount } }
 			withArguments:			{ gradientBuffer. inputGradientBuffer. spatialCount }.
 
-		{ queue readFloatsFrom: inputGradientBuffer count: channels * spatialCount }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	channels * spatialCount
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[
