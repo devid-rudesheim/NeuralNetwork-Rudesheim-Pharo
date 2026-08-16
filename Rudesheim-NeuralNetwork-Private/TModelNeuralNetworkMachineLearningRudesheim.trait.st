@@ -83,7 +83,7 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencial
 		each == result
 			ifFalse:
 			[
-				each releaseRudesheim.
+				each releaseIfApplicableRudesheim.
 			].
 	].
 	^ result
@@ -103,7 +103,7 @@ TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
 	]
 		ensure:
 		[
-			result releaseRudesheim.
+			result releaseIfApplicableRudesheim.
 		]
 ]
 

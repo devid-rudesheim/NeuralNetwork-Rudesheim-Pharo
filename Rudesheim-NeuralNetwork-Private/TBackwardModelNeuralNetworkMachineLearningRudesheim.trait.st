@@ -88,23 +88,16 @@ usingCriterion:		aTCriterionNeuralNetworkMachineLearningRudesheim [
 	design) that forward: itself never downloads or releases -- TModel>>forward:
 	releases its own single-pass-only cache the same way once it is done reading
 	from it, and this cache is no different, just also read from during the
-	backward pass above. releaseRudesheim is called only on values that provide
-	that hook and is safe to call more than once on the same buffer (release
-	checks its own handle for nil first), so no aliasing between a node's input
-	and its predecessor's output needs to be tracked here."
+	backward pass above. releaseIfApplicableRudesheim is sent unconditionally --
+	it is a no-op for values that own no releasable resource -- and is safe to
+	call more than once on the same buffer (release checks its own handle for
+	nil first), so no aliasing between a node's input and its predecessor's
+	output needs to be tracked here."
 	valueCache
 		valuesDo:
 		[ :eachPredictions |
-			(eachPredictions inputPredictions respondsTo: #releaseRudesheim)
-				ifTrue:
-				[
-					eachPredictions inputPredictions releaseRudesheim.
-				].
-			(eachPredictions outputPredictions respondsTo: #releaseRudesheim)
-				ifTrue:
-				[
-					eachPredictions outputPredictions releaseRudesheim.
-				].
+			eachPredictions inputPredictions releaseIfApplicableRudesheim.
+			eachPredictions outputPredictions releaseIfApplicableRudesheim.
 		].
 
 	^

@@ -371,26 +371,33 @@ object: anObject [
 
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> onnxToSTONScriptFileReference [
+	"Locates tool/onnx_to_ston.py inside whichever Iceberg-registered repository this class's
+	own package (Rudesheim-NeuralNetwork-Private) was loaded from. Matching by package
+	membership rather than by a hardcoded repository name works both for a local dev checkout
+	(commonly registered as 'rudesheim') and for CI, where .smalltalk.ston's
+	#registerInIceberg : true registers the actions/checkout@v4 clone under whatever name that
+	checkout happens to have."
+
+	^ ( self onnxToSTONScriptRepositoryLocations
+		ifEmpty:
+		[
+			self
+				error:	'No Iceberg-registered repository found for package ' , self package name , '; ensure .smalltalk.ston sets #registerInIceberg : true.'.
+		] )
+		first / 'tool' / 'onnx_to_ston.py'.
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> onnxToSTONScriptRepositoryLocations [
 	|
 		repository
 	|
 
-	repository :=
-		IceRepository registry
-			detect:
-			[ :each |
-				each name = 'NeuralNetwork-Rudesheim-Pharo'.
-			]
-			ifNone:
-			[
-				IceRepository registry
-					detect:
-					[ :each |
-						each name = 'rudesheim'.
-					]
-			].
+	repository := IceRepository registeredRepositoryIncludingPackage: self package.
 
-	^ repository location / 'tool' / 'onnx_to_ston.py'.
+	^ repository
+		ifNil:		[ #() ]
+		ifNotNil:	[ { repository location } ].
 ]
 
 { #category : 'as yet unclassified' }

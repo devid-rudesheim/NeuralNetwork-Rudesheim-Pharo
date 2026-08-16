@@ -83,7 +83,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				with:
 				[
 					spec
-						requires: #( 'Rudesheim-NeuralNetwork-Private' 'RudesheimOpenCL' )
+						requires: #( 'Rudesheim-NeuralNetwork-Private' 'RudesheimOpenCL' 'RudesheimKernel' )
 				];
 
 				package: 'Rudesheim-NeuralNetwork-ONNX-OpenCL'
