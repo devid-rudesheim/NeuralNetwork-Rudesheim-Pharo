@@ -1,11 +1,11 @@
 Trait {
-	#name : 'TReleasableRudesheim',
+	#name : 'TReleasableOpenCLRudesheim',
 	#category : 'Rudesheim-NeuralNetwork-OpenCL-Private',
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Private'
 }
 
 { #category : 'releasing' }
-TReleasableRudesheim >> releaseIfApplicableRudesheim [
+TReleasableOpenCLRudesheim >> releaseIfApplicableRudesheim [
 
 	self releaseRudesheim.
 ]

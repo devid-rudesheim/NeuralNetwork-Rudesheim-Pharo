@@ -4,7 +4,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim is a per-chan
 Class {
 	#name : 'BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TReleasableRudesheim',
+	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TReleasableOpenCLRudesheim',
 	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait',
 	#instVars : [
 		'scaleBuffer',
