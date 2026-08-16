@@ -2,12 +2,16 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'RudesheimNeuralNetwork',
-      #load : [ 'tests' ]
+      #load : [ 'tests', 'openclTests' ]
     }
   ],
   #testing : {
     #include : {
-      #packages : [ 'Rudesheim-NeuralNetwork-Tests', 'Rudesheim-NeuralNetwork-Private-Tests' ]
+      #packages : [
+        'Rudesheim-NeuralNetwork-Tests',
+        'Rudesheim-NeuralNetwork-Private-Tests',
+        'Rudesheim-NeuralNetwork-OpenCL-Tests'
+      ]
     }
   }
 }

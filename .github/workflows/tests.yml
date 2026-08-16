@@ -17,6 +17,11 @@ jobs:
     name: ${{ matrix.smalltalk }}
     steps:
       - uses: actions/checkout@v4
+      - name: Install pocl (software OpenCL platform for headless CI)
+        run: sudo apt-get update && sudo apt-get install -y pocl-opencl-icd ocl-icd-libopencl1 clinfo
+        shell: bash
+      - run: clinfo
+        shell: bash
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
