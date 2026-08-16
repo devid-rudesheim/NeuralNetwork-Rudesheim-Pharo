@@ -59,6 +59,7 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
+		openCL
 		queue
 		inChannels
 		inRows
@@ -79,6 +80,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 		inputGradientKernel
 	|
 
+	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	inChannels := window inputChannels.
 	inRows := window inputRows.
 	inColumns := window inputColumns.
@@ -89,30 +91,30 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 	inputCount := inChannels * inRows * inColumns.
 	weightCount := outChannels * inChannels * kernelRows * kernelColumns.
 
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	queue := openCL commandQueue.
 	inputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
 			elementType:	TFBasicType float.
 	gradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
 			elementType:	TFBasicType float.
 	inputGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	inputCount
 			elementType:	TFBasicType float.
 	biasGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	outChannels
 			elementType:	TFBasicType float.
 	weightGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	weightCount
 			elementType:	TFBasicType float.
 
 	biasGradientKernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'Conv2dBiasGradient'
 			parameterTypes:
 			{
@@ -123,7 +125,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 				TFBasicType uint.
 			}.
 	weightGradientKernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'Conv2dWeightGradient'
 			parameterTypes:
 			{
@@ -144,7 +146,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 				TFBasicType sint.
 			}.
 	inputGradientKernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'Conv2dInputGradient'
 			parameterTypes:
 			{
@@ -252,7 +254,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
-	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
 		readFrom:	biasesBuffer
 		count:	outChannels
 		elementType:	TFBasicType float
@@ -262,6 +264,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
 
 	|
+		openCL
 		queue
 		inputBuffer
 		outputBuffer
@@ -270,19 +273,20 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 		kernelEvent
 	|
 
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
+	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := openCL commandQueue.
+	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: openCL context.
 	outputCount := outChannels * window outputRows * window outputColumns.
 	outputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	outputCount
 			elementType:	TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
-		context:	OpenCLNeuralNetworkMachineLearningRudesheim context.
+		context:	openCL context.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'Conv2dForward'
 			parameterTypes:
 			{
@@ -366,17 +370,22 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeights:	aWeightsSe
 biases:	aBiasesSequenceableCollection
 window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 
+	|
+		openCL
+	|
+
+	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	window := aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim.
 	outChannels :=
 		aWeightsSequenceableCollection size
 			/ ( window inputChannels * window kernelRows * window kernelColumns ).
 
 	weightsBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aWeightsSequenceableCollection asArray
 			elementType:	TFBasicType float.
 	biasesBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aBiasesSequenceableCollection asArray
 			elementType:	TFBasicType float
 ]
@@ -384,7 +393,7 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
 
-	^ OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
+	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
 		readFrom:	weightsBuffer
 		count:	outChannels * window inputChannels * window kernelRows * window kernelColumns
 		elementType:	TFBasicType float

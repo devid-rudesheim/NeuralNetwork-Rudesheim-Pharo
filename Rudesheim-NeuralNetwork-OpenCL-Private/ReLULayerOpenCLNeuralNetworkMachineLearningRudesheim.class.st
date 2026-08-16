@@ -11,6 +11,7 @@ Class {
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
+		openCL
 		queue
 		count
 		inputBuffer
@@ -19,26 +20,27 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 		kernel
 	|
 
+	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	"inputPredictions may be a live OpenCL buffer passed through from an upstream
 	Layer (see note/opencl-layer-buffer-passthrough-design.md), which is not
 	indexable/does not understand #size directly, so asArray it first (a no-op
 	for a value that's already a plain Array) before ever asking its size."
 	count := aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray size.
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	queue := openCL commandQueue.
 	inputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
 			elementType:	TFBasicType float.
 	gradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
 			elementType:	TFBasicType float.
 	inputGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	count
 			elementType:	TFBasicType float.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'ReluBackward'
 			parameterTypes:
 			{
@@ -74,6 +76,7 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSequencialCollection [
 
 	|
+		openCL
 		queue
 		count
 		inputBuffer
@@ -82,23 +85,24 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 		kernelEvent
 	|
 
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := openCL commandQueue.
 	"anInputNumbersSequencialCollection may already be an OpenCL buffer
 	passed through from an upstream Layer, which doesn't understand #size --
 	read the element count off inputBuffer (an Array upload tags itself with
 	its own size; see SequenceableCollection>>asOpenCLBufferRudesheim:)."
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
+	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: openCL context.
 	count := inputBuffer count.
 	outputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		openCL context
 			newCLBufferForElementCount:	count
 			elementType:	TFBasicType float.
 	outputBuffer
 		count:		count;
 		queue:		queue;
-		context:	OpenCLNeuralNetworkMachineLearningRudesheim context.
+		context:	openCL context.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		openCL
 			kernelAt:				'ReluForward'
 			parameterTypes:
 			{
