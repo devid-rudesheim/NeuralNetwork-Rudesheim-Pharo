@@ -183,7 +183,7 @@ cache:						aRebuiltNodeCacheIdentityDictionary [
 	A parameterized Layer's withUpdatedWeightsRows:learningRate: builds a whole
 	new instance (with its own new GPU buffers) rather than mutating self in
 	place, so once the replacement exists the superseded old layer's own buffers
-	are released via releaseRudesheim (where implemented -- a parameterless Layer's
+	are released via releaseIfApplicableRudesheim (a parameterless Layer's
 	withUpdatedWeightsRows:learningRate: is a no-op returning self unchanged, so
 	oldLayer == newLayer there and nothing needs releasing). Training repeats this
 	once per example, so without this release a long training run reliably
@@ -209,8 +209,7 @@ cache:						aRebuiltNodeCacheIdentityDictionary [
 			( newLayer == oldLayer )
 				ifFalse:
 				[
-					( oldLayer respondsTo: #releaseRudesheim )
-						ifTrue: [ oldLayer releaseRudesheim ]
+					oldLayer releaseIfApplicableRudesheim.
 				].
 
 			self species

@@ -5,7 +5,9 @@
 
 [![Pharo 13](https://img.shields.io/badge/Pharo-13-informational)](https://pharo.org)
 
-> **CI status:** the Unit Tests workflow currently fails on GitHub Actions. `NodeNeuralNetworkMachineLearningRudesheimTest>>testChainForwardMatchesFlatLayerFold` errors with `Array does not understand #releaseRudesheim`, raised from `ModelNeuralNetworkMachineLearningRudesheim>>forward:` while releasing intermediate node outputs. This is a real code defect (not an environment limitation) and is not yet fixed.
+> **CI status:** the Unit Tests workflow passes on GitHub Actions. It currently exercises the Pure
+> backend only (`Rudesheim-NeuralNetwork-Tests`/`Rudesheim-NeuralNetwork-Private-Tests`); the OpenCL
+> backend has no CI coverage yet.
 
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
