@@ -5,8 +5,9 @@
 
 [![Pharo 13](https://img.shields.io/badge/Pharo-13-informational)](https://pharo.org)
 
-> **CI status:** the Unit Tests workflow runs both the Pure and OpenCL suites on every push/PR (see
-> [Continuous Integration](#continuous-integration)).
+> **CI status:** the Unit Tests workflow passes on GitHub Actions. It currently exercises the Pure
+> backend only (`Rudesheim-NeuralNetwork-Tests`/`Rudesheim-NeuralNetwork-Private-Tests`); the OpenCL
+> backend has no CI coverage yet.
 
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
@@ -52,19 +53,6 @@ The baseline loads these repositories:
 The `opencl` group also loads:
 
 - `RudesheimOpenCL`: `github://devid-rudesheim/OpenCL-Rudesheim-Pharo:main`
-
-## Continuous Integration
-
-The `Unit Tests` GitHub Actions workflow (`.github/workflows/tests.yml`) loads both the `tests` and
-`openclTests` baseline groups and runs `Rudesheim-NeuralNetwork-Tests`, `Rudesheim-NeuralNetwork-Private-Tests`,
-and `Rudesheim-NeuralNetwork-OpenCL-Tests` on every push and pull request — the Pure and OpenCL backends
-are both covered.
-
-GitHub-hosted `ubuntu-latest` runners have no GPU, so the workflow installs
-[`pocl`](http://portablecl.org/) (Portable Computing Language), a CPU-based OpenCL platform, before
-running `smalltalkci`. This gives `RudesheimOpenCL` a usable OpenCL platform/device without requiring
-real GPU hardware, so the OpenCL suite runs the same way locally on a machine with `pocl` installed
-(`pocl-opencl-icd`/`ocl-icd-libopencl1` on Debian/Ubuntu).
 
 ## Load Options
 
