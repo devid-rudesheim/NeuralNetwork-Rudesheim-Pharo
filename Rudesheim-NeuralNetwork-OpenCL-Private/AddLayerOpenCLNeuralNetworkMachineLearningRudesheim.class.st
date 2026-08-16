@@ -14,6 +14,7 @@ Class {
 AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
+		cl
 		queue
 		halfCount
 		gradientBuffer
@@ -21,18 +22,19 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		kernel
 	|
 
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	halfCount := aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient size.
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	queue := cl commandQueue.
 	gradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferForElementCount:	halfCount * 2
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		cl
 			kernelAt:				'AddBackward'
 			parameterTypes:
 			{
@@ -54,8 +56,8 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		them going forward."
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	halfCount * 2
+				readFrom:		inputGradientBuffer
+				count:			halfCount * 2
 				elementType:	TFBasicType float
 		}
 	]
@@ -70,6 +72,7 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNumbersSequencialCollection [
 
 	|
+		cl
 		queue
 		inputBuffer
 		outputBuffer
@@ -78,21 +81,24 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 		kernelEvent
 	|
 
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
 	"anInputNumbersSequencialCollection may already be an OpenCL buffer --
 	see the comment on this same pattern in ReLULayerOpenCL>>forward:."
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
+	inputBuffer :=
+		anInputNumbersSequencialCollection
+			asOpenCLBufferRudesheim:	cl context.
 	outputCount := inputBuffer count // 2.
 	outputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferForElementCount:	outputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
-		context:	OpenCLNeuralNetworkMachineLearningRudesheim context.
+		context:	cl context.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		cl
 			kernelAt:				'AddForward'
 			parameterTypes:
 			{
@@ -117,7 +123,7 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:				{ { outputCount } }
+				forNDRange:		{ { outputCount } }
 				withArguments:
 				{
 					inputBuffer.
