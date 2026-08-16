@@ -23,8 +23,14 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 
 	halfCount := aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient size.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: halfCount * 2 * TFBasicType float byteSize.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
+			elementType:	TFBasicType float.
+	inputGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	halfCount * 2
+			elementType:	TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'AddBackward'
@@ -46,7 +52,12 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		splits this doubled-length input gradient back into the two predecessors' own
 		lengths -- the exact inverse of how valueFromPredecessorValues:givenInput: concatenated
 		them going forward."
-		{ queue readFloatsFrom: inputGradientBuffer count: halfCount * 2 }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	halfCount * 2
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[
@@ -72,7 +83,10 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 	see the comment on this same pattern in ReLULayerOpenCL>>forward:."
 	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
 	outputCount := inputBuffer count // 2.
-	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: outputCount * TFBasicType float byteSize.
+	outputBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	outputCount
+			elementType:	TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
