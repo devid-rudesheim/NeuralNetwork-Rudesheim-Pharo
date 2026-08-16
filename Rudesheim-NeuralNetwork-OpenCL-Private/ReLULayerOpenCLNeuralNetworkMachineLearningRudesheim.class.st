@@ -11,6 +11,7 @@ Class {
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
+		cl
 		queue
 		count
 		inputBuffer
@@ -19,26 +20,27 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 		kernel
 	|
 
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	"inputPredictions may be a live OpenCL buffer passed through from an upstream
 	Layer (see note/opencl-layer-buffer-passthrough-design.md), which is not
 	indexable/does not understand #size directly, so asArray it first (a no-op
 	for a value that's already a plain Array) before ever asking its size."
 	count := aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray size.
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	queue := cl commandQueue.
 	inputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		cl
 			kernelAt:				'ReluBackward'
 			parameterTypes:
 			{
@@ -57,8 +59,8 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	count
+				readFrom:		inputGradientBuffer
+				count:			count
 				elementType:	TFBasicType float
 		}
 	]
@@ -74,6 +76,7 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSequencialCollection [
 
 	|
+		cl
 		queue
 		count
 		inputBuffer
@@ -82,23 +85,26 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 		kernelEvent
 	|
 
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
 	"anInputNumbersSequencialCollection may already be an OpenCL buffer
 	passed through from an upstream Layer, which doesn't understand #size --
 	read the element count off inputBuffer (an Array upload tags itself with
 	its own size; see SequenceableCollection>>asOpenCLBufferRudesheim:)."
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
+	inputBuffer :=
+		anInputNumbersSequencialCollection
+			asOpenCLBufferRudesheim:	cl context.
 	count := inputBuffer count.
 	outputBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		count;
 		queue:		queue;
-		context:	OpenCLNeuralNetworkMachineLearningRudesheim context.
+		context:	cl context.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		cl
 			kernelAt:				'ReluForward'
 			parameterTypes:
 			{
@@ -116,8 +122,8 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:				{ { count } }
-				withArguments:			{ inputBuffer. outputBuffer. count }.
+				forNDRange:		{ { count } }
+				withArguments:	{ inputBuffer. outputBuffer. count }.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is
 		returned live and inputBuffer's release is conditional."
