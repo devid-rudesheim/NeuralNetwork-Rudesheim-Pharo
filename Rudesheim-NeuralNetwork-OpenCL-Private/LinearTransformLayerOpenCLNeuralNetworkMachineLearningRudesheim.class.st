@@ -33,7 +33,7 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBackwordContextNeuralNetworkMachineLearningRudesheim [
 
 	|
-		openCL
+		cl
 		queue
 		gradient
 		inputs
@@ -46,26 +46,26 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 		flatWeightGradient
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	gradient := aBackwordContextNeuralNetworkMachineLearningRudesheim gradient.
 	inputs := aBackwordContextNeuralNetworkMachineLearningRudesheim inputPredictions.
-	queue := openCL commandQueue.
+	queue := cl commandQueue.
 
 	gradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	gradient asArray
 			elementType:		TFBasicType float.
 	inputsBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	inputs asArray
 			elementType:		TFBasicType float.
 	inputGradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	columns
 			elementType:				TFBasicType float.
 
 	kernel1 :=
-		openCL
+		cl
 			kernelAt:				'GemvTransposeBackward'
 			parameterTypes:
 			{
@@ -82,11 +82,11 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 		withArguments:			{ weightsBuffer. gradientBuffer. inputGradientBuffer. rows. columns }.
 
 	weightGradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	rows * columns
 			elementType:				TFBasicType float.
 	kernel2 :=
-		openCL
+		cl
 			kernelAt:				'OuterProduct'
 			parameterTypes:
 			{
@@ -156,7 +156,7 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 
 	|
-		openCL
+		cl
 		queue
 		inputBuffer
 		outputBuffer
@@ -164,19 +164,21 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anIn
 		kernelEvent
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
-	queue := openCL commandQueue.
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: openCL context.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
+	inputBuffer :=
+		anInputNumbersSequencialCollection
+			asOpenCLBufferRudesheim:	cl context.
 	outputBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	rows
 			elementType:				TFBasicType float.
 	outputBuffer
 		count:		rows;
 		queue:		queue;
-		context:	openCL context.
+		context:	cl context.
 	kernel :=
-		openCL
+		cl
 			kernelAt:				'GemvForward'
 			parameterTypes:
 			{
@@ -204,8 +206,8 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anIn
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:				{ { rows } }
-				withArguments:			{ weightsBuffer. biasesBuffer. inputBuffer. outputBuffer. rows. columns }.
+				forNDRange:		{ { rows } }
+				withArguments:	{ weightsBuffer. biasesBuffer. inputBuffer. outputBuffer. rows. columns }.
 
 		"outputBuffer is returned live (not downloaded here) so an adjacent
 		OpenCL Layer can consume it without a round-trip -- see
@@ -256,11 +258,11 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeightsRow
 biases:				aBiasesSequencialCollection [
 
 	|
-		openCL
+		cl
 		flatWeights
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	rows := aWeightRowsSequencialCollection size.
 	columns := rows = 0 ifTrue: [ 0 ] ifFalse: [ aWeightRowsSequencialCollection first size ].
 	flatWeights :=
@@ -269,11 +271,11 @@ biases:				aBiasesSequencialCollection [
 			into:	[ :flat :row | flat addAll: row asArray; yourself ].
 
 	weightsBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	flatWeights asArray
 			elementType:		TFBasicType float.
 	biasesBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	aBiasesSequencialCollection asArray
 			elementType:		TFBasicType float
 ]

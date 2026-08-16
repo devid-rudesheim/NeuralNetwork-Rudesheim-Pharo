@@ -43,7 +43,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window: aWind
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
-		openCL
+		cl
 		queue
 		inputCount
 		inputBuffer
@@ -52,23 +52,23 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 		kernel
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
-	queue := openCL commandQueue.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
 	inputCount := window inputChannels * window inputRows * window inputColumns.
 	inputBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
 			elementType:		TFBasicType float.
 	gradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
 			elementType:		TFBasicType float.
 	inputGradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	inputCount
 			elementType:				TFBasicType float.
 	kernel :=
-		openCL
+		cl
 			kernelAt:				'Pool2dBackward'
 			parameterTypes:
 			{
@@ -127,7 +127,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 { #category : 'as yet unclassified' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 	|
-		openCL
+		cl
 		queue
 		inputBuffer
 		outputBuffer
@@ -136,28 +136,28 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 		kernelEvent
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
-	queue := openCL commandQueue.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
 
 	inputBuffer :=
 		anInputNumbersSequencialCollection
-			asOpenCLBufferRudesheim:	openCL context.
+			asOpenCLBufferRudesheim:	cl context.
 
 	outputCount := window inputChannels * window outputRows * window outputColumns.
 
 	outputBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	outputCount
-			elementType:								TFBasicType float.
+			elementType:				TFBasicType float.
 
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
-		context:	openCL context.
+		context:	cl context.
 
 	kernel :=
-		openCL
-			kernelAt:	'Pool2dForward'
+		cl
+			kernelAt:		'Pool2dForward'
 			parameterTypes:	{TFBasicType pointer .  TFBasicType pointer .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType uint .  TFBasicType sint .  TFBasicType sint}.
 
 	^
@@ -168,7 +168,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:	{{window inputChannels .  window outputRows .  window outputColumns}}
+				forNDRange:		{{window inputChannels .  window outputRows .  window outputColumns}}
 				withArguments:	{inputBuffer .  outputBuffer .  window inputRows .  window inputColumns .  window outputRows .  window outputColumns .  window kernelRows .  window kernelColumns .  window strideRows .  window strideColumns .  window paddingTopRows .  window paddingLeftColumns}.
 
 		outputBuffer.

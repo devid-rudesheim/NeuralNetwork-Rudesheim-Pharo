@@ -37,7 +37,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> windo
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 
 	|
-		openCL
+		cl
 		queue
 		spatialCount
 		channels
@@ -46,20 +46,20 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 		kernel
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	channels := window inputChannels.
 	spatialCount := window inputRows * window inputColumns.
-	queue := openCL commandQueue.
+	queue := cl commandQueue.
 	gradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
 			elementType:		TFBasicType float.
 	inputGradientBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	channels * spatialCount
 			elementType:				TFBasicType float.
 	kernel :=
-		openCL
+		cl
 			kernelAt:				'GlobalAvgPoolBackward'
 			parameterTypes:
 			{
@@ -93,7 +93,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
 
 	|
-		openCL
+		cl
 		queue
 		inputBuffer
 		outputBuffer
@@ -102,20 +102,22 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 		kernelEvent
 	|
 
-	openCL := Rudesheim MachineLearning NeuralNetwork OpenCL.
-	queue := openCL commandQueue.
-	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: openCL context.
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
+	queue := cl commandQueue.
+	inputBuffer :=
+		anInputNumbersSequencialCollection
+			asOpenCLBufferRudesheim:	cl context.
 	outputCount := window inputChannels.
 	outputBuffer :=
-		openCL context
+		cl context
 			newCLBufferForElementCount:	outputCount
 			elementType:				TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
-		context:	openCL context.
+		context:	cl context.
 	kernel :=
-		openCL
+		cl
 			kernelAt:				'GlobalAvgPoolForward'
 			parameterTypes:
 			{
@@ -133,7 +135,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:				{ { outputCount } }
+				forNDRange:		{ { outputCount } }
 				withArguments:
 				{
 					inputBuffer.
