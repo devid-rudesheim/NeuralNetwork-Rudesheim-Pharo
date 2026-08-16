@@ -4,7 +4,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim is a 2D convolution layer
 Class {
 	#name : 'Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TReleasableOpenCLRudesheim',
+	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TReleasableRudesheim',
 	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait',
 	#instVars : [
 		'weightsBuffer',
