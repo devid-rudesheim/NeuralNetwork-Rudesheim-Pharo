@@ -361,6 +361,12 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesheim [
 	biasesBuffer releaseRudesheim.
 ]
 
+{ #category : 'releasing' }
+Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseIfApplicableRudesheim [
+
+	self releaseRudesheim.
+]
+
 { #category : 'initialization' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeights:	aWeightsSequenceableCollection
 biases:	aBiasesSequenceableCollection

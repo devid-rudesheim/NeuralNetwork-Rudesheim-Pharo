@@ -244,6 +244,12 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRud
 	shiftBuffer releaseRudesheim.
 ]
 
+{ #category : 'releasing' }
+BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseIfApplicableRudesheim [
+
+	self releaseRudesheim.
+]
+
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> scale [
 
