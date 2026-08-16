@@ -53,9 +53,18 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
 	inputCount := window inputChannels * window inputRows * window inputColumns.
-	inputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: inputCount * TFBasicType float byteSize.
+	inputBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
+			elementType:	TFBasicType float.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
+			elementType:	TFBasicType float.
+	inputGradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	inputCount
+			elementType:	TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'Pool2dBackward'
@@ -98,7 +107,12 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 				window paddingLeftColumns.
 			}.
 
-		{ queue readFloatsFrom: inputGradientBuffer count: inputCount }
+		{
+			queue
+				readFrom:	inputGradientBuffer
+				count:	inputCount
+				elementType:	TFBasicType float
+		}
 	]
 		ensure:
 		[
@@ -129,7 +143,8 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 
 	outputBuffer :=
 		OpenCLNeuralNetworkMachineLearningRudesheim context
-			newCLBufferForSize:	outputCount * TFBasicType float byteSize.
+			newCLBufferForElementCount:	outputCount
+			elementType:					TFBasicType float.
 
 	outputBuffer
 		count:		outputCount;

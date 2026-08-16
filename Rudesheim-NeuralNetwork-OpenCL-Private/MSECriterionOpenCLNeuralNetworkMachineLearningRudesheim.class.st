@@ -25,9 +25,18 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 
 	count := predictions size.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	predictionsBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: predictions asArray.
-	targetsBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: targets asArray.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: count * TFBasicType float byteSize.
+	predictionsBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	predictions asArray
+			elementType:	TFBasicType float.
+	targetsBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferWith:	targets asArray
+			elementType:	TFBasicType float.
+	gradientBuffer :=
+		OpenCLNeuralNetworkMachineLearningRudesheim context
+			newCLBufferForElementCount:	count
+			elementType:	TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'CriterionGradientScale'
@@ -47,7 +56,10 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 			forNDRange:				{ { count } }
 			withArguments:			{ predictionsBuffer. targetsBuffer. gradientBuffer. ( 2.0 / count ). count }.
 
-		queue readFloatsFrom: gradientBuffer count: count
+		queue
+			readFrom:	gradientBuffer
+			count:	count
+			elementType:	TFBasicType float
 	]
 		ensure:
 		[
