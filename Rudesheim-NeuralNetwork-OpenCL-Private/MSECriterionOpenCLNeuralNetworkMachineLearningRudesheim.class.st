@@ -30,15 +30,15 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 	predictionsBuffer :=
 		openCL context
 			newCLBufferWith:	predictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	targetsBuffer :=
 		openCL context
 			newCLBufferWith:	targets asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
 		openCL
 			kernelAt:				'CriterionGradientScale'
@@ -59,8 +59,8 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 			withArguments:			{ predictionsBuffer. targetsBuffer. gradientBuffer. ( 2.0 / count ). count }.
 
 		queue
-			readFrom:	gradientBuffer
-			count:	count
+			readFrom:		gradientBuffer
+			count:			count
 			elementType:	TFBasicType float
 	]
 		ensure:

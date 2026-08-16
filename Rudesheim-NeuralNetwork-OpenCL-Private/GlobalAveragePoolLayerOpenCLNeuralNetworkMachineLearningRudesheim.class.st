@@ -53,11 +53,11 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	channels * spatialCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
 		openCL
 			kernelAt:				'GlobalAvgPoolBackward'
@@ -77,8 +77,8 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	channels * spatialCount
+				readFrom:		inputGradientBuffer
+				count:			channels * spatialCount
 				elementType:	TFBasicType float
 		}
 	]
@@ -109,7 +109,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	outputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;

@@ -78,23 +78,23 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	
 	inputBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	channels * spatialCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	scaleGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	channels
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	shiftGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	channels
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	inputGradientKernel :=
 		openCL
 			kernelAt:				'BatchNormalizationInputGradient'
@@ -132,22 +132,22 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	channels * spatialCount
+				readFrom:		inputGradientBuffer
+				count:			channels * spatialCount
 				elementType:	TFBasicType float.
 			BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim
 				scale:
 				(
 					queue
-						readFrom:	scaleGradientBuffer
-						count:	channels
+						readFrom:		scaleGradientBuffer
+						count:			channels
 						elementType:	TFBasicType float
 				)
 				shift:
 				(
 					queue
-						readFrom:	shiftGradientBuffer
-						count:	channels
+						readFrom:		shiftGradientBuffer
+						count:			channels
 						elementType:	TFBasicType float
 				)
 				window:	window.
@@ -183,7 +183,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	a
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	outputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
@@ -252,8 +252,8 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRud
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> scale [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
-		readFrom:	scaleBuffer
-		count:	window inputChannels
+		readFrom:		scaleBuffer
+		count:			window inputChannels
 		elementType:	TFBasicType float
 ]
 
@@ -271,19 +271,19 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 	scaleBuffer :=
 		openCL context
 			newCLBufferWith:	aScaleSequenceableCollection asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	shiftBuffer :=
 		openCL context
 			newCLBufferWith:	aShiftSequenceableCollection asArray
-			elementType:	TFBasicType float
+			elementType:		TFBasicType float
 ]
 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> shift [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
-		readFrom:	shiftBuffer
-		count:	window inputChannels
+		readFrom:		shiftBuffer
+		count:			window inputChannels
 		elementType:	TFBasicType float
 ]
 

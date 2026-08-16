@@ -54,15 +54,15 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputsBuffer :=
 		openCL context
 			newCLBufferWith:	inputs asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	columns
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 
 	kernel1 :=
 		openCL
@@ -84,7 +84,7 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 	weightGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	rows * columns
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel2 :=
 		openCL
 			kernelAt:				'OuterProduct'
@@ -103,16 +103,16 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 
 	flatWeightGradient :=
 		queue
-			readFrom:	weightGradientBuffer
-			count:	rows * columns
+			readFrom:		weightGradientBuffer
+			count:			rows * columns
 			elementType:	TFBasicType float.
 
 	^
 	[
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	columns
+				readFrom:		inputGradientBuffer
+				count:			columns
 				elementType:	TFBasicType float.
 			self species
 				weightsRows:
@@ -128,8 +128,8 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 				biases:
 				(
 					queue
-						readFrom:	gradientBuffer
-						count:	rows
+						readFrom:		gradientBuffer
+						count:			rows
 						elementType:	TFBasicType float
 				).
 		}
@@ -147,8 +147,8 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aBa
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
-		readFrom:	biasesBuffer
-		count:	rows
+		readFrom:		biasesBuffer
+		count:			rows
 		elementType:	TFBasicType float
 ]
 
@@ -170,7 +170,7 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anIn
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	rows
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		rows;
 		queue:		queue;
@@ -271,11 +271,11 @@ biases:				aBiasesSequencialCollection [
 	weightsBuffer :=
 		openCL context
 			newCLBufferWith:	flatWeights asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	biasesBuffer :=
 		openCL context
 			newCLBufferWith:	aBiasesSequencialCollection asArray
-			elementType:	TFBasicType float
+			elementType:		TFBasicType float
 ]
 
 { #category : 'accessing' }
@@ -289,8 +289,8 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weightsRows [
 	queue := Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue.
 	flat :=
 		queue
-			readFrom:	weightsBuffer
-			count:	rows * columns
+			readFrom:		weightsBuffer
+			count:			rows * columns
 			elementType:	TFBasicType float.
 
 	^ ( 1 to: rows )

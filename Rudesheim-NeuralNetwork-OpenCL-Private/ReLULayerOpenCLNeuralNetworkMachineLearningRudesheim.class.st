@@ -30,15 +30,15 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 	inputBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
 		openCL
 			kernelAt:				'ReluBackward'
@@ -59,8 +59,8 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	count
+				readFrom:		inputGradientBuffer
+				count:			count
 				elementType:	TFBasicType float
 		}
 	]
@@ -96,7 +96,7 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		count;
 		queue:		queue;

@@ -58,15 +58,15 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 	inputBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	inputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
 		openCL
 			kernelAt:				'Pool2dBackward'
@@ -111,8 +111,8 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	inputCount
+				readFrom:		inputGradientBuffer
+				count:			inputCount
 				elementType:	TFBasicType float
 		}
 	]
@@ -148,7 +148,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	outputCount
-			elementType:					TFBasicType float.
+			elementType:								TFBasicType float.
 
 	outputBuffer
 		count:		outputCount;

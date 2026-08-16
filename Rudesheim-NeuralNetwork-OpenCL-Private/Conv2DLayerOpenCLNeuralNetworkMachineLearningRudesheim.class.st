@@ -95,23 +95,23 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 	inputBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
 		openCL context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	inputGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	inputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	biasGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	outChannels
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	weightGradientBuffer :=
 		openCL context
 			newCLBufferForElementCount:	weightCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 
 	biasGradientKernel :=
 		openCL
@@ -220,22 +220,22 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 
 		{
 			queue
-				readFrom:	inputGradientBuffer
-				count:	inputCount
+				readFrom:		inputGradientBuffer
+				count:			inputCount
 				elementType:	TFBasicType float.
 			Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
 				weights:
 				(
 					queue
-						readFrom:	weightGradientBuffer
-						count:	weightCount
+						readFrom:		weightGradientBuffer
+						count:			weightCount
 						elementType:	TFBasicType float
 				)
 				biases:
 				(
 					queue
-						readFrom:	biasGradientBuffer
-						count:	outChannels
+						readFrom:		biasGradientBuffer
+						count:			outChannels
 						elementType:	TFBasicType float
 				)
 				window:		window.
@@ -255,8 +255,8 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> biases [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
-		readFrom:	biasesBuffer
-		count:	outChannels
+		readFrom:		biasesBuffer
+		count:			outChannels
 		elementType:	TFBasicType float
 ]
 
@@ -280,7 +280,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 	outputBuffer :=
 		openCL context
 			newCLBufferForElementCount:	outputCount
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	outputBuffer
 		count:		outputCount;
 		queue:		queue;
@@ -383,19 +383,19 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 	weightsBuffer :=
 		openCL context
 			newCLBufferWith:	aWeightsSequenceableCollection asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	biasesBuffer :=
 		openCL context
 			newCLBufferWith:	aBiasesSequenceableCollection asArray
-			elementType:	TFBasicType float
+			elementType:		TFBasicType float
 ]
 
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
-		readFrom:	weightsBuffer
-		count:	outChannels * window inputChannels * window kernelRows * window kernelColumns
+		readFrom:		weightsBuffer
+		count:			outChannels * window inputChannels * window kernelRows * window kernelColumns
 		elementType:	TFBasicType float
 ]
 
