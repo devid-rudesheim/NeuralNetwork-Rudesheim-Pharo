@@ -1,7 +1,7 @@
 Class {
 	#name : 'LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim',
+	#traits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim + TReleasableRudesheim',
 	#classTraits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classTrait',
 	#instVars : [
 		'rows',
@@ -247,14 +247,9 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseRudesh
 	biasesBuffer releaseRudesheim.
 ]
 
-{ #category : 'releasing' }
-LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> releaseIfApplicableRudesheim [
-
-	self releaseRudesheim.
-]
-
 { #category : 'initialization' }
-LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeightsRows: aWeightRowsSequencialCollection biases: aBiasesSequencialCollection [
+LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWeightsRows:	aWeightRowsSequencialCollection
+biases:				aBiasesSequencialCollection [
 
 	|
 		flatWeights
