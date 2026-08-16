@@ -7,7 +7,9 @@
 
 > **CI status:** the Unit Tests workflow passes on GitHub Actions. It currently exercises the Pure
 > backend only (`Rudesheim-NeuralNetwork-Tests`/`Rudesheim-NeuralNetwork-Private-Tests`); the OpenCL
-> backend has no CI coverage yet.
+> backend has no CI coverage yet. ONNX round-trip conversion (protobuf decode, Soil storage, Pure
+> forward) is covered via a small synthetic fixture built in-test; the real-file ONNX tests
+> (`mnist-8.onnx`/`resnet50-v2-7.onnx`) remain local-only for now (see issue #16).
 
 Rudesheim Neural Network is a Pharo neural-network package for building and evaluating model graphs.
 It provides pure Smalltalk layers, graph nodes, criteria, a trainer, Soil-backed model records, ONNX conversion support, and optional OpenCL-backed execution.
