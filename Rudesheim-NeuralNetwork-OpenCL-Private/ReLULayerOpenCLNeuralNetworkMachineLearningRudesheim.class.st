@@ -25,9 +25,9 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 	for a value that's already a plain Array) before ever asking its size."
 	count := aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray size.
 	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
-	inputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray.
-	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWithFloats: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray.
-	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: count * TFBasicType float byteSize.
+	inputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray elementType: TFBasicType float.
+	gradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferWith: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray elementType: TFBasicType float.
+	inputGradientBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: count elementType: TFBasicType float.
 	kernel :=
 		OpenCLNeuralNetworkMachineLearningRudesheim
 			kernelAt:				'ReluBackward'
@@ -75,7 +75,7 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 	its own size; see SequenceableCollection>>asOpenCLBufferRudesheim:)."
 	inputBuffer := anInputNumbersSequencialCollection asOpenCLBufferRudesheim: OpenCLNeuralNetworkMachineLearningRudesheim context.
 	count := inputBuffer count.
-	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForSize: count * TFBasicType float byteSize.
+	outputBuffer := OpenCLNeuralNetworkMachineLearningRudesheim context newCLBufferForElementCount: count elementType: TFBasicType float.
 	outputBuffer
 		count:		count;
 		queue:		queue;
