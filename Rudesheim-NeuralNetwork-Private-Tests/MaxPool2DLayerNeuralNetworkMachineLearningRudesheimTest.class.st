@@ -11,6 +11,27 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 	^ MaxPool2DLayerNeuralNetworkMachineLearningRudesheim.
 ]
 
+{ #category : 'accessing' }
+MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
+
+	^ self targetClass
+		window:
+		(
+			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+				inputChannels:	1
+				inputRows:	1
+				inputColumns:	1
+				kernelRows:	1
+				kernelColumns:	1
+				strideRows:	1
+				strideColumns:	1
+				paddingTopRows:	0
+				paddingBottomRows:	0
+				paddingLeftColumns:	0
+				paddingRightColumns:	0.
+		)
+]
+
 { #category : 'as yet unclassified' }
 MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedMax [
 	|

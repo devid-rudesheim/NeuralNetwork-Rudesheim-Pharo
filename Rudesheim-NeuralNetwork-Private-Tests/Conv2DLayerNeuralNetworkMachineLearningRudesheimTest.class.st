@@ -11,6 +11,29 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 	^ Conv2DLayerNeuralNetworkMachineLearningRudesheim.
 ]
 
+{ #category : 'accessing' }
+Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
+
+	^ self targetClass
+		weights:	#(1.0)
+		biases:	#(0.0)
+		window:
+		(
+			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+				inputChannels:	1
+				inputRows:	1
+				inputColumns:	1
+				kernelRows:	1
+				kernelColumns:	1
+				strideRows:	1
+				strideColumns:	1
+				paddingTopRows:	0
+				paddingBottomRows:	0
+				paddingLeftColumns:	0
+				paddingRightColumns:	0.
+		)
+]
+
 { #category : 'as yet unclassified' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedSumKernel [
 	|
