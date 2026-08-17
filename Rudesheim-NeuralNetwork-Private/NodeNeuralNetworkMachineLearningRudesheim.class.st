@@ -1,8 +1,8 @@
 Class {
 	#name : 'NodeNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TNodeNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TNodeNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TNodeNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TNodeNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'layer',
 		'predecessors'

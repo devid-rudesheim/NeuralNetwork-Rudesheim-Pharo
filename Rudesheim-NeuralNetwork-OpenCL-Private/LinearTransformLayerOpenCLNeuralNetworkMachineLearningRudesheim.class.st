@@ -1,8 +1,8 @@
 Class {
 	#name : 'LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim + TReleasableRudesheim',
-	#classTraits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim + TReleasableRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'rows',
 		'columns',

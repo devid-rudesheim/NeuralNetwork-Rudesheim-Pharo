@@ -15,7 +15,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> t
 { #category : 'accessing' }
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	2
 		inputRows:	2
 		inputColumns:	2

@@ -55,3 +55,9 @@ SoilNeuralNetworkMachineLearningRudesheim class >> WeightsSource [
 
 	^ WeightsSourceSoilNeuralNetworkMachineLearningRudesheim
 ]
+
+{ #category : 'namespace' }
+SoilNeuralNetworkMachineLearningRudesheim class >> WindowSpecification [
+
+	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+]

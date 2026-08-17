@@ -36,7 +36,7 @@ GlobalAveragePoolLayerBackendNeuralNetworkMachineLearningRudesheimTest >> testFo
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	2
 			inputRows:	2
 			inputColumns:	2

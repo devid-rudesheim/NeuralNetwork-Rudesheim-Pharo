@@ -959,7 +959,7 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> tensorKindClassForTo
 
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> windowSpecificationFromSTONFieldsArray: aSTONWindowFieldsArray [
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	
 		(
 			aSTONWindowFieldsArray

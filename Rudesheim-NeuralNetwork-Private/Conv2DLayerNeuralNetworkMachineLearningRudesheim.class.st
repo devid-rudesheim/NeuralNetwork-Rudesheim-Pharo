@@ -4,6 +4,8 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim is the Pure (plain Smalltalk, n
 Class {
 	#name : 'Conv2DLayerNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'weights',
 		'biases',

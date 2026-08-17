@@ -11,6 +11,29 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 	^ Conv2DLayerNeuralNetworkMachineLearningRudesheim.
 ]
 
+{ #category : 'accessing' }
+Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
+
+	^ self targetClass
+		weights:	#(1.0)
+		biases:	#(0.0)
+		window:
+		(
+			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
+				inputChannels:	1
+				inputRows:	1
+				inputColumns:	1
+				kernelRows:	1
+				kernelColumns:	1
+				strideRows:	1
+				strideColumns:	1
+				paddingTopRows:	0
+				paddingBottomRows:	0
+				paddingLeftColumns:	0
+				paddingRightColumns:	0
+		)
+]
+
 { #category : 'as yet unclassified' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedSumKernel [
 	|
@@ -21,7 +44,7 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandCo
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	4
 			inputColumns:	4
@@ -57,7 +80,7 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddi
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	2
 			inputColumns:	2

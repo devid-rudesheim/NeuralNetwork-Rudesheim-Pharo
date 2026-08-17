@@ -1,8 +1,8 @@
 Class {
 	#name : 'MSECriterionNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'errorValues'
 	],

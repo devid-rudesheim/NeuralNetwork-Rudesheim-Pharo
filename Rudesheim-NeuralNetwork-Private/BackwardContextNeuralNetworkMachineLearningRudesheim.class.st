@@ -1,8 +1,8 @@
 Class {
 	#name : 'BackwardContextNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TBackwardContextNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TBackwardContextNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TBackwardContextNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TBackwardContextNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'gradient',
 		'predictions',
