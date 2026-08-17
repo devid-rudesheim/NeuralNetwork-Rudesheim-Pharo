@@ -30,7 +30,7 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasic
 				paddingTopRows:	0
 				paddingBottomRows:	0
 				paddingLeftColumns:	0
-				paddingRightColumns:	0.
+				paddingRightColumns:	0
 		)
 ]
 
