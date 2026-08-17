@@ -4,6 +4,8 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheim is the Pure (plain Smalltalk
 Class {
 	#name : 'MaxPool2DLayerNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'window'
 	],

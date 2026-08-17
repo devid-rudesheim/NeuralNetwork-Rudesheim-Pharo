@@ -1,8 +1,8 @@
 Class {
 	#name : 'RandomWeightsSourceNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'rows',
 		'columns',

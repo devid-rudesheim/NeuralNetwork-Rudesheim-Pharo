@@ -4,8 +4,8 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim is a spatial g
 Class {
 	#name : 'GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'window'
 	],

@@ -4,6 +4,8 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim describes the spati
 Class {
 	#name : 'WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'inputChannels',
 		'inputRows',

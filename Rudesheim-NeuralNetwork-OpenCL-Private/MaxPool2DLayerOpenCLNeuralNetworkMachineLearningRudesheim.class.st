@@ -4,8 +4,8 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim is a 2D max-pooling la
 Class {
 	#name : 'MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TLayerNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TLayerNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'window'
 	],

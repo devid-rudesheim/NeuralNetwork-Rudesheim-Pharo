@@ -8,8 +8,8 @@ TBackwardModel adds backward:usingCriterion:, reverse-mode autodiff over the sam
 Class {
 	#name : 'ModelNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TBackwardModelNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TBackwardModelNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TBackwardModelNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TBackwardModelNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'neuralNetworkLayers',
 		'outputNode',

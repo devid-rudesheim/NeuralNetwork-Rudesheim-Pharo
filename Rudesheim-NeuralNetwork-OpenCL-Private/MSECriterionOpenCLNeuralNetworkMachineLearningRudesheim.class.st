@@ -1,8 +1,8 @@
 Class {
 	#name : 'MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'predictions',
 		'targets'

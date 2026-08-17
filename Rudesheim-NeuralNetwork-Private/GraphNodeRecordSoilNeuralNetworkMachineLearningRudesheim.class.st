@@ -4,6 +4,8 @@ GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim is the internal Soil-st
 Class {
 	#name : 'GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'layerClass',
 		'predecessorRecords',
