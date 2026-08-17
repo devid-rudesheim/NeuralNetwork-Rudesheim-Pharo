@@ -19,7 +19,7 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasic
 		shift:	#(0.0)
 		window:
 		(
-			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
 				inputRows:	1
 				inputColumns:	1
@@ -43,7 +43,7 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardM
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	2
 			inputRows:	1
 			inputColumns:	2

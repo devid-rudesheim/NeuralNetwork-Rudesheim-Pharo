@@ -15,7 +15,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetCla
 { #category : 'accessing' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	1
 		inputRows:	4
 		inputColumns:	4

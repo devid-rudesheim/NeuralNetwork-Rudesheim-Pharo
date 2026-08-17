@@ -15,7 +15,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass 
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	1
 		inputRows:	4
 		inputColumns:	4
@@ -216,7 +216,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatches
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	4
 			inputColumns:	4
@@ -251,7 +251,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSam
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	2
 			inputColumns:	2

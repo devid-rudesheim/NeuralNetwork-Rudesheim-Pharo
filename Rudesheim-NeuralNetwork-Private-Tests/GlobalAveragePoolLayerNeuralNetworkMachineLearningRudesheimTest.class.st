@@ -17,7 +17,7 @@ GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicT
 	^ self targetClass
 		window:
 		(
-			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
 				inputRows:	1
 				inputColumns:	1
@@ -41,7 +41,7 @@ GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMa
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	2
 			inputRows:	2
 			inputColumns:	2

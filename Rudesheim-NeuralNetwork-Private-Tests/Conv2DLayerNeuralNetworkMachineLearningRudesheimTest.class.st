@@ -19,7 +19,7 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
 		biases:	#(0.0)
 		window:
 		(
-			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
 				inputRows:	1
 				inputColumns:	1
@@ -44,7 +44,7 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandCo
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	4
 			inputColumns:	4
@@ -80,7 +80,7 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddi
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	2
 			inputColumns:	2

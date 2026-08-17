@@ -15,7 +15,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	2
 		inputRows:	1
 		inputColumns:	2

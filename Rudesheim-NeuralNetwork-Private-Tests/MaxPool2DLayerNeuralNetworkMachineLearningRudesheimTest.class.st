@@ -17,7 +17,7 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
 	^ self targetClass
 		window:
 		(
-			WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
 				inputRows:	1
 				inputColumns:	1
@@ -41,7 +41,7 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHan
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	4
 			inputColumns:	4
