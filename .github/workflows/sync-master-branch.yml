@@ -1,0 +1,24 @@
+name: Sync master branch to main (temporary Iceberg workaround)
+
+# Icebergがリポジトリ登録時にデフォルトブランチを `master` と決め打ちで探しにいく
+# 既知のバグへの一時的な回避策。`master` は `main` の単純なミラーであり、直接コミット
+# しないこと。Iceberg本体で「masterが無ければmainを引く」修正が取り込まれ、行き渡ったら
+# このworkflowと `master` ブランチ自体を削除してよい。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync-master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fast-forward master to match main
+        run: git push origin HEAD:refs/heads/master --force
