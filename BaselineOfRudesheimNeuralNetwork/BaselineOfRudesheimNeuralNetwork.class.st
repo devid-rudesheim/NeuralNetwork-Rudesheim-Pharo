@@ -42,7 +42,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				baseline: 'Soil'
 				with:
 				[
-					spec repository: 'github://ApptiveGrid/Soil/src'
+					spec repository: 'github://ApptiveGrid/Soil:v5/src'
 				];
 
 				project: 'SoilCore'
