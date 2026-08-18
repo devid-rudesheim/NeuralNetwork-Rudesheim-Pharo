@@ -17,7 +17,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				baseline: 'RudesheimUtility'
 				with:
 				[
-					spec repository: 'github://devid-rudesheim/Utility-Rudesheim-Pharo:main'
+					spec repository: 'github://devid-rudesheim/Utility-Rudesheim-Pharo:develop'
 				];
 
 				project: 'RudesheimUtilityTests'
@@ -30,13 +30,13 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				baseline: 'RudesheimKernel'
 				with:
 				[
-					spec repository: 'github://devid-rudesheim/Kernel-Rudesheim-Pharo:main'
+					spec repository: 'github://devid-rudesheim/Kernel-Rudesheim-Pharo:develop'
 				];
 
 				baseline: 'RudesheimOpenCL'
 				with:
 				[
-					spec repository: 'github://devid-rudesheim/OpenCL-Rudesheim-Pharo:main'
+					spec repository: 'github://devid-rudesheim/OpenCL-Rudesheim-Pharo:develop'
 				];
 
 				baseline: 'Soil'
