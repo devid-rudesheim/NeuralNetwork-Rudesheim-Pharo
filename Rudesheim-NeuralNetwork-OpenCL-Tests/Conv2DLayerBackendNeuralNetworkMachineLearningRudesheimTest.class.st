@@ -36,7 +36,7 @@ Conv2DLayerBackendNeuralNetworkMachineLearningRudesheimTest >> testForwardMatche
 	|
 
 	window :=
-		WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
 			inputRows:	4
 			inputColumns:	4

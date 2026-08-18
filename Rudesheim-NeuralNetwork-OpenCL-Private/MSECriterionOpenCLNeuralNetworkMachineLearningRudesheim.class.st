@@ -1,8 +1,8 @@
 Class {
 	#name : 'MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TMSECriterionNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'predictions',
 		'targets'
@@ -15,6 +15,7 @@ Class {
 MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 
 	|
+		cl
 		queue
 		count
 		predictionsBuffer
@@ -23,22 +24,23 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 		kernel
 	|
 
+	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	count := predictions size.
-	queue := OpenCLNeuralNetworkMachineLearningRudesheim commandQueue.
+	queue := cl commandQueue.
 	predictionsBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferWith:	predictions asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	targetsBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferWith:	targets asArray
-			elementType:	TFBasicType float.
+			elementType:		TFBasicType float.
 	gradientBuffer :=
-		OpenCLNeuralNetworkMachineLearningRudesheim context
+		cl context
 			newCLBufferForElementCount:	count
-			elementType:	TFBasicType float.
+			elementType:				TFBasicType float.
 	kernel :=
-		OpenCLNeuralNetworkMachineLearningRudesheim
+		cl
 			kernelAt:				'CriterionGradientScale'
 			parameterTypes:
 			{
@@ -57,8 +59,8 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 			withArguments:			{ predictionsBuffer. targetsBuffer. gradientBuffer. ( 2.0 / count ). count }.
 
 		queue
-			readFrom:	gradientBuffer
-			count:	count
+			readFrom:		gradientBuffer
+			count:			count
 			elementType:	TFBasicType float
 	]
 		ensure:

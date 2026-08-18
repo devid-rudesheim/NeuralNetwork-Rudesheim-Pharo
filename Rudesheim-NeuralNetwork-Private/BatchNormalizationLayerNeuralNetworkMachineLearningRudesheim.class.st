@@ -4,6 +4,8 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim is the Pure (plain 
 Class {
 	#name : 'BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'scale',
 		'shift',

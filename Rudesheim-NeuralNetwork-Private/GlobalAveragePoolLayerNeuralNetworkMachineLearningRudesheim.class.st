@@ -4,6 +4,8 @@ GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim is the Pure (plain S
 Class {
 	#name : 'GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TShouldntNewRudesheim',
+	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'window'
 	],

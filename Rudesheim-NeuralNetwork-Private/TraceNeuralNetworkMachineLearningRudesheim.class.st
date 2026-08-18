@@ -1,8 +1,8 @@
 Class {
 	#name : 'TraceNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TTraceNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TTraceNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TTraceNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TTraceNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'neuralNetworkLayer',
 		'predictions',

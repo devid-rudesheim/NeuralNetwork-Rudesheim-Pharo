@@ -4,8 +4,8 @@ WeightsSourceSoilNeuralNetworkMachineLearningRudesheim will lazily read layer we
 Class {
 	#name : 'WeightsSourceSoilNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
-	#traits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim classTrait',
+	#traits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim + TShouldntNewRudesheim',
+	#classTraits : 'TWeightsSourceNeuralNetworkMachineLearningRudesheim classTrait + TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'tensorDescriptorRecords'
 	],

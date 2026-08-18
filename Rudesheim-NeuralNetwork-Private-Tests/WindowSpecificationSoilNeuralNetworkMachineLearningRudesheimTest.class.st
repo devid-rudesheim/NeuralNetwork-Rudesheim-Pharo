@@ -12,6 +12,23 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheimTest class >> target
 	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
 ]
 
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
+
+	^ self targetClass
+		inputChannels:	1
+		inputRows:	1
+		inputColumns:	1
+		kernelRows:	1
+		kernelColumns:	1
+		strideRows:	1
+		strideColumns:	1
+		paddingTopRows:	0
+		paddingBottomRows:	0
+		paddingLeftColumns:	0
+		paddingRightColumns:	0.
+]
+
 { #category : 'tests' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheimTest >> testAccessorsRoundTrip [
 
