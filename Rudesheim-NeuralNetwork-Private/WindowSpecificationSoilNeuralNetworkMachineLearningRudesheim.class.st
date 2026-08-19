@@ -104,21 +104,13 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
 { #category : 'private' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
 
-	^ Rudesheim
-		MachineLearning
-		NeuralNetwork
-		TensorLayout
-		forInput:	self input.
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout forInput: self input.
 ]
 
 { #category : 'private' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
 
-	^ Rudesheim
-		MachineLearning
-		NeuralNetwork
-		TensorLayout
-		forOutput:	self output.
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout forOutput: self output.
 ]
 
 { #category : 'initialization' }
