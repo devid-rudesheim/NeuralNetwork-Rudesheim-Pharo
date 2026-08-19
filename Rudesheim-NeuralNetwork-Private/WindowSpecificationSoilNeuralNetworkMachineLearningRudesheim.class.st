@@ -50,7 +50,11 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> input [
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputLayout [
 
-	^ inputLayout ifNil: [ inputLayout := self defaultInputLayout ]
+	^ inputLayout
+		ifNil:
+		[
+			inputLayout := self defaultInputLayout.
+		].
 ]
 
 { #category : 'accessing' }
@@ -90,19 +94,31 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> output [
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
 
-	^ outputLayout ifNil: [ outputLayout := self defaultOutputLayout ]
+	^ outputLayout
+		ifNil:
+		[
+			outputLayout := self defaultOutputLayout.
+		].
 ]
 
 { #category : 'private' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
 
-	^ Rudesheim MachineLearning NeuralNetwork TensorLayout forInput: self input
+	^ Rudesheim
+		MachineLearning
+		NeuralNetwork
+		TensorLayout
+		forInput:	self input.
 ]
 
 { #category : 'private' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
 
-	^ Rudesheim MachineLearning NeuralNetwork TensorLayout forOutput: self output
+	^ Rudesheim
+		MachineLearning
+		NeuralNetwork
+		TensorLayout
+		forOutput:	self output.
 ]
 
 { #category : 'initialization' }

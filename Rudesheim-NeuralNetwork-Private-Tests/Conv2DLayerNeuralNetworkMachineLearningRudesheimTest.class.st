@@ -80,12 +80,38 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithMultipleI
 	extentClass := Rudesheim Utility Extent.
 
 	window :=
-		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
+		Rudesheim
+			MachineLearning
+			NeuralNetwork
+			Soil
+			WindowSpecification
 			inputChannels:	2
-			inputExtent:	(extentClass width: 2 height: 2)
-			kernelExtent:	(extentClass width: 2 height: 2)
-			strideExtent:	(extentClass width: 1 height: 1)
-			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
+			inputExtent:
+			(
+				extentClass
+					width:	2
+					height:	2
+			)
+			kernelExtent:
+			(
+				extentClass
+					width:	2
+					height:	2
+			)
+			strideExtent:
+			(
+				extentClass
+					width:	1
+					height:	1
+			)
+			padding:
+			(
+				Margin
+					top:	0
+					left:	0
+					bottom:	0
+					right:	0
+			).
 
 	layer :=
 		self targetClass

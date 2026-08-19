@@ -68,7 +68,7 @@ NeuralNetworkMachineLearningRudesheim class >> Soil [
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> TensorLayout [
 
-	^ TensorLayoutNeuralNetworkMachineLearningRudesheim
+	^ TensorLayoutNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }

@@ -18,18 +18,23 @@ TensorLayoutNeuralNetworkMachineLearningRudesheim class >> extent: anExtentUtili
 	^ super new
 		setExtent:	anExtentUtilityRudesheim
 		columnCount:	anExtentUtilityRudesheim columns
-		channelStride:	anExtentUtilityRudesheim rows * anExtentUtilityRudesheim columns;
+		channelStride:
+		anExtentUtilityRudesheim
+			rows
+			* anExtentUtilityRudesheim columns;
 		yourself.
 ]
 
 { #category : 'instance creation' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim class >> forInput: anInputExtentUtilityRudesheim [
-	^ self extent: anInputExtentUtilityRudesheim.
+	^ self
+		extent:	anInputExtentUtilityRudesheim.
 ]
 
 { #category : 'instance creation' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim class >> forOutput: anOutputExtentUtilityRudesheim [
-	^ self extent: anOutputExtentUtilityRudesheim.
+	^ self
+		extent:	anOutputExtentUtilityRudesheim.
 ]
 
 { #category : 'accessing' }
@@ -50,7 +55,11 @@ TensorLayoutNeuralNetworkMachineLearningRudesheim >> extent [
 { #category : 'flattening' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim >> flatIndexForChannel: aChannelIndexInteger
 position: aPositionPoint [
-	^ aChannelIndexInteger * self channelStride + (aPositionPoint x * self columnCount) + aPositionPoint y + 1.
+	^ aChannelIndexInteger
+		* self channelStride
+		+ (aPositionPoint x * self columnCount)
+		+ aPositionPoint y
+		+ 1.
 ]
 
 { #category : 'initialization' }
