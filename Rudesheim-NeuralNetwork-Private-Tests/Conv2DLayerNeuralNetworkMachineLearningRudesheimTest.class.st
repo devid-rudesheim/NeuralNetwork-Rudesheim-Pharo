@@ -69,6 +69,38 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandCo
 ]
 
 { #category : 'as yet unclassified' }
+Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithMultipleInputChannelsIndexesEachChannelCorrectly [
+	|
+		extentClass
+		window
+		layer
+		output
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
+	window :=
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
+			inputChannels:	2
+			inputExtent:	(extentClass width: 2 height: 2)
+			kernelExtent:	(extentClass width: 2 height: 2)
+			strideExtent:	(extentClass width: 1 height: 1)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
+
+	layer :=
+		self targetClass
+			weights:	#(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+			biases:	#(0.0)
+			window:	window.
+
+	output := (layer forward: #(1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0)) asArray.
+
+	self
+		assert:	output
+		equals:	#(36.0).
+]
+
+{ #category : 'as yet unclassified' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddingIncludesBias [
 	|
 		extentClass

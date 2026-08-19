@@ -71,124 +71,160 @@ window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 		yourself.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'evaluating' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 	|
-		inputRows
-		inputColumns
-		inputChannels
-		outputRows
-		outputColumns
-		kernelRows
-		kernelColumns
-		strideRows
-		strideColumns
-		paddingTopRows
-		paddingLeftColumns
+		inputLayout
+		outputLayout
+		ranges
+		validKernelPositionsByOutputPositionFor
+		validKernelRowPositionsByOutputRow
+		validKernelColumnPositionsByOutputColumn
 		output
-		total
 		weight
 		value
-		iy
-		ix
-		flatOutputIndex
 	|
 
-	inputChannels := window inputChannels.
-	inputRows := window input rows.
-	inputColumns := window input columns.
-	outputRows := window output rows.
-	outputColumns := window output columns.
-	kernelRows := window kernel rows.
-	kernelColumns := window kernel columns.
-	strideRows := window stride rows.
-	strideColumns := window stride columns.
-	paddingTopRows := window padding top.
-	paddingLeftColumns := window padding left.
+	inputLayout := window inputLayout.
+	outputLayout := window outputLayout.
+
+	validKernelPositionsByOutputPositionFor :=
+		[ :anOutputRange :anExtentSelector :aPaddingSelector |
+			|
+				kernelSize
+				stride
+				paddingOffset
+				inputBound
+			|
+			kernelSize :=
+				anExtentSelector
+					value:	window kernel.
+
+			stride :=
+				anExtentSelector
+					value:	window stride.
+
+			paddingOffset :=
+				aPaddingSelector
+					value:	window padding.
+
+			inputBound :=
+				anExtentSelector
+					value:	window input.
+
+			anOutputRange
+				collect:
+				[ :anOutputPosition |
+					(0 to: kernelSize - 1)
+						collect:
+						[ :eachKernelOffset |
+							Point
+								x:	eachKernelOffset
+								y:	anOutputPosition * stride + eachKernelOffset - paddingOffset.
+						]
+						thenSelect:
+						[ :eachKernelPosition |
+							(eachKernelPosition y >= 0)
+								and:
+								[
+									eachKernelPosition y < inputBound.
+								].
+						].
+				].
+		].
+
+	ranges :=
+		{
+			outputLayout extent rows.
+			outputLayout extent columns.
+			outChannels.
+			window inputChannels.
+		}
+			collect:
+			[ :each |
+				0
+					to:	each - 1.
+			].
+
+	validKernelRowPositionsByOutputRow :=
+		validKernelPositionsByOutputPositionFor
+			value:	(ranges at: 1)
+			value:	#rows
+			value:	#top.
+
+	validKernelColumnPositionsByOutputColumn :=
+		validKernelPositionsByOutputPositionFor
+			value:	(ranges at: 2)
+			value:	#columns
+			value:	#left.
 
 	output :=
 		Array
-			new:	outChannels * outputRows * outputColumns.
+			new:	outChannels * outputLayout channelStride.
 
-	0
-		to:	outChannels - 1
+	(ranges at: 1)
+		with:	validKernelRowPositionsByOutputRow
 		do:
-		[ :oc |
-			0
-				to:	outputRows - 1
+		[ :oy :validKernelRowPositions |
+			(ranges at: 2)
+				with:	validKernelColumnPositionsByOutputColumn
 				do:
-				[ :oy |
-					0
-						to:	outputColumns - 1
+				[ :ox :validKernelColumnPositions |
+					(ranges at: 3)
 						do:
-						[ :ox |
-							total := 0.
+						[ :oc |
+							|
+								total
+								flatOutputIndex
+							|
 
-							0
-								to:	inputChannels - 1
-								do:
-								[ :ic |
-									0
-										to:	kernelRows - 1
-										do:
-										[ :ky |
-											iy := oy * strideRows + ky - paddingTopRows.
+							flatOutputIndex :=
+								outputLayout
+									flatIndexForChannel:	oc
+									position:	(oy @ ox).
 
-											(
-												iy >= 0
-													and:
-													[
-														iy < inputRows.
-													]
-											)
-												ifTrue:
-												[
-													0
-														to:	kernelColumns - 1
-														do:
-														[ :kx |
-															ix := ox * strideColumns + kx - paddingLeftColumns.
-
-															(
-																ix >= 0
-																	and:
-																	[
-																		ix < inputColumns.
-																	]
-															)
-																ifTrue:
-																[
-																	weight :=
+							total :=
+								(ranges at: 4)
+									inject:	0
+									into:
+									[ :channelTotal :ic |
+										channelTotal +
+										(
+											validKernelRowPositions
+												inject:	0
+												into:
+												[ :rowTotal :eachKernelRowPosition |
+													rowTotal +
+													(
+														validKernelColumnPositions
+															inject:	0
+															into:
+															[ :columnTotal :eachKernelColumnPosition |
+																value :=
+																	anInputNumbersSequencialCollection
+																		at:
 																		(
-																			(
-																				(
-																					weights
-																						at:	oc + 1
-																				)
-																					at:	ic + 1
-																			)
-																				at:	ky + 1
-																		)
-																			at:	kx + 1.
+																			inputLayout
+																				flatIndexForChannel:	ic
+																				position:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
+																		).
 
-																	value :=
-																		anInputNumbersSequencialCollection
-																			at:	
-																			ic
-																				* inputRows
-																				+ iy
-																				* inputColumns
-																				+ ix
-																				+ 1.
+																weight :=
+																(
+																	(
+																		(weights at: oc + 1)
+																			at: ic + 1
+																	)
+																		at: eachKernelRowPosition x + 1
+																)
+																	at: eachKernelColumnPosition x + 1.
 
-																	total := total + (weight * value).
-																].
-														].
-												].
-										].
-								].
-
-							flatOutputIndex := (oc * outputRows + oy) * outputColumns + ox + 1.
+																columnTotal + (weight * value)
+															]
+													)
+												]
+										)
+									].
 
 							output
 								at:	flatOutputIndex

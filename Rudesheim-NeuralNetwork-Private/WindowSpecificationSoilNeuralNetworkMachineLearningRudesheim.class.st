@@ -11,7 +11,9 @@ Class {
 		'input',
 		'kernel',
 		'stride',
-		'padding'
+		'padding',
+		'inputLayout',
+		'outputLayout'
 	],
 	#category : 'Rudesheim-NeuralNetwork-Private',
 	#package : 'Rudesheim-NeuralNetwork-Private'
@@ -46,6 +48,16 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> input [
 ]
 
 { #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputLayout [
+
+	^ inputLayout
+		ifNil:
+		[
+			inputLayout := self defaultInputLayout.
+		].
+]
+
+{ #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> kernel [
 
 	^ kernel
@@ -77,6 +89,30 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> output [
 	^ Rudesheim Utility Extent
 		width:	( self padded columns - self kernel columns ) // self stride columns + 1
 		height:	( self padded rows - self kernel rows ) // self stride rows + 1
+]
+
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
+
+	^ outputLayout
+		ifNil:
+		[
+			outputLayout := self defaultOutputLayout.
+		].
+]
+
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
+
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forInput:	self input.
+]
+
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
+
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forOutput:	self output.
 ]
 
 { #category : 'initialization' }
