@@ -82,12 +82,12 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	inChannels := window inputChannels.
-	inRows := window inputRows.
-	inColumns := window inputColumns.
-	outRows := window outputRows.
-	outColumns := window outputColumns.
-	kernelRows := window kernelRows.
-	kernelColumns := window kernelColumns.
+	inRows := window input rows.
+	inColumns := window input columns.
+	outRows := window output rows.
+	outColumns := window output columns.
+	kernelRows := window kernel rows.
+	kernelColumns := window kernel columns.
 	inputCount := inChannels * inRows * inColumns.
 	weightCount := outChannels * inChannels * kernelRows * kernelColumns.
 
@@ -190,10 +190,10 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 				outColumns.
 				kernelRows.
 				kernelColumns.
-				window strideRows.
-				window strideColumns.
-				window paddingTopRows.
-				window paddingLeftColumns.
+				window stride rows.
+				window stride columns.
+				window padding top.
+				window padding left.
 			}.
 
 		queue
@@ -212,10 +212,10 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardCo
 				outColumns.
 				kernelRows.
 				kernelColumns.
-				window strideRows.
-				window strideColumns.
-				window paddingTopRows.
-				window paddingLeftColumns.
+				window stride rows.
+				window stride columns.
+				window padding top.
+				window padding left.
 			}.
 
 		{
@@ -278,7 +278,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 	inputBuffer :=
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
-	outputCount := outChannels * window outputRows * window outputColumns.
+	outputCount := outChannels * window output rows * window output columns.
 	outputBuffer :=
 		cl context
 			newCLBufferForElementCount:	outputCount
@@ -318,7 +318,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{ { outChannels. window outputRows. window outputColumns } }
+				forNDRange:		{ { outChannels. window output rows. window output columns } }
 				withArguments:
 				{
 					weightsBuffer.
@@ -326,17 +326,17 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumber
 					inputBuffer.
 					outputBuffer.
 					window inputChannels.
-					window inputRows.
-					window inputColumns.
+					window input rows.
+					window input columns.
 					outChannels.
-					window outputRows.
-					window outputColumns.
-					window kernelRows.
-					window kernelColumns.
-					window strideRows.
-					window strideColumns.
-					window paddingTopRows.
-					window paddingLeftColumns.
+					window output rows.
+					window output columns.
+					window kernel rows.
+					window kernel columns.
+					window stride rows.
+					window stride columns.
+					window padding top.
+					window padding left.
 				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is
@@ -380,7 +380,7 @@ window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 	window := aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim.
 	outChannels :=
 		aWeightsSequenceableCollection size
-			/ ( window inputChannels * window kernelRows * window kernelColumns ).
+			/ ( window inputChannels * window kernel rows * window kernel columns ).
 
 	weightsBuffer :=
 		cl context
@@ -397,7 +397,7 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> weights [
 
 	^ Rudesheim MachineLearning NeuralNetwork OpenCL commandQueue
 		readFrom:		weightsBuffer
-		count:			outChannels * window inputChannels * window kernelRows * window kernelColumns
+		count:			outChannels * window inputChannels * window kernel rows * window kernel columns
 		elementType:	TFBasicType float
 ]
 

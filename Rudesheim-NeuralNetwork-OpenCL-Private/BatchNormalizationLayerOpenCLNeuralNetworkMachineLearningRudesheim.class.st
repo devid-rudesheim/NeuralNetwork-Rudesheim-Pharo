@@ -73,7 +73,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	channels := window inputChannels.
-	spatialCount := window inputRows * window inputColumns.
+	spatialCount := window input rows * window input columns.
 	queue := cl commandQueue.
 	inputBuffer :=
 		cl context
@@ -181,7 +181,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	a
 	inputBuffer :=
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
-	outputCount := window inputChannels * window inputRows * window inputColumns.
+	outputCount := window inputChannels * window input rows * window input columns.
 	outputBuffer :=
 		cl context
 			newCLBufferForElementCount:	outputCount
@@ -211,7 +211,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	a
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{ { window inputChannels. window inputRows * window inputColumns } }
+				forNDRange:		{ { window inputChannels. window input rows * window input columns } }
 				withArguments:
 				{
 					scaleBuffer.
@@ -219,7 +219,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	a
 					inputBuffer.
 					outputBuffer.
 					window inputChannels.
-					window inputRows * window inputColumns.
+					window input rows * window input columns.
 				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is

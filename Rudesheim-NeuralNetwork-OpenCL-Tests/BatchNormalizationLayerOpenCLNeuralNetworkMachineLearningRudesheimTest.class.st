@@ -15,18 +15,18 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	2
-		inputRows:	1
-		inputColumns:	2
-		kernelRows:	1
-		kernelColumns:	1
-		strideRows:	1
-		strideColumns:	1
-		paddingTopRows:	0
-		paddingBottomRows:	0
-		paddingLeftColumns:	0
-		paddingRightColumns:	0
+		inputExtent:	(extentClass width: 2 height: 1)
+		kernelExtent:	(extentClass width: 1 height: 1)
+		strideExtent:	(extentClass width: 1 height: 1)
+		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
 ]
 
 { #category : 'accessing' }
