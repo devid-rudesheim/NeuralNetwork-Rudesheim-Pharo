@@ -96,10 +96,21 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 				paddingOffset
 				inputBound
 			|
-			kernelSize := anExtentSelector value: window kernel.
-			stride := anExtentSelector value: window stride.
-			paddingOffset := aPaddingSelector value: window padding.
-			inputBound := anExtentSelector value: window input.
+			kernelSize :=
+				anExtentSelector
+					value:	window kernel.
+
+			stride :=
+				anExtentSelector
+					value:	window stride.
+
+			paddingOffset :=
+				aPaddingSelector
+					value:	window padding.
+
+			inputBound :=
+				anExtentSelector
+					value:	window input.
 
 			anOutputRange
 				collect:
@@ -113,7 +124,11 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 						]
 						thenSelect:
 						[ :eachKernelPosition |
-							(eachKernelPosition y >= 0) and: [ eachKernelPosition y < inputBound ].
+							(eachKernelPosition y >= 0)
+								and:
+								[
+									eachKernelPosition y < inputBound.
+								].
 						].
 				].
 		].
@@ -143,7 +158,9 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 			value:	#columns
 			value:	#left.
 
-	output := Array new: outChannels * outputLayout channelStride.
+	output :=
+		Array
+			new:	outChannels * outputLayout channelStride.
 
 	(ranges at: 1)
 		with:	validKernelRowPositionsByOutputRow
@@ -153,45 +170,46 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 				with:	validKernelColumnPositionsByOutputColumn
 				do:
 				[ :ox :validKernelColumnPositions |
-					(ranges at: 3) do:
-					[ :oc |
-						|
-							total
-							flatOutputIndex
-						|
+					(ranges at: 3)
+						do:
+						[ :oc |
+							|
+								total
+								flatOutputIndex
+							|
 
-						flatOutputIndex :=
-							outputLayout
-								flatIndexForChannel:	oc
-								position:	(oy @ ox).
+							flatOutputIndex :=
+								outputLayout
+									flatIndexForChannel:	oc
+									position:	(oy @ ox).
 
-						total :=
-							(ranges at: 4)
-								inject:	0
-								into:
-								[ :channelTotal :ic |
-									channelTotal +
-									(
-										validKernelRowPositions
-											inject:	0
-											into:
-											[ :rowTotal :eachKernelRowPosition |
-												rowTotal +
-												(
-													validKernelColumnPositions
-														inject:	0
-														into:
-														[ :columnTotal :eachKernelColumnPosition |
-															value :=
-																anInputNumbersSequencialCollection
-																	at:
-																	(
-																		inputLayout
-																			flatIndexForChannel:	ic
-																			position:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
-																	).
+							total :=
+								(ranges at: 4)
+									inject:	0
+									into:
+									[ :channelTotal :ic |
+										channelTotal +
+										(
+											validKernelRowPositions
+												inject:	0
+												into:
+												[ :rowTotal :eachKernelRowPosition |
+													rowTotal +
+													(
+														validKernelColumnPositions
+															inject:	0
+															into:
+															[ :columnTotal :eachKernelColumnPosition |
+																value :=
+																	anInputNumbersSequencialCollection
+																		at:
+																		(
+																			inputLayout
+																				flatIndexForChannel:	ic
+																				position:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
+																		).
 
-															weight :=
+																weight :=
 																(
 																	(
 																		(weights at: oc + 1)
@@ -201,17 +219,17 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 																)
 																	at: eachKernelColumnPosition x + 1.
 
-															columnTotal + (weight * value)
-														]
-												)
-											]
-									)
-								].
+																columnTotal + (weight * value)
+															]
+													)
+												]
+										)
+									].
 
-						output
-							at:	flatOutputIndex
-							put:	total + (biases at: oc + 1).
-					].
+							output
+								at:	flatOutputIndex
+								put:	total + (biases at: oc + 1).
+						].
 				].
 		].
 

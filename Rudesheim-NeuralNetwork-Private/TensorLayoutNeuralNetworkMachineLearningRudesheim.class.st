@@ -24,12 +24,14 @@ TensorLayoutNeuralNetworkMachineLearningRudesheim class >> extent: anExtentUtili
 
 { #category : 'instance creation' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim class >> forInput: anInputExtentUtilityRudesheim [
-	^ self extent: anInputExtentUtilityRudesheim.
+	^ self
+		extent:	anInputExtentUtilityRudesheim.
 ]
 
 { #category : 'instance creation' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim class >> forOutput: anOutputExtentUtilityRudesheim [
-	^ self extent: anOutputExtentUtilityRudesheim.
+	^ self
+		extent:	anOutputExtentUtilityRudesheim.
 ]
 
 { #category : 'accessing' }
