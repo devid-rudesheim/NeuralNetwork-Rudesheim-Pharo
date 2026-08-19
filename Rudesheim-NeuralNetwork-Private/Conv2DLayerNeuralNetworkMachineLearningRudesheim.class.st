@@ -80,7 +80,6 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 		validKernelPositionsByOutputPositionFor
 		validKernelRowPositionsByOutputRow
 		validKernelColumnPositionsByOutputColumn
-		flattenIndex
 		output
 		weight
 		value
@@ -88,11 +87,6 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 
 	inputLayout := window inputLayout.
 	outputLayout := window outputLayout.
-
-	flattenIndex :=
-		[ :channelIndex :position :aTensorLayout |
-			channelIndex * aTensorLayout channelStride + (position x * aTensorLayout columnCount) + position y + 1.
-		].
 
 	validKernelPositionsByOutputPositionFor :=
 		[ :anOutputRange :anExtentSelector :aPaddingSelector |
@@ -167,10 +161,9 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 						|
 
 						flatOutputIndex :=
-							flattenIndex
-								value:	oc
-								value:	(oy @ ox)
-								value:	outputLayout.
+							outputLayout
+								flatIndexForChannel:	oc
+								position:	(oy @ ox).
 
 						total :=
 							(ranges at: 4)
@@ -193,10 +186,9 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 																anInputNumbersSequencialCollection
 																	at:
 																	(
-																		flattenIndex
-																			value:	ic
-																			value:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
-																			value:	inputLayout
+																		inputLayout
+																			flatIndexForChannel:	ic
+																			position:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
 																	).
 
 															weight :=
