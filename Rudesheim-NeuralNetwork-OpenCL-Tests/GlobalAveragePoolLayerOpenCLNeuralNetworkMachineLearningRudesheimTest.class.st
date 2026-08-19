@@ -15,18 +15,18 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> t
 { #category : 'accessing' }
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	2
-		inputRows:	2
-		inputColumns:	2
-		kernelRows:	2
-		kernelColumns:	2
-		strideRows:	2
-		strideColumns:	2
-		paddingTopRows:	0
-		paddingBottomRows:	0
-		paddingLeftColumns:	0
-		paddingRightColumns:	0
+		inputExtent:	(extentClass width: 2 height: 2)
+		kernelExtent:	(extentClass width: 2 height: 2)
+		strideExtent:	(extentClass width: 2 height: 2)
+		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
 ]
 
 { #category : 'tests' }

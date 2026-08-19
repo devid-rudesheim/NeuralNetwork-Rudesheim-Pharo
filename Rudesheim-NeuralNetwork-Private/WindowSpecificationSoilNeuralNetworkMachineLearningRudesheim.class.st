@@ -8,16 +8,12 @@ Class {
 	#classTraits : 'TShouldntNewRudesheim classTrait',
 	#instVars : [
 		'inputChannels',
-		'inputRows',
-		'inputColumns',
-		'kernelRows',
-		'kernelColumns',
-		'strideRows',
-		'strideColumns',
-		'paddingTopRows',
-		'paddingBottomRows',
-		'paddingLeftColumns',
-		'paddingRightColumns'
+		'input',
+		'kernel',
+		'stride',
+		'padding',
+		'inputLayout',
+		'outputLayout'
 	],
 	#category : 'Rudesheim-NeuralNetwork-Private',
 	#package : 'Rudesheim-NeuralNetwork-Private'
@@ -25,29 +21,17 @@ Class {
 
 { #category : 'instance creation' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim class >> inputChannels:	anInputChannelsInteger
-inputRows:	anInputRowsInteger
-inputColumns:	anInputColumnsInteger
-kernelRows:	aKernelRowsInteger
-kernelColumns:	aKernelColumnsInteger
-strideRows:	aStrideRowsInteger
-strideColumns:	aStrideColumnsInteger
-paddingTopRows:	aPaddingTopRowsInteger
-paddingBottomRows:	aPaddingBottomRowsInteger
-paddingLeftColumns:	aPaddingLeftColumnsInteger
-paddingRightColumns:	aPaddingRightColumnsInteger [
+inputExtent:	anInputExtentUtilityRudesheim
+kernelExtent:	aKernelExtentUtilityRudesheim
+strideExtent:	aStrideExtentUtilityRudesheim
+padding:	aPaddingMargin [
 
 	^ super new
-		setInputChannels:		anInputChannelsInteger
-		inputRows:				anInputRowsInteger
-		inputColumns:			anInputColumnsInteger
-		kernelRows:				aKernelRowsInteger
-		kernelColumns:			aKernelColumnsInteger
-		strideRows:				aStrideRowsInteger
-		strideColumns:			aStrideColumnsInteger
-		paddingTopRows:			aPaddingTopRowsInteger
-		paddingBottomRows:		aPaddingBottomRowsInteger
-		paddingLeftColumns:		aPaddingLeftColumnsInteger
-		paddingRightColumns:	aPaddingRightColumnsInteger;
+		setInputChannels:	anInputChannelsInteger
+		inputExtent:		anInputExtentUtilityRudesheim
+		kernelExtent:		aKernelExtentUtilityRudesheim
+		strideExtent:		aStrideExtentUtilityRudesheim
+		padding:			aPaddingMargin;
 		yourself
 ]
 
@@ -58,111 +42,89 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputChannels [
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputColumns [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> input [
 
-	^ inputColumns
+	^ input
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputRows [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputLayout [
 
-	^ inputRows
+	^ inputLayout
+		ifNil:
+		[
+			inputLayout := self defaultInputLayout.
+		].
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> kernelColumns [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> kernel [
 
-	^ kernelColumns
+	^ kernel
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> kernelRows [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> stride [
 
-	^ kernelRows
+	^ stride
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputColumns [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padding [
 
-	^ ( self paddedColumns - kernelColumns ) // strideColumns + 1
+	^ padding
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputRows [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padded [
 
-	^ ( self paddedRows - kernelRows ) // strideRows + 1
+	^ Rudesheim Utility Extent
+		width:	self input columns + self padding left + self padding right
+		height:	self input rows + self padding top + self padding bottom
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddedColumns [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> output [
 
-	^ inputColumns + paddingLeftColumns + paddingRightColumns
+	^ Rudesheim Utility Extent
+		width:	( self padded columns - self kernel columns ) // self stride columns + 1
+		height:	( self padded rows - self kernel rows ) // self stride rows + 1
 ]
 
 { #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddedRows [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
 
-	^ inputRows + paddingTopRows + paddingBottomRows
+	^ outputLayout
+		ifNil:
+		[
+			outputLayout := self defaultOutputLayout.
+		].
 ]
 
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddingBottomRows [
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
 
-	^ paddingBottomRows
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forInput:	self input.
 ]
 
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddingLeftColumns [
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
 
-	^ paddingLeftColumns
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddingRightColumns [
-
-	^ paddingRightColumns
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> paddingTopRows [
-
-	^ paddingTopRows
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forOutput:	self output.
 ]
 
 { #category : 'initialization' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> setInputChannels:	anInputChannelsInteger
-inputRows:	anInputRowsInteger
-inputColumns:	anInputColumnsInteger
-kernelRows:	aKernelRowsInteger
-kernelColumns:	aKernelColumnsInteger
-strideRows:	aStrideRowsInteger
-strideColumns:	aStrideColumnsInteger
-paddingTopRows:	aPaddingTopRowsInteger
-paddingBottomRows:	aPaddingBottomRowsInteger
-paddingLeftColumns:	aPaddingLeftColumnsInteger
-paddingRightColumns:	aPaddingRightColumnsInteger [
+inputExtent:	anInputExtentUtilityRudesheim
+kernelExtent:	aKernelExtentUtilityRudesheim
+strideExtent:	aStrideExtentUtilityRudesheim
+padding:	aPaddingMargin [
 
-	inputChannels			:= anInputChannelsInteger.
-	inputRows				:= anInputRowsInteger.
-	inputColumns			:= anInputColumnsInteger.
-	kernelRows				:= aKernelRowsInteger.
-	kernelColumns			:= aKernelColumnsInteger.
-	strideRows				:= aStrideRowsInteger.
-	strideColumns			:= aStrideColumnsInteger.
-	paddingTopRows			:= aPaddingTopRowsInteger.
-	paddingBottomRows		:= aPaddingBottomRowsInteger.
-	paddingLeftColumns		:= aPaddingLeftColumnsInteger.
-	paddingRightColumns	:= aPaddingRightColumnsInteger
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> strideColumns [
-
-	^ strideColumns
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> strideRows [
-
-	^ strideRows
+	inputChannels	:= anInputChannelsInteger.
+	input			:= anInputExtentUtilityRudesheim.
+	kernel			:= aKernelExtentUtilityRudesheim.
+	stride			:= aStrideExtentUtilityRudesheim.
+	padding			:= aPaddingMargin
 ]

@@ -15,18 +15,18 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetCla
 { #category : 'accessing' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	1
-		inputRows:	4
-		inputColumns:	4
-		kernelRows:	2
-		kernelColumns:	2
-		strideRows:	2
-		strideColumns:	2
-		paddingTopRows:	0
-		paddingBottomRows:	0
-		paddingLeftColumns:	0
-		paddingRightColumns:	0
+		inputExtent:	(extentClass width: 4 height: 4)
+		kernelExtent:	(extentClass width: 2 height: 2)
+		strideExtent:	(extentClass width: 2 height: 2)
+		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
 ]
 
 { #category : 'tests' }

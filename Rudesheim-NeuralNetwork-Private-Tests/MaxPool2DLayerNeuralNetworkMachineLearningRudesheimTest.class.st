@@ -14,45 +14,42 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 { #category : 'accessing' }
 MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
 
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ self targetClass
 		window:
 		(
 			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
-				inputRows:	1
-				inputColumns:	1
-				kernelRows:	1
-				kernelColumns:	1
-				strideRows:	1
-				strideColumns:	1
-				paddingTopRows:	0
-				paddingBottomRows:	0
-				paddingLeftColumns:	0
-				paddingRightColumns:	0
+				inputExtent:	(extentClass width: 1 height: 1)
+				kernelExtent:	(extentClass width: 1 height: 1)
+				strideExtent:	(extentClass width: 1 height: 1)
+				padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
 		)
 ]
 
 { #category : 'as yet unclassified' }
 MaxPool2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedMax [
 	|
+		extentClass
 		window
 		layer
 		output
 	|
 
+	extentClass := Rudesheim Utility Extent.
+
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputRows:	4
-			inputColumns:	4
-			kernelRows:	2
-			kernelColumns:	2
-			strideRows:	2
-			strideColumns:	2
-			paddingTopRows:	0
-			paddingBottomRows:	0
-			paddingLeftColumns:	0
-			paddingRightColumns:	0.
+			inputExtent:	(extentClass width: 4 height: 4)
+			kernelExtent:	(extentClass width: 2 height: 2)
+			strideExtent:	(extentClass width: 2 height: 2)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
 
 	layer :=
 		self targetClass

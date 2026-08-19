@@ -62,23 +62,20 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSe
 	|
 
 	inputChannels := window inputChannels.
-	inputRows := window inputRows.
-	inputColumns := window inputColumns.
-	outputRows := window outputRows.
-	outputColumns := window outputColumns.
-	kernelRows := window kernelRows.
-	kernelColumns := window kernelColumns.
-	strideRows := window strideRows.
-	strideColumns := window strideColumns.
-	paddingTopRows := window paddingTopRows.
-	paddingLeftColumns := window paddingLeftColumns.
+	inputRows := window input rows.
+	inputColumns := window input columns.
+	outputRows := window output rows.
+	outputColumns := window output columns.
+	kernelRows := window kernel rows.
+	kernelColumns := window kernel columns.
+	strideRows := window stride rows.
+	strideColumns := window stride columns.
+	paddingTopRows := window padding top.
+	paddingLeftColumns := window padding left.
 
 	output :=
 		Array
-			new:	
-			inputChannels
-				* outputRows
-				* outputColumns.
+			new:	inputChannels * outputRows * outputColumns.
 
 	0
 		to:	inputChannels - 1

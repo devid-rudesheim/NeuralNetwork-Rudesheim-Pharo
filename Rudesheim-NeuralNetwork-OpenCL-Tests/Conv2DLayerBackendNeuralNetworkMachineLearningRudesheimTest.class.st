@@ -30,24 +30,21 @@ Conv2DLayerBackendNeuralNetworkMachineLearningRudesheimTest >> backend: aTBacken
 { #category : 'as yet unclassified' }
 Conv2DLayerBackendNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedSumKernel [
 	|
+		extentClass
 		window
 		layer
 		output
 	|
 
+	extentClass := Rudesheim Utility Extent.
+
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputRows:	4
-			inputColumns:	4
-			kernelRows:	3
-			kernelColumns:	3
-			strideRows:	1
-			strideColumns:	1
-			paddingTopRows:	0
-			paddingBottomRows:	0
-			paddingLeftColumns:	0
-			paddingRightColumns:	0.
+			inputExtent:	(extentClass width: 4 height: 4)
+			kernelExtent:	(extentClass width: 3 height: 3)
+			strideExtent:	(extentClass width: 1 height: 1)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
 
 	layer :=
 		self

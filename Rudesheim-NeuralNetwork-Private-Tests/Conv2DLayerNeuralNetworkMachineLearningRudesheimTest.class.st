@@ -14,6 +14,12 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
 { #category : 'accessing' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
 
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ self targetClass
 		weights:	#(1.0)
 		biases:	#(0.0)
@@ -21,41 +27,32 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
 		(
 			Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 				inputChannels:	1
-				inputRows:	1
-				inputColumns:	1
-				kernelRows:	1
-				kernelColumns:	1
-				strideRows:	1
-				strideColumns:	1
-				paddingTopRows:	0
-				paddingBottomRows:	0
-				paddingLeftColumns:	0
-				paddingRightColumns:	0
+				inputExtent:	(extentClass width: 1 height: 1)
+				kernelExtent:	(extentClass width: 1 height: 1)
+				strideExtent:	(extentClass width: 1 height: 1)
+				padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
 		)
 ]
 
 { #category : 'as yet unclassified' }
 Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedSumKernel [
 	|
+		extentClass
 		window
 		layer
 		input
 		output
 	|
 
+	extentClass := Rudesheim Utility Extent.
+
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputRows:	4
-			inputColumns:	4
-			kernelRows:	3
-			kernelColumns:	3
-			strideRows:	1
-			strideColumns:	1
-			paddingTopRows:	0
-			paddingBottomRows:	0
-			paddingLeftColumns:	0
-			paddingRightColumns:	0.
+			inputExtent:	(extentClass width: 4 height: 4)
+			kernelExtent:	(extentClass width: 3 height: 3)
+			strideExtent:	(extentClass width: 1 height: 1)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
 
 	layer :=
 		self targetClass
@@ -72,26 +69,55 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandCo
 ]
 
 { #category : 'as yet unclassified' }
-Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddingIncludesBias [
+Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithMultipleInputChannelsIndexesEachChannelCorrectly [
 	|
+		extentClass
 		window
 		layer
 		output
 	|
 
+	extentClass := Rudesheim Utility Extent.
+
+	window :=
+		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
+			inputChannels:	2
+			inputExtent:	(extentClass width: 2 height: 2)
+			kernelExtent:	(extentClass width: 2 height: 2)
+			strideExtent:	(extentClass width: 1 height: 1)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
+
+	layer :=
+		self targetClass
+			weights:	#(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
+			biases:	#(0.0)
+			window:	window.
+
+	output := (layer forward: #(1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0)) asArray.
+
+	self
+		assert:	output
+		equals:	#(36.0).
+]
+
+{ #category : 'as yet unclassified' }
+Conv2DLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddingIncludesBias [
+	|
+		extentClass
+		window
+		layer
+		output
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputRows:	2
-			inputColumns:	2
-			kernelRows:	3
-			kernelColumns:	3
-			strideRows:	1
-			strideColumns:	1
-			paddingTopRows:	1
-			paddingBottomRows:	1
-			paddingLeftColumns:	1
-			paddingRightColumns:	1.
+			inputExtent:	(extentClass width: 2 height: 2)
+			kernelExtent:	(extentClass width: 3 height: 3)
+			strideExtent:	(extentClass width: 1 height: 1)
+			padding:	(Margin top: 1 left: 1 bottom: 1 right: 1).
 
 	layer :=
 		self targetClass

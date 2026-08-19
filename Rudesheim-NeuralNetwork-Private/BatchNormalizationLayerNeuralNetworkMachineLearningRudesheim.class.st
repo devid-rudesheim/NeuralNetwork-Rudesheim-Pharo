@@ -80,7 +80,7 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim >> forward: anInput
 	|
 
 	channels := window inputChannels.
-	spatialCount := window inputRows * window inputColumns.
+	spatialCount := window input rows * window input columns.
 
 	output :=
 		Array
