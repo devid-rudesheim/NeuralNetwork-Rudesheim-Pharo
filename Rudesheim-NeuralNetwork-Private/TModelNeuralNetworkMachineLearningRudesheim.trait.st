@@ -63,10 +63,10 @@ TModelNeuralNetworkMachineLearningRudesheim classSide >> species [
 { #category : 'evaluating' }
 TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
 	"A resolved node value may be a live OpenCL buffer (see
-	note/opencl-layer-buffer-passthrough-design.md). The caller decides when
-	to materialize it with asArray. Every cached node value except the returned
-	final value is released here; ownership of the returned value moves to the
-	caller."
+	note/opencl-layer-buffer-passthrough-design.md) before it is materialized here.
+	Every cached node value, including the final one, is released once this pass is
+	done reading from it; the returned value is always a plain materialized Array,
+	identical to what value: returns (value: is a plain alias for this method)."
 
 	|
 		aValueCacheIdentityDictionary
@@ -86,17 +86,6 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencial
 				each releaseIfApplicableRudesheim.
 			].
 	].
-	^ result
-]
-
-{ #category : 'evaluating' }
-TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
-
-	|
-		result
-	|
-
-	result := self forward: aSequenceableCollection.
 	^
 	[
 		result asArray
@@ -105,6 +94,12 @@ TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
 		[
 			result releaseIfApplicableRudesheim.
 		]
+]
+
+{ #category : 'evaluating' }
+TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
+
+	^ self forward: aSequenceableCollection
 ]
 
 { #category : 'accessing' }

@@ -21,32 +21,23 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelForwardShap
 	|
 
 	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
-	output := ( model forward: #( 1.0 0.0 ) ) asArray.
+	output := model forward: #( 1.0 0.0 ).
 
 	self assert: output size equals: 2
 ]
 
 { #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueReturnsForwardAsArray [
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueIsAliasForForward [
 
 	|
 		model
 		input
-		output
 	|
 
 	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
 	input := #( 1.0 0.0 ).
-	output := model forward: input.
 
-	^
-	[
-		self assert: ( model value: input ) equals: output asArray
-	]
-		ensure:
-		[
-			output releaseRudesheim.
-		]
+	self assert: ( model value: input ) equals: ( model forward: input )
 ]
 
 { #category : 'tests' }
