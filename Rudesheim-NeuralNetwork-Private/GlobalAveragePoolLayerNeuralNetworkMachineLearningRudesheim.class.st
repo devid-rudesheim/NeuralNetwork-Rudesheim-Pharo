@@ -49,7 +49,7 @@ GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputN
 	|
 
 	channels := window inputChannels.
-	count := window inputRows * window inputColumns.
+	count := window input rows * window input columns.
 
 	output :=
 		Array

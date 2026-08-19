@@ -48,7 +48,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	channels := window inputChannels.
-	spatialCount := window inputRows * window inputColumns.
+	spatialCount := window input rows * window input columns.
 	queue := cl commandQueue.
 	gradientBuffer :=
 		cl context
@@ -140,8 +140,8 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 				{
 					inputBuffer.
 					outputBuffer.
-					window inputRows.
-					window inputColumns.
+					window input rows.
+					window input columns.
 				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is

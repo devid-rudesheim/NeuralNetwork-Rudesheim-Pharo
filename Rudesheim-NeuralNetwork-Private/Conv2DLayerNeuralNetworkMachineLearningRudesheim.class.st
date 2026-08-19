@@ -95,23 +95,20 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 	|
 
 	inputChannels := window inputChannels.
-	inputRows := window inputRows.
-	inputColumns := window inputColumns.
-	outputRows := window outputRows.
-	outputColumns := window outputColumns.
-	kernelRows := window kernelRows.
-	kernelColumns := window kernelColumns.
-	strideRows := window strideRows.
-	strideColumns := window strideColumns.
-	paddingTopRows := window paddingTopRows.
-	paddingLeftColumns := window paddingLeftColumns.
+	inputRows := window input rows.
+	inputColumns := window input columns.
+	outputRows := window output rows.
+	outputColumns := window output columns.
+	kernelRows := window kernel rows.
+	kernelColumns := window kernel columns.
+	strideRows := window stride rows.
+	strideColumns := window stride columns.
+	paddingTopRows := window padding top.
+	paddingLeftColumns := window padding left.
 
 	output :=
 		Array
-			new:	
-			outChannels
-				* outputRows
-				* outputColumns.
+			new:	outChannels * outputRows * outputColumns.
 
 	0
 		to:	outChannels - 1
@@ -216,8 +213,8 @@ window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 
 	window := aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim.
 	inChannels := window inputChannels.
-	kernelRows := window kernelRows.
-	kernelColumns := window kernelColumns.
+	kernelRows := window kernel rows.
+	kernelColumns := window kernel columns.
 	outChannels := aWeightsSequenceableCollection size / (inChannels * kernelRows * kernelColumns).
 
 	position := 1.

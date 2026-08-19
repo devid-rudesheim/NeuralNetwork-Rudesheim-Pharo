@@ -30,24 +30,21 @@ GlobalAveragePoolLayerBackendNeuralNetworkMachineLearningRudesheimTest >> backen
 { #category : 'as yet unclassified' }
 GlobalAveragePoolLayerBackendNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedPerChannelAverage [
 	|
+		extentClass
 		window
 		layer
 		output
 	|
 
+	extentClass := Rudesheim Utility Extent.
+
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	2
-			inputRows:	2
-			inputColumns:	2
-			kernelRows:	2
-			kernelColumns:	2
-			strideRows:	2
-			strideColumns:	2
-			paddingTopRows:	0
-			paddingBottomRows:	0
-			paddingLeftColumns:	0
-			paddingRightColumns:	0.
+			inputExtent:	(extentClass width: 2 height: 2)
+			kernelExtent:	(extentClass width: 2 height: 2)
+			strideExtent:	(extentClass width: 2 height: 2)
+			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
 
 	layer :=
 		self

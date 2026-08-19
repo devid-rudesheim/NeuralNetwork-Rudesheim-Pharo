@@ -959,60 +959,38 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> tensorKindClassForTo
 
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> windowSpecificationFromSTONFieldsArray: aSTONWindowFieldsArray [
+	|
+		extentClass
+	|
+
+	extentClass := Rudesheim Utility Extent.
+
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
-		inputChannels:	
+		inputChannels:	( aSTONWindowFieldsArray at: 1 )
+		inputExtent:
 		(
-			aSTONWindowFieldsArray
-				at:	1
+			extentClass
+				width:	( aSTONWindowFieldsArray at: 3 )
+				height:	( aSTONWindowFieldsArray at: 2 )
 		)
-		inputRows:	
+		kernelExtent:
 		(
-			aSTONWindowFieldsArray
-				at:	2
+			extentClass
+				width:	( aSTONWindowFieldsArray at: 5 )
+				height:	( aSTONWindowFieldsArray at: 4 )
 		)
-		inputColumns:	
+		strideExtent:
 		(
-			aSTONWindowFieldsArray
-				at:	3
+			extentClass
+				width:	( aSTONWindowFieldsArray at: 7 )
+				height:	( aSTONWindowFieldsArray at: 6 )
 		)
-		kernelRows:	
+		padding:
 		(
-			aSTONWindowFieldsArray
-				at:	4
-		)
-		kernelColumns:	
-		(
-			aSTONWindowFieldsArray
-				at:	5
-		)
-		strideRows:	
-		(
-			aSTONWindowFieldsArray
-				at:	6
-		)
-		strideColumns:	
-		(
-			aSTONWindowFieldsArray
-				at:	7
-		)
-		paddingTopRows:	
-		(
-			aSTONWindowFieldsArray
-				at:	8
-		)
-		paddingBottomRows:	
-		(
-			aSTONWindowFieldsArray
-				at:	9
-		)
-		paddingLeftColumns:	
-		(
-			aSTONWindowFieldsArray
-				at:	10
-		)
-		paddingRightColumns:	
-		(
-			aSTONWindowFieldsArray
-				at:	11
+			Margin
+				top:	( aSTONWindowFieldsArray at: 8 )
+				left:	( aSTONWindowFieldsArray at: 10 )
+				bottom:	( aSTONWindowFieldsArray at: 9 )
+				right:	( aSTONWindowFieldsArray at: 11 )
 		).
 ]

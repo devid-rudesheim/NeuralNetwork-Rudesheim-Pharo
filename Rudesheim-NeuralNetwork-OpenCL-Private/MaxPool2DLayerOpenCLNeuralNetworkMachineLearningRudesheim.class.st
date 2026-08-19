@@ -54,7 +54,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	queue := cl commandQueue.
-	inputCount := window inputChannels * window inputRows * window inputColumns.
+	inputCount := window inputChannels * window input rows * window input columns.
 	inputBuffer :=
 		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
@@ -91,22 +91,22 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwar
 	[
 		queue
 			enqueueKernelAndWait:	kernel
-			forNDRange:				{ { window inputChannels. window inputRows. window inputColumns } }
+			forNDRange:				{ { window inputChannels. window input rows. window input columns } }
 			withArguments:
 			{
 				inputBuffer.
 				gradientBuffer.
 				inputGradientBuffer.
-				window inputRows.
-				window inputColumns.
-				window outputRows.
-				window outputColumns.
-				window kernelRows.
-				window kernelColumns.
-				window strideRows.
-				window strideColumns.
-				window paddingTopRows.
-				window paddingLeftColumns.
+				window input rows.
+				window input columns.
+				window output rows.
+				window output columns.
+				window kernel rows.
+				window kernel columns.
+				window stride rows.
+				window stride columns.
+				window padding top.
+				window padding left.
 			}.
 
 		{
@@ -143,7 +143,7 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
 
-	outputCount := window inputChannels * window outputRows * window outputColumns.
+	outputCount := window inputChannels * window output rows * window output columns.
 
 	outputBuffer :=
 		cl context
@@ -168,8 +168,8 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNum
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{{window inputChannels .  window outputRows .  window outputColumns}}
-				withArguments:	{inputBuffer .  outputBuffer .  window inputRows .  window inputColumns .  window outputRows .  window outputColumns .  window kernelRows .  window kernelColumns .  window strideRows .  window strideColumns .  window paddingTopRows .  window paddingLeftColumns}.
+				forNDRange:		{{window inputChannels .  window output rows .  window output columns}}
+				withArguments:	{inputBuffer .  outputBuffer .  window input rows .  window input columns .  window output rows .  window output columns .  window kernel rows .  window kernel columns .  window stride rows .  window stride columns .  window padding top .  window padding left}.
 
 		outputBuffer.
 	]
