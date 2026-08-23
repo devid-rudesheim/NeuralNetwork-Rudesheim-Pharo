@@ -12,14 +12,12 @@ Class {
 
 { #category : 'accessing' }
 MSECriterionNeuralNetworkMachineLearningRudesheim >> errorValues [
-
-	^ errorValues
+	^ errorValues.
 ]
 
 { #category : 'accessing' }
 MSECriterionNeuralNetworkMachineLearningRudesheim >> gradient [
-
-	^ ( 2.0 / self errorValues size ) * self errorValues
+	^ 2.0 / self errorValues size * self errorValues.
 ]
 
 { #category : 'accessing' }
@@ -28,7 +26,7 @@ MSECriterionNeuralNetworkMachineLearningRudesheim >> loss [
 		squaredErrors
 	|
 
-	squaredErrors := 
+	squaredErrors :=
 		self errorValues
 			collect:	#squared.
 
@@ -36,14 +34,13 @@ MSECriterionNeuralNetworkMachineLearningRudesheim >> loss [
 ]
 
 { #category : 'initialization' }
-MSECriterionNeuralNetworkMachineLearningRudesheim >> setPredictions:		aPredictionsSequencialCollection
-targets:				aTargetSequencialCollection [
-
+MSECriterionNeuralNetworkMachineLearningRudesheim >> setPredictions: aPredictionsSequencialCollection
+targets: aTargetSequencialCollection [
 	errorValues :=
 		aPredictionsSequencialCollection
-			with: aTargetSequencialCollection 
+			with:	aTargetSequencialCollection
 			collect:
-			[ :prediction :target | 
-				prediction - target
+			[ :prediction :target |
+				prediction - target.
 			].
 ]

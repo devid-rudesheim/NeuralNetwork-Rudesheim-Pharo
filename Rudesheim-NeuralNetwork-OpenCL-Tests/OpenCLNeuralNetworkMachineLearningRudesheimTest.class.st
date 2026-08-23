@@ -7,7 +7,6 @@ Class {
 
 { #category : 'running' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> tearDown [
-
 	OpenCLNeuralNetworkMachineLearningRudesheim
 		startUp:	false.
 
@@ -16,7 +15,6 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> tearDown [
 
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueDelegatesToDriver [
-
 	self
 		assert:	OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
 		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue.
@@ -24,7 +22,6 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueDelegatesToDr
 
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextDelegatesToDriver [
-
 	self
 		assert:	OpenCLNeuralNetworkMachineLearningRudesheim context
 		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver context.
@@ -32,8 +29,9 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextDelegatesToDriver 
 
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testStartUpResetsDriver [
-
-	| firstContext |
+	|
+		firstContext
+	|
 
 	firstContext := OpenCLNeuralNetworkMachineLearningRudesheim context.
 

@@ -14,28 +14,25 @@ Class {
 }
 
 { #category : 'instance creation' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self window: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self
+		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first.
 ]
 
 { #category : 'accessing' }
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> species [
-
-	^ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'instance creation' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 	^ super new
 		setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim;
-		yourself
+		yourself.
 ]
 
 { #category : 'evaluating' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
-
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 	|
 		cl
 		queue
@@ -50,37 +47,51 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 	channels := window inputChannels.
 	spatialCount := window input rows * window input columns.
 	queue := cl commandQueue.
+
 	gradientBuffer :=
 		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	inputGradientBuffer :=
 		cl context
 			newCLBufferForElementCount:	channels * spatialCount
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	kernel :=
 		cl
-			kernelAt:				'GlobalAvgPoolBackward'
+			kernelAt:	'GlobalAvgPoolBackward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
 	[
 		queue
 			enqueueKernelAndWait:	kernel
-			forNDRange:				{ { channels. spatialCount } }
-			withArguments:			{ gradientBuffer. inputGradientBuffer. spatialCount }.
+			forNDRange:
+			{
+				{
+					channels.
+					spatialCount
+				}
+			}
+			withArguments:
+			{
+				gradientBuffer.
+				inputGradientBuffer.
+				spatialCount
+			}.
 
 		{
 			queue
-				readFrom:		inputGradientBuffer
-				count:			channels * spatialCount
+				readFrom:	inputGradientBuffer
+				count:	channels * spatialCount
 				elementType:	TFBasicType float
-		}
+		}.
 	]
 		ensure:
 		[
@@ -90,8 +101,7 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> backward:	a
 ]
 
 { #category : 'evaluating' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
-
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 	|
 		cl
 		queue
@@ -104,27 +114,32 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	queue := cl commandQueue.
+
 	inputBuffer :=
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
+
 	outputCount := window inputChannels.
+
 	outputBuffer :=
 		cl context
 			newCLBufferForElementCount:	outputCount
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	outputBuffer
-		count:		outputCount;
-		queue:		queue;
+		count:	outputCount;
+		queue:	queue;
 		context:	cl context.
+
 	kernel :=
 		cl
-			kernelAt:				'GlobalAvgPoolForward'
+			kernelAt:	'GlobalAvgPoolForward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
 				TFBasicType uint.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
@@ -135,18 +150,23 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{ { outputCount } }
+				forNDRange:
+				{
+					{
+						outputCount
+					}
+				}
 				withArguments:
 				{
 					inputBuffer.
 					outputBuffer.
 					window input rows.
-					window input columns.
+					window input columns
 				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is
 		returned live and inputBuffer's release is conditional."
-		outputBuffer
+		outputBuffer.
 	]
 		ensure:
 		[
@@ -160,19 +180,18 @@ GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> forward:	an
 					kernelEvent wait.
 					inputBuffer release.
 				].
+
 			kernelEvent release.
 		].
 ]
 
 { #category : 'initialization' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWindow:	aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
-
-	window := aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> setWindow: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
+	window := aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'converting' }
-GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-learningRate:				aRateFloat [
-
-	^ self
+GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows: aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
+learningRate: aRateFloat [
+	^ self.
 ]

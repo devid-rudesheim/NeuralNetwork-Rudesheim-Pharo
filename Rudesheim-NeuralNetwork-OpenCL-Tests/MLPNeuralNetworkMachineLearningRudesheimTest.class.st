@@ -8,13 +8,11 @@ Class {
 
 { #category : 'accessing' }
 MLPNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ MLPNeuralNetworkMachineLearningRudesheim
+	^ MLPNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'tests' }
 MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelForwardShape [
-
 	|
 		model
 		output
@@ -34,8 +32,82 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelForwardShap
 ]
 
 { #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueIsAliasForForward [
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelLayerCount [
+	|
+		model
+	|
 
+	model :=
+		self targetClass
+			nextModelAs:	Rudesheim MachineLearning NeuralNetwork Pure Model.
+
+	self
+		assert:	model neuralNetworkLayers size
+		equals:	3.
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelRequiresBackendModelClass [
+	self
+		should:
+		[
+			self targetClass
+				nextModelAs:	Rudesheim MachineLearning NeuralNetwork Model.
+		]
+		raise:	Error.
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesBackendModelClass [
+	|
+		model
+		nn
+	|
+
+	nn := Rudesheim MachineLearning NeuralNetwork.
+
+	model :=
+		self targetClass
+			nextModelAs:
+				nn OpenCL Model.
+
+	self
+		assert:	model backend
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:
+		(
+			model neuralNetworkLayers first
+				isKindOf:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+		).
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesGivenBackend [
+	|
+		model
+	|
+
+	model :=
+		self targetClass
+			nextModelAs:	Rudesheim MachineLearning NeuralNetwork Model
+			backend:	OpenCLNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:	model backend
+		equals:	OpenCLNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:
+		(
+			model neuralNetworkLayers first
+				isKindOf:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+		).
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueIsAliasForForward [
 	|
 		model
 		input
@@ -61,104 +133,93 @@ MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelValueIsAlia
 ]
 
 { #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelLayerCount [
-
-	|
-		model
-	|
-
-	model := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
-
-	self assert: model neuralNetworkLayers size equals: 3
-]
-
-{ #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesGivenBackend [
-
-	|
-		model
-	|
-
-	model :=
-		self targetClass
-			nextModelAs:	Rudesheim MachineLearning NeuralNetwork Model
-			backend:		OpenCLNeuralNetworkMachineLearningRudesheim.
-
-	self assert: model backend equals: OpenCLNeuralNetworkMachineLearningRudesheim.
-	self assert: ( model neuralNetworkLayers first isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim )
-]
-
-{ #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelRequiresBackendModelClass [
-
-	self
-		should:
-		[
-			self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Model.
-		]
-		raise:	Error
-]
-
-{ #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureModelUsesBackendModelClass [
-
-	|
-		model
-		nn
-	|
-
-	nn := Rudesheim MachineLearning NeuralNetwork.
-	model :=
-		self targetClass
-			nextModelAs:	
-			nn
-				OpenCL
-				Model.
-
-	self assert: model backend equals: OpenCLNeuralNetworkMachineLearningRudesheim.
-	self assert: ( model neuralNetworkLayers first isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim )
-]
-
-{ #category : 'tests' }
 MLPNeuralNetworkMachineLearningRudesheimTest >> testArchitectureProducesFreshModelEachCall [
-
 	|
 		left
 		right
 	|
 
-	left := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
-	right := self targetClass nextModelAs: Rudesheim MachineLearning NeuralNetwork Pure Model.
+	left :=
+		self targetClass
+			nextModelAs:	Rudesheim MachineLearning NeuralNetwork Pure Model.
 
-	self deny: left neuralNetworkLayers first weightsRows equals: right neuralNetworkLayers first weightsRows
-]
+	right :=
+		self targetClass
+			nextModelAs:	Rudesheim MachineLearning NeuralNetwork Pure Model.
 
-{ #category : 'tests' }
-MLPNeuralNetworkMachineLearningRudesheimTest >> testLayerSpecificationsCount [
-
-	self assert: (self targetClass layerSpecifications: PureNeuralNetworkMachineLearningRudesheim) size equals: 3
+	self
+		deny:	left neuralNetworkLayers first weightsRows
+		equals:	right neuralNetworkLayers first weightsRows.
 ]
 
 { #category : 'tests' }
 MLPNeuralNetworkMachineLearningRudesheimTest >> testCriterionUsesGivenBackend [
+	self
+		assert:
+		(
+			self targetClass
+				criterion:	PureNeuralNetworkMachineLearningRudesheim
+		)
+		equals:	MSECriterionNeuralNetworkMachineLearningRudesheim.
 
-	self assert: ( self targetClass criterion: PureNeuralNetworkMachineLearningRudesheim ) equals: MSECriterionNeuralNetworkMachineLearningRudesheim.
-	self assert: ( self targetClass criterion: OpenCLNeuralNetworkMachineLearningRudesheim ) equals: MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim
+	self
+		assert:
+		(
+			self targetClass
+				criterion:	OpenCLNeuralNetworkMachineLearningRudesheim
+		)
+		equals:	MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim.
+]
+
+{ #category : 'tests' }
+MLPNeuralNetworkMachineLearningRudesheimTest >> testLayerSpecificationsCount [
+	self
+		assert:
+		(
+			self targetClass
+				layerSpecifications:	PureNeuralNetworkMachineLearningRudesheim
+		) size
+		equals:	3.
 ]
 
 { #category : 'tests' }
 MLPNeuralNetworkMachineLearningRudesheimTest >> testLayerSpecificationsUsesGivenBackend [
-
 	|
 		pureLayers
 		openCLLayers
 	|
 
-	pureLayers := (self targetClass layerSpecifications: PureNeuralNetworkMachineLearningRudesheim) collect: #value.
-	openCLLayers := (self targetClass layerSpecifications: OpenCLNeuralNetworkMachineLearningRudesheim) collect: #value.
+	pureLayers :=
+	(
+		self targetClass
+			layerSpecifications:	PureNeuralNetworkMachineLearningRudesheim
+	)
+		collect:	#value.
 
-	self assert: (pureLayers first isKindOf: LinearTransformLayerNeuralNetworkMachineLearningRudesheim).
-	self assert: (openCLLayers first isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim).
-	self assert: pureLayers second == ReLULayerNeuralNetworkMachineLearningRudesheim.
-	self assert: openCLLayers second == ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim
+	openCLLayers :=
+	(
+		self targetClass
+			layerSpecifications:	OpenCLNeuralNetworkMachineLearningRudesheim
+	)
+		collect:	#value.
+
+	self
+		assert:
+		(
+			pureLayers first
+				isKindOf:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
+		).
+
+	self
+		assert:
+		(
+			openCLLayers first
+				isKindOf:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+		).
+
+	self
+		assert:	pureLayers second == ReLULayerNeuralNetworkMachineLearningRudesheim.
+
+	self
+		assert:	openCLLayers second == ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]

@@ -5,45 +5,39 @@ Trait {
 }
 
 { #category : 'instance creation' }
-TPredictionsNeuralNetworkMachineLearningRudesheim classSide >> inputPredictions:	anInputsSequencialCollection
-outputPredictions:	anOutputsSequencialCollection [
-
-	^ super new 
+TPredictionsNeuralNetworkMachineLearningRudesheim classSide >> inputPredictions: anInputsSequencialCollection
+outputPredictions: anOutputsSequencialCollection [
+	^ super new
 		setInputPredictions:	anInputsSequencialCollection
-		outputPredictions:		anOutputsSequencialCollection
+		outputPredictions:	anOutputsSequencialCollection.
 ]
 
 { #category : 'accessing' }
-TPredictionsNeuralNetworkMachineLearningRudesheim >> backwardContextWithGradient:	aGradientSequencialCollection [
-
+TPredictionsNeuralNetworkMachineLearningRudesheim >> backwardContextWithGradient: aGradientSequencialCollection [
 	^ Rudesheim MachineLearning NeuralNetwork BackwardContext
-		gradient: 		aGradientSequencialCollection
-		predictions:		self
+		gradient:	aGradientSequencialCollection
+		predictions:	self.
 ]
 
 { #category : 'accessing' }
 TPredictionsNeuralNetworkMachineLearningRudesheim >> inputPredictions [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TPredictionsNeuralNetworkMachineLearningRudesheim >> outputPredictions [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TPredictionsNeuralNetworkMachineLearningRudesheim >> setInputPredictions:	anInputsSequencialCollection
-outputPredictions:		anOutputsSequencialCollection [
-
+TPredictionsNeuralNetworkMachineLearningRudesheim >> setInputPredictions: anInputsSequencialCollection
+outputPredictions: anOutputsSequencialCollection [
 	self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
-TPredictionsNeuralNetworkMachineLearningRudesheim >> traceNeuralNetworkLayer:		aTTraceNeuralNetworkMachineLearningRudesheim [
-
+TPredictionsNeuralNetworkMachineLearningRudesheim >> traceNeuralNetworkLayer: aTTraceNeuralNetworkMachineLearningRudesheim [
 	^ Rudesheim MachineLearning NeuralNetwork Trace
 		neuralNetworkLayer:	aTTraceNeuralNetworkMachineLearningRudesheim
-		predictions:				self.
+		predictions:	self.
 ]

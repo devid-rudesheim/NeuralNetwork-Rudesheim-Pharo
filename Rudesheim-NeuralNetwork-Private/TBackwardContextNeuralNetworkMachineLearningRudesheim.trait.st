@@ -7,24 +7,20 @@ Trait {
 }
 
 { #category : 'instance creation' }
-TBackwardContextNeuralNetworkMachineLearningRudesheim classSide >> gradient:		aGradientSequencialCollection
-predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
-	^ super new 
+TBackwardContextNeuralNetworkMachineLearningRudesheim classSide >> gradient: aGradientSequencialCollection
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
+	^ super new
 		setGradient:	aGradientSequencialCollection
-		predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim
-
+		predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 TBackwardContextNeuralNetworkMachineLearningRudesheim >> gradient [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TBackwardContextNeuralNetworkMachineLearningRudesheim >> setGradient:	aGradientSequencialCollection
-predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
+TBackwardContextNeuralNetworkMachineLearningRudesheim >> setGradient: aGradientSequencialCollection
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	self subclassResponsibility.
 ]

@@ -7,24 +7,20 @@ Trait {
 }
 
 { #category : 'instance creation' }
-TTraceNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayer:	aTLayerNeuralNetworkMachineLearningRudesheim
-predictions:				aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
+TTraceNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayer: aTLayerNeuralNetworkMachineLearningRudesheim
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	^ super new
 		setNeuralNetworkLayer:	aTLayerNeuralNetworkMachineLearningRudesheim
-		predictions:					aTPredictionsNeuralNetworkMachineLearningRudesheim
-
+		predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 TTraceNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayer [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TTraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer:	aTLayerNeuralNetworkMachineLearningRudesheim
-predictions:					aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
+TTraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer: aTLayerNeuralNetworkMachineLearningRudesheim
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	self subclassResponsibility.
 ]

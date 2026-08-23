@@ -6,24 +6,20 @@ Trait {
 
 { #category : 'namespace' }
 TBackendNeuralNetworkMachineLearningRudesheim classSide >> Criterion [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'namespace' }
 TBackendNeuralNetworkMachineLearningRudesheim classSide >> Layer [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'namespace' }
 TBackendNeuralNetworkMachineLearningRudesheim classSide >> Model [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TBackendNeuralNetworkMachineLearningRudesheim classSide >> default [
-
-	^ PureNeuralNetworkMachineLearningRudesheim
+	^ PureNeuralNetworkMachineLearningRudesheim.
 ]

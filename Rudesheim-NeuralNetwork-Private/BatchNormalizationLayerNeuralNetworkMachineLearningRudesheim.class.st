@@ -26,32 +26,21 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGr
 		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
 			detect:
 			[ :each |
-				each
-					tensorKindClass
-					= WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
+				each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
 			].
 
 	shiftDescriptor :=
 		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
 			detect:
 			[ :each |
-				each
-					tensorKindClass
-					= BiasesTensorSoilNeuralNetworkMachineLearningRudesheim.
+				each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim.
 			].
 
 	^ self
 		scale:	scaleDescriptor payload
 		shift:	shiftDescriptor payload
-		window:	
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-			layerAttributesRecords
-			first.
-]
-
-{ #category : 'as yet unclassified' }
-BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-	^ 'BatchNormalization'.
+		window:
+			aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first.
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,17 +83,23 @@ BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim >> forward: anInput
 				to:	spatialCount
 				do:
 				[ :p |
-					i := (c - 1) * spatialCount + p.
+					i := ( c - 1 ) * spatialCount + p.
 
 					output
 						at:	i
-						put:	
+						put:
 						(
 							anInputNumbersSequencialCollection
 								at:	i
-						)
-							* (scale at: c)
-							+ (shift at: c).
+						) *
+						(
+							scale
+								at:	c
+						) +
+						(
+							shift
+								at:	c
+						).
 				].
 		].
 

@@ -7,6 +7,5 @@ Class {
 
 { #category : 'namespace' }
 WeightsSourceNeuralNetworkMachineLearningRudesheim class >> Random [
-
-	^ RandomWeightsSourceNeuralNetworkMachineLearningRudesheim
+	^ RandomWeightsSourceNeuralNetworkMachineLearningRudesheim.
 ]

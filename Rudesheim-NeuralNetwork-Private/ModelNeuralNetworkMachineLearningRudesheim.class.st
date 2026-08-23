@@ -21,14 +21,16 @@ Class {
 
 { #category : 'accessing' }
 ModelNeuralNetworkMachineLearningRudesheim >> backend [
-
 	^ backend
-		ifNil: [ self error: 'Model backend must be explicit; use nn Pure Model or nn OpenCL Model' ]
+		ifNil:
+		[
+			self
+				error:	'Model backend must be explicit; use nn Pure Model or nn OpenCL Model'.
+		].
 ]
 
 { #category : 'accessing' }
 ModelNeuralNetworkMachineLearningRudesheim >> defaultOutputNode [
-
 	|
 		nn
 		layers
@@ -38,42 +40,44 @@ ModelNeuralNetworkMachineLearningRudesheim >> defaultOutputNode [
 	layers := self neuralNetworkLayers.
 
 	^ layers allButFirst
-		inject:	( nn Node layer: layers first )
+		inject:
+		(
+			nn Node
+				layer:	layers first
+		)
 		into:
 		[ :previousNode :eachLayer |
 			nn Node
-				layer:			eachLayer
+				layer:	eachLayer
 				predecessor:	previousNode.
-		]
+		].
 ]
 
 { #category : 'accessing' }
 ModelNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayers [
-
 	^ neuralNetworkLayers.
 ]
 
 { #category : 'accessing' }
 ModelNeuralNetworkMachineLearningRudesheim >> outputNode [
-
 	^ outputNode
-		ifNil: [ outputNode := self defaultOutputNode ]
+		ifNil:
+		[
+			outputNode := self defaultOutputNode.
+		].
 ]
 
 { #category : 'initialization' }
 ModelNeuralNetworkMachineLearningRudesheim >> setBackend: aTBackendNeuralNetworkMachineLearningRudesheim [
-
-	backend := aTBackendNeuralNetworkMachineLearningRudesheim
+	backend := aTBackendNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'initialization' }
-ModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
-
+ModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers: aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
 	neuralNetworkLayers := aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'initialization' }
-ModelNeuralNetworkMachineLearningRudesheim >> setOutputNode:	aTNodeNeuralNetworkMachineLearningRudesheim [
-
+ModelNeuralNetworkMachineLearningRudesheim >> setOutputNode: aTNodeNeuralNetworkMachineLearningRudesheim [
 	outputNode := aTNodeNeuralNetworkMachineLearningRudesheim.
 ]

@@ -9,55 +9,46 @@ Class {
 }
 
 { #category : 'namespace' }
-SoilNeuralNetworkMachineLearningRudesheim class >> Root [
-
-	^ StoreRootSoilNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'namespace' }
-SoilNeuralNetworkMachineLearningRudesheim class >> Tensor [
-
-	^ TensorSoilNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> GraphNodeRecord [
-
-	^ GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+	^ GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> ModelRecord [
-
-	^ ModelRecordSoilNeuralNetworkMachineLearningRudesheim
+	^ ModelRecordSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> ModelSymbol [
+	^ ModelSymbolSoilNeuralNetworkMachineLearningRudesheim.
+]
 
-	^ ModelSymbolSoilNeuralNetworkMachineLearningRudesheim
+{ #category : 'namespace' }
+SoilNeuralNetworkMachineLearningRudesheim class >> Root [
+	^ StoreRootSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> StoreRoot [
+	^ StoreRootSoilNeuralNetworkMachineLearningRudesheim.
+]
 
-	^ StoreRootSoilNeuralNetworkMachineLearningRudesheim
+{ #category : 'namespace' }
+SoilNeuralNetworkMachineLearningRudesheim class >> Tensor [
+	^ TensorSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> TensorDescriptor [
-
-	^ TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim
+	^ TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> WeightsSource [
-
-	^ WeightsSourceSoilNeuralNetworkMachineLearningRudesheim
+	^ WeightsSourceSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 SoilNeuralNetworkMachineLearningRudesheim class >> WindowSpecification [
-
-	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim
+	^ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim.
 ]

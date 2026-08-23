@@ -6,12 +6,10 @@ Trait {
 
 { #category : 'reading' }
 TModelReaderNeuralNetworkMachineLearningRudesheim classSide >> nextModelAs: aClass [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'reading' }
 TModelReaderNeuralNetworkMachineLearningRudesheim >> nextModelAs: aClass [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]

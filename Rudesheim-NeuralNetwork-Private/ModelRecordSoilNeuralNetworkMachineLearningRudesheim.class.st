@@ -4,6 +4,8 @@ ModelRecordSoilNeuralNetworkMachineLearningRudesheim stores the internal Soil re
 Class {
 	#name : 'ModelRecordSoilNeuralNetworkMachineLearningRudesheim',
 	#superclass : 'Object',
+	#traits : 'TModelSourceNeuralNetworkMachineLearningRudesheim',
+	#classTraits : 'TModelSourceNeuralNetworkMachineLearningRudesheim classTrait',
 	#instVars : [
 		'formatClass',
 		'externalFileReference',
@@ -13,8 +15,6 @@ Class {
 		'outputGraphNodeRecord',
 		'metadata'
 	],
-	#traits : 'TModelSourceNeuralNetworkMachineLearningRudesheim',
-	#classTraits : 'TModelSourceNeuralNetworkMachineLearningRudesheim classTrait',
 	#category : 'Rudesheim-NeuralNetwork-Private',
 	#package : 'Rudesheim-NeuralNetwork-Private'
 }
@@ -25,145 +25,150 @@ ModelRecordSoilNeuralNetworkMachineLearningRudesheim class >> isSoilClusterRoot 
 	inlining it into whatever graph references it (e.g. StoreRootSoilNeuralNetworkMachineLearningRudesheim's
 	models Dictionary). Without this, reading any single model from a store deserializes
 	every model that store holds."
-
-	^ true
+	^ true.
 ]
 
 { #category : 'adding' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> addGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	self graphNodeRecords
+		add:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
 
-	self graphNodeRecords add: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
-	^ aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+	^ aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'adding' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> addTensorDescriptorRecord: aTensorDescriptorSoilNeuralNetworkMachineLearningRudesheim [
+	self tensorDescriptorRecords
+		add:	aTensorDescriptorSoilNeuralNetworkMachineLearningRudesheim.
 
-	self tensorDescriptorRecords add: aTensorDescriptorSoilNeuralNetworkMachineLearningRudesheim.
-	^ aTensorDescriptorSoilNeuralNetworkMachineLearningRudesheim
+	^ aTensorDescriptorSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> externalFileReference [
-
-	^ externalFileReference
+	^ externalFileReference.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> externalFileReference: aFileReference [
-
-	externalFileReference := aFileReference
+	externalFileReference := aFileReference.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> externalPayload [
-
-	^ externalPayload
+	^ externalPayload.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> externalPayload: aByteArray [
-
-	externalPayload := aByteArray
+	externalPayload := aByteArray.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> formatClass [
-
-	^ formatClass
+	^ formatClass.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> formatClass: aClass [
-
-	formatClass := aClass
+	formatClass := aClass.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> graphNodeRecords [
-
 	^ graphNodeRecords
-		ifNil: [ graphNodeRecords := OrderedCollection new ]
+		ifNil:
+		[
+			graphNodeRecords := OrderedCollection new.
+		].
+]
+
+{ #category : 'private' }
+ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> layerClassForGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+backend: aTBackendNeuralNetworkMachineLearningRudesheim [
+	^ ONNXNeuralNetworkMachineLearningRudesheim
+		layerClassForName:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerClass nameForONNX
+		backend:	aTBackendNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> metadata [
-
 	^ metadata
-		ifNil: [ metadata := Dictionary new ]
+		ifNil:
+		[
+			metadata := Dictionary new.
+		].
+]
+
+{ #category : 'reading' }
+ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nextModelAs: aClass [
+	^ aClass
+		outputNode:
+		(
+			self
+				nodeForGraphNodeRecord:	self outputGraphNodeRecord
+				cache:	IdentityDictionary new
+				backend:	aClass backend
+		).
 ]
 
 { #category : 'private' }
-ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> layerClassForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-backend:													aTBackendNeuralNetworkMachineLearningRudesheim [
-
-	^ ONNXNeuralNetworkMachineLearningRudesheim
-		layerClassForName:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerClass nameForONNX
-		backend:			aTBackendNeuralNetworkMachineLearningRudesheim
-]
-
-{ #category : 'private' }
-ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nodeForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-cache:					anIdentityDictionary
-backend:				aTBackendNeuralNetworkMachineLearningRudesheim [
-
+ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nodeForGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+cache: anIdentityDictionary
+backend: aTBackendNeuralNetworkMachineLearningRudesheim [
 	^ anIdentityDictionary
 		at:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
 		ifAbsentPut:
 		[
 			Rudesheim MachineLearning NeuralNetwork Node
 				layer:
+				(
 					(
-						(
-							self
-								layerClassForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-								backend:						aTBackendNeuralNetworkMachineLearningRudesheim
-						)
-							fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+						self
+							layerClassForGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+							backend:	aTBackendNeuralNetworkMachineLearningRudesheim
 					)
+						fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+				)
 				predecessors:
-					(
-						aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim predecessorRecords
-							collect:
-							[ :eachPredecessorRecord |
-								self
-									nodeForGraphNodeRecord:	eachPredecessorRecord
-									cache:					anIdentityDictionary
-									backend:				aTBackendNeuralNetworkMachineLearningRudesheim
-							]
-					)
-		]
-]
-
-{ #category : 'reading' }
-ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> nextModelAs:	aClass [
-
-	^ aClass outputNode:
-		(
-			self
-				nodeForGraphNodeRecord:	self outputGraphNodeRecord
-				cache:					IdentityDictionary new
-				backend:				aClass backend
-		)
+				(
+					aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim predecessorRecords
+						collect:
+						[ :eachPredecessorRecord |
+							self
+								nodeForGraphNodeRecord:	eachPredecessorRecord
+								cache:	anIdentityDictionary
+								backend:	aTBackendNeuralNetworkMachineLearningRudesheim.
+						]
+				).
+		].
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> outputGraphNodeRecord [
-
-	^ outputGraphNodeRecord
+	^ outputGraphNodeRecord.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> outputGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	(
+		self graphNodeRecords
+			includes:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+	)
+		ifFalse:
+		[
+			self
+				error:	'Output graph node must belong to the model record'.
+		].
 
-	(self graphNodeRecords includes: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim)
-		ifFalse: [ self error: 'Output graph node must belong to the model record' ].
-	outputGraphNodeRecord := aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
+	outputGraphNodeRecord := aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 ModelRecordSoilNeuralNetworkMachineLearningRudesheim >> tensorDescriptorRecords [
-
 	^ tensorDescriptorRecords
-		ifNil: [ tensorDescriptorRecords := OrderedCollection new ]
+		ifNil:
+		[
+			tensorDescriptorRecords := OrderedCollection new.
+		].
 ]

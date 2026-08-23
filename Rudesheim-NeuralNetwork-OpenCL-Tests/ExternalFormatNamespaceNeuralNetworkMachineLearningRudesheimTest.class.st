@@ -13,21 +13,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> mnistO
 		IceRepository registry
 			detect:
 			[ :each |
-				each
-					name
-					= 'rudesheim'.
+				each name = 'rudesheim'.
 			]
-	)
-		location
-		parent
-		parent
-		parent
-		parent
-		parent
-		parent
-		parent
-		/ 'llm-model'
-		/ 'mnist-8.onnx'.
+	) location parent parent parent parent parent parent parent / 'llm-model' / 'mnist-8.onnx'.
 ]
 
 { #category : 'as yet unclassified' }
@@ -41,10 +29,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> mnistP
 	soilFileReference exists
 		ifFalse:
 		[
-			self
-				targetClass
-				ONNX
-				Convertor
+			self targetClass ONNX Convertor
 				file:	self mnistOnnxFileReference
 				toSoil:	soilFileReference.
 		].
@@ -65,10 +50,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> mnistS
 	soilFileReference exists
 		ifFalse:
 		[
-			self
-				targetClass
-				ONNX
-				Convertor
+			self targetClass ONNX Convertor
 				file:	self mnistOnnxFileReference
 				toSoil:	soilFileReference
 				progress:
@@ -86,21 +68,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> resnet
 		IceRepository registry
 			detect:
 			[ :each |
-				each
-					name
-					= 'rudesheim'.
+				each name = 'rudesheim'.
 			]
-	)
-		location
-		parent
-		parent
-		parent
-		parent
-		parent
-		parent
-		parent
-		/ 'llm-model'
-		/ 'resnet50-v2-7.onnx'.
+	) location parent parent parent parent parent parent parent / 'llm-model' / 'resnet50-v2-7.onnx'.
 ]
 
 { #category : 'as yet unclassified' }
@@ -114,10 +84,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> resnet
 	soilFileReference exists
 		ifFalse:
 		[
-			self
-				targetClass
-				ONNX
-				Convertor
+			self targetClass ONNX Convertor
 				file:	self resnet50OnnxFileReference
 				toSoil:	soilFileReference.
 		].
@@ -138,10 +105,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> resnet
 	soilFileReference exists
 		ifFalse:
 		[
-			self
-				targetClass
-				ONNX
-				Convertor
+			self targetClass ONNX Convertor
 				file:	self resnet50OnnxFileReference
 				toSoil:	soilFileReference
 				progress:
@@ -154,12 +118,12 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> resnet
 
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> selectorsWithExtendedForwardTimeLimit [
-	^ #(#testResNet50ForwardsToThousandLogits #testResNet50ForwardsToThousandLogitsWithPureBackend).
+	^ #( #testResNet50ForwardsToThousandLogits #testResNet50ForwardsToThousandLogitsWithPureBackend ).
 ]
 
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> selectorsWithExternalConversionTimeLimit [
-	^ #(#testMNISTOnnxConvertsThroughSoil #testResNet50OnnxConvertsThroughSoil #testResNet50OnnxConvertsThroughSoilWithPureBackend).
+	^ #( #testMNISTOnnxConvertsThroughSoil #testResNet50OnnxConvertsThroughSoil #testResNet50OnnxConvertsThroughSoilWithPureBackend ).
 ]
 
 { #category : 'as yet unclassified' }
@@ -170,9 +134,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest class >> target
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> defaultTimeLimit [
 	(
-		self
-			class
-			selectorsWithExternalConversionTimeLimit
+		self class selectorsWithExternalConversionTimeLimit
 			includes:	self selector
 	)
 		ifTrue:
@@ -181,9 +143,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> defaultTimeL
 		].
 
 	(
-		self
-			class
-			selectorsWithExtendedForwardTimeLimit
+		self class selectorsWithExtendedForwardTimeLimit
 			includes:	self selector
 	)
 		ifTrue:
@@ -203,17 +163,13 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testBackendM
 	nn := self targetClass.
 
 	self
-		assert:	
-		nn
-			Pure
-			Model
+		assert:
+			nn Pure Model
 		equals:	ModelPureNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		nn
-			OpenCL
-			Model
+		assert:
+			nn OpenCL Model
 		equals:	ModelOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
@@ -226,7 +182,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 	nn := self targetClass.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'Gemm'
@@ -234,7 +190,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'Relu'
@@ -242,7 +198,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	ReLULayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'Conv'
@@ -250,7 +206,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	Conv2DLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'MaxPool'
@@ -258,7 +214,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	MaxPool2DLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'Add'
@@ -266,7 +222,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	AddLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'BatchNormalization'
@@ -274,7 +230,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testLayerCla
 		equals:	BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
+		assert:
 		(
 			nn ONNX
 				layerClassForName:	'GlobalAveragePool'
@@ -299,10 +255,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 	nn := self targetClass.
 
-	self
-		class
-		mnistOnnxFileReference
-		exists
+	self class mnistOnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -310,12 +263,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 	(
 		Soil
-			openOnPath:	
-			self
-				class
-				mnistSoilFileReference
-	)
-		intoRHScope
+			openOnPath:
+				self class mnistSoilFileReference
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -329,7 +279,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'mnist-8'
@@ -337,10 +287,8 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 			model :=
 				modelRecord
-					nextModelAs:	
-					nn
-						OpenCL
-						Model.
+					nextModelAs:
+						nn OpenCL Model.
 
 			input :=
 				Array
@@ -348,10 +296,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 					withAll:	0.1.
 
 			prediction :=
-				(
-					model
-						forward:	input
-				) asArray.
+			(
+				model
+					forward:	input
+			) asArray.
 		].
 
 	self
@@ -359,7 +307,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 		equals:	10.
 
 	self
-		assert:	
+		assert:
 		(
 			prediction
 				allSatisfy:
@@ -378,10 +326,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 	nn := self targetClass.
 
-	self
-		class
-		mnistOnnxFileReference
-		exists
+	self class mnistOnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -389,12 +334,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 	(
 		Soil
-			openOnPath:	
-			self
-				class
-				mnistPureSoilFileReference
-	)
-		intoRHScope
+			openOnPath:
+				self class mnistPureSoilFileReference
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -408,7 +350,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'mnist-8'
@@ -418,38 +360,35 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTFor
 				assert:	modelRecord notNil.
 
 			self
-				assert:	
+				assert:
 				(
 					modelRecord metadata
 						includesKey:	#graphPopulationError
-				)
-					not.
+				) not.
 
 			self
-				deny:	
-				modelRecord
-					graphNodeRecords
-					isEmpty.
+				deny:
+					modelRecord graphNodeRecords isEmpty.
 
 			self
-				assert:	
-				modelRecord
-					outputGraphNodeRecord
-					notNil.
+				assert:
+					modelRecord outputGraphNodeRecord notNil.
 
 			model :=
 				modelRecord
-					nextModelAs:	
-					nn
-						Pure
-						Model.
+					nextModelAs:
+						nn Pure Model.
 
 			input :=
 				Array
 					new:	784
 					withAll:	0.1.
 
-			prediction := (model forward: input) asArray.
+			prediction :=
+			(
+				model
+					forward:	input
+			) asArray.
 		].
 
 	self
@@ -470,10 +409,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTOnn
 		soilFileReference
 	|
 
-	self
-		class
-		mnistOnnxFileReference
-		exists
+	self class mnistOnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -487,8 +423,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTOnn
 	(
 		Soil
 			openOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -500,7 +435,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTOnn
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'mnist-8'
@@ -510,24 +445,19 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testMNISTOnn
 				assert:	modelRecord notNil.
 
 			self
-				assert:	
+				assert:
 				(
 					modelRecord metadata
 						includesKey:	#graphPopulationError
-				)
-					not.
+				) not.
 
 			self
-				deny:	
-				modelRecord
-					graphNodeRecords
-					isEmpty.
+				deny:
+					modelRecord graphNodeRecords isEmpty.
 
 			self
-				assert:	
-				modelRecord
-					outputGraphNodeRecord
-					notNil.
+				assert:
+					modelRecord outputGraphNodeRecord notNil.
 		].
 ]
 
@@ -551,76 +481,62 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 	modelRecord := nn Soil ModelRecord new.
 
 	branchAWeights :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Weights
-			shape:	#(2 2)
-			payload:	#(1.0 0.0 0.0 1.0).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Weights
+			shape:	#( 2 2 )
+			payload:	#( 1.0 0.0 0.0 1.0 ).
 
 	branchABiases :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Biases
-			shape:	#(2)
-			payload:	#(0.0 0.0).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Biases
+			shape:	#( 2 )
+			payload:	#( 0.0 0.0 ).
 
 	branchANode :=
-		nn
-			Soil
-			GraphNodeRecord
+		nn Soil GraphNodeRecord
 			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
-			predecessorRecords:	#()
-			tensorDescriptorRecords:	{branchAWeights .  branchABiases}.
+			predecessorRecords:	#(  )
+			tensorDescriptorRecords:
+			{
+				branchAWeights.
+				branchABiases
+			}.
 
 	branchBWeights :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Weights
-			shape:	#(2 2)
-			payload:	#(2.0 0.0 0.0 2.0).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Weights
+			shape:	#( 2 2 )
+			payload:	#( 2.0 0.0 0.0 2.0 ).
 
 	branchBBiases :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Biases
-			shape:	#(2)
-			payload:	#(1.0 1.0).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Biases
+			shape:	#( 2 )
+			payload:	#( 1.0 1.0 ).
 
 	branchBNode :=
-		nn
-			Soil
-			GraphNodeRecord
+		nn Soil GraphNodeRecord
 			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
-			predecessorRecords:	#()
-			tensorDescriptorRecords:	{branchBWeights .  branchBBiases}.
+			predecessorRecords:	#(  )
+			tensorDescriptorRecords:
+			{
+				branchBWeights.
+				branchBBiases
+			}.
 
 	mergeNode :=
-		nn
-			Soil
-			GraphNodeRecord
+		nn Soil GraphNodeRecord
 			layerClass:	AddLayerNeuralNetworkMachineLearningRudesheim
-			predecessorRecords:	{branchANode .  branchBNode}
-			tensorDescriptorRecords:	#().
+			predecessorRecords:
+			{
+				branchANode.
+				branchBNode
+			}
+			tensorDescriptorRecords:	#(  ).
 
 	modelRecord
 		addGraphNodeRecord:	branchANode.
@@ -636,10 +552,8 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 
 	model :=
 		modelRecord
-			nextModelAs:	
-			nn
-				OpenCL
-				Model.
+			nextModelAs:
+				nn OpenCL Model.
 
 	self
 		assert:	model backend
@@ -650,14 +564,14 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 		equals:	AddLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 
 	output :=
-		(
-			model
-				forward:	#(3.0 4.0)
-		) asArray.
+	(
+		model
+			forward:	#( 3.0 4.0 )
+	) asArray.
 
 	self
 		assert:	output
-		equals:	#(10.0 13.0).
+		equals:	#( 10.0 13.0 ).
 ]
 
 { #category : 'as yet unclassified' }
@@ -676,36 +590,28 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 	modelRecord := nn Soil ModelRecord new.
 
 	weightsDescriptor :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Weights
-			shape:	#(2 2)
-			payload:	#(1.0 0.0 0.0 1.0).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Weights
+			shape:	#( 2 2 )
+			payload:	#( 1.0 0.0 0.0 1.0 ).
 
 	biasesDescriptor :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Biases
-			shape:	#(2)
-			payload:	#(0.5 -0.5).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Biases
+			shape:	#( 2 )
+			payload:	#( 0.5 -0.5 ).
 
 	node :=
-		nn
-			Soil
-			GraphNodeRecord
+		nn Soil GraphNodeRecord
 			layerClass:	LinearTransformLayerNeuralNetworkMachineLearningRudesheim
-			predecessorRecords:	#()
-			tensorDescriptorRecords:	{weightsDescriptor .  biasesDescriptor}.
+			predecessorRecords:	#(  )
+			tensorDescriptorRecords:
+			{
+				weightsDescriptor.
+				biasesDescriptor
+			}.
 
 	modelRecord
 		addGraphNodeRecord:	node.
@@ -715,45 +621,41 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testModelRec
 
 	model :=
 		modelRecord
-			nextModelAs:	
-			nn
-				OpenCL
-				Model.
+			nextModelAs:
+				nn OpenCL Model.
 
 	self
 		assert:	model backend
 		equals:	OpenCLNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	( model outputNode layer isKindOf: LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim ).
+		assert:
+		(
+			model outputNode layer
+				isKindOf:	LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+		).
 
 	output :=
-		(
-			model
-				forward:	#(1.0 2.0)
-		) asArray.
+	(
+		model
+			forward:	#( 1.0 2.0 )
+	) asArray.
 
 	self
 		assert:	output
-		equals:	#(1.5 1.5).
+		equals:	#( 1.5 1.5 ).
 ]
 
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXConvertorNamespace [
 	self
-		assert:	
-		self
-			targetClass
-			ONNX
-			Convertor
+		assert:
+			self targetClass ONNX Convertor
 		equals:	ConvertorONNXNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			ONNX
-			Converter
+		assert:
+			self targetClass ONNX Converter
 		equals:	ConvertorONNXNeuralNetworkMachineLearningRudesheim.
 ]
 
@@ -803,9 +705,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 			soilFileReference delete.
 		].
 
-	nn
-		ONNX
-		Convertor
+	nn ONNX Convertor
 		file:	fileReference fullName
 		toSoil:	soilFileReference fullName
 		at:	'rudesheim-onnx-payload'
@@ -815,9 +715,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 				add:	event -> object.
 		].
 
-	nn
-		ONNX
-		Convertor
+	nn ONNX Convertor
 		soil:	soilFileReference fullName
 		toFile:	outputFileReference fullName
 		at:	'rudesheim-onnx-payload'
@@ -828,23 +726,20 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 		].
 
 	self
-		assert:	
-		outputFileReference
-			binaryReadStream
-			contents
+		assert:
+			outputFileReference binaryReadStream contents
 		equals:	#[9 8 7].
 
 	self
-		assert:	
+		assert:
 		(
 			events
 				collect:
 				[ :each |
 					each key.
 				]
-		)
-			asArray
-		equals:	#(started readStream wroteSoil done started readSoil wroteStream done).
+		) asArray
+		equals:	#( started readStream wroteSoil done started readSoil wroteStream done ).
 ]
 
 { #category : 'as yet unclassified' }
@@ -882,9 +777,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 			soilFileReference delete.
 		].
 
-	nn
-		ONNX
-		Convertor
+	nn ONNX Convertor
 		file:	fileReference
 		toSoil:	soilFileReference.
 
@@ -896,10 +789,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 
 		modelRecord :=
 			root
-				at:	
+				at:
 				(
 					root
-						symbolByName:	(fileReference withoutExtension basename)
+						symbolByName:	fileReference withoutExtension basename
 				).
 
 		self
@@ -923,41 +816,23 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXFile
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXNamesLiveOnLayerClasses [
 	self
-		assert:	
-		self
-			targetClass
-			Layer
-			LinearTransform
-			nameForONNX
+		assert:
+			self targetClass Layer LinearTransform nameForONNX
 		equals:	'Gemm'.
 
 	self
-		assert:	
-		self
-			targetClass
-			Layer
-			ReLU
-			nameForONNX
+		assert:
+			self targetClass Layer ReLU nameForONNX
 		equals:	'Relu'.
 
 	self
-		assert:	
-		self
-			targetClass
-			OpenCL
-			Layer
-			LinearTransform
-			nameForONNX
+		assert:
+			self targetClass OpenCL Layer LinearTransform nameForONNX
 		equals:	'Gemm'.
 
 	self
-		assert:	
-		self
-			targetClass
-			OpenCL
-			Layer
-			ReLU
-			nameForONNX
+		assert:
+			self targetClass OpenCL Layer ReLU nameForONNX
 		equals:	'Relu'.
 ]
 
@@ -994,9 +869,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXStre
 		ReadStream
 			on:	#[1 2 3 4 5].
 	[
-		nn
-			ONNX
-			Convertor
+		nn ONNX Convertor
 			readStream:	readStream
 			toSoil:	soil
 			at:	'stream-model'
@@ -1010,9 +883,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXStre
 			WriteStream
 				on:	ByteArray new.
 
-		nn
-			ONNX
-			Convertor
+		nn ONNX Convertor
 			soil:	soil
 			toWriteStream:	outputStream
 			at:	'stream-model'
@@ -1027,16 +898,15 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testONNXStre
 			equals:	#[1 2 3 4 5].
 
 		self
-			assert:	
+			assert:
 			(
 				events
 					collect:
 					[ :each |
 						each key.
 					]
-			)
-				asArray
-			equals:	#(started readStream wroteSoil done started readSoil wroteStream done).
+			) asArray
+			equals:	#( started readStream wroteSoil done started readSoil wroteStream done ).
 	]
 		ensure:
 		[
@@ -1053,10 +923,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 	nn := self targetClass.
 
-	self
-		class
-		resnet50OnnxFileReference
-		exists
+	self class resnet50OnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -1064,12 +931,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 	(
 		Soil
-			openOnPath:	
-			self
-				class
-				resnet50SoilFileReference
-	)
-		intoRHScope
+			openOnPath:
+				self class resnet50SoilFileReference
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -1083,7 +947,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'resnet50-v2-7'
@@ -1091,24 +955,20 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			model :=
 				modelRecord
-					nextModelAs:	
-					nn
-						OpenCL
-						Model.
+					nextModelAs:
+						nn OpenCL Model.
 
 			input :=
 				Array
-					new:	
-					3
-						* 224
-						* 224
+					new:
+						3 * 224 * 224
 					withAll:	0.1.
 
 			prediction :=
-				(
-					model
-						forward:	input
-				) asArray.
+			(
+				model
+					forward:	input
+			) asArray.
 		].
 
 	self
@@ -1116,7 +976,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 		equals:	1000.
 
 	self
-		assert:	
+		assert:
 		(
 			prediction
 				allSatisfy:
@@ -1135,10 +995,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 	nn := self targetClass.
 
-	self
-		class
-		resnet50OnnxFileReference
-		exists
+	self class resnet50OnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -1146,12 +1003,9 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 	(
 		Soil
-			openOnPath:	
-			self
-				class
-				resnet50PureSoilFileReference
-	)
-		intoRHScope
+			openOnPath:
+				self class resnet50PureSoilFileReference
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -1165,7 +1019,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'resnet50-v2-7'
@@ -1173,20 +1027,20 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			model :=
 				modelRecord
-					nextModelAs:	
-					nn
-						Pure
-						Model.
+					nextModelAs:
+						nn Pure Model.
 
 			input :=
 				Array
-					new:	
-					3
-						* 224
-						* 224
+					new:
+						3 * 224 * 224
 					withAll:	0.1.
 
-			prediction := (model forward: input) asArray.
+			prediction :=
+			(
+				model
+					forward:	input
+			) asArray.
 		].
 
 	self
@@ -1207,10 +1061,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 		soilFileReference
 	|
 
-	self
-		class
-		resnet50OnnxFileReference
-		exists
+	self class resnet50OnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -1224,8 +1075,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 	(
 		Soil
 			openOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -1237,7 +1087,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'resnet50-v2-7'
@@ -1247,24 +1097,19 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 				assert:	modelRecord notNil.
 
 			self
-				assert:	
+				assert:
 				(
 					modelRecord metadata
 						includesKey:	#graphPopulationError
-				)
-					not.
+				) not.
 
 			self
-				deny:	
-				modelRecord
-					graphNodeRecords
-					isEmpty.
+				deny:
+					modelRecord graphNodeRecords isEmpty.
 
 			self
-				assert:	
-				modelRecord
-					outputGraphNodeRecord
-					notNil.
+				assert:
+					modelRecord outputGraphNodeRecord notNil.
 		].
 ]
 
@@ -1274,10 +1119,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 		soilFileReference
 	|
 
-	self
-		class
-		resnet50OnnxFileReference
-		exists
+	self class resnet50OnnxFileReference exists
 		ifFalse:
 		[
 			^ self skip.
@@ -1291,8 +1133,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 	(
 		Soil
 			openOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -1304,7 +1145,7 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 
 			modelRecord :=
 				root
-					at:	
+					at:
 					(
 						root
 							symbolByName:	'resnet50-v2-7'
@@ -1314,83 +1155,57 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testResNet50
 				assert:	modelRecord notNil.
 
 			self
-				assert:	
+				assert:
 				(
 					modelRecord metadata
 						includesKey:	#graphPopulationError
-				)
-					not.
+				) not.
 
 			self
-				deny:	
-				modelRecord
-					graphNodeRecords
-					isEmpty.
+				deny:
+					modelRecord graphNodeRecords isEmpty.
 
 			self
-				assert:	
-				modelRecord
-					outputGraphNodeRecord
-					notNil.
+				assert:
+					modelRecord outputGraphNodeRecord notNil.
 		].
 ]
 
 { #category : 'as yet unclassified' }
 ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testSoilNamespace [
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			GraphNodeRecord
+		assert:
+			self targetClass Soil GraphNodeRecord
 		equals:	GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			ModelRecord
+		assert:
+			self targetClass Soil ModelRecord
 		equals:	ModelRecordSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			ModelSymbol
+		assert:
+			self targetClass Soil ModelSymbol
 		equals:	ModelSymbolSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			Root
+		assert:
+			self targetClass Soil Root
 		equals:	StoreRootSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			Tensor
+		assert:
+			self targetClass Soil Tensor
 		equals:	TensorSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			TensorDescriptor
+		assert:
+			self targetClass Soil TensorDescriptor
 		equals:	TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim.
 
 	self
-		assert:	
-		self
-			targetClass
-			Soil
-			WeightsSource
+		assert:
+			self targetClass Soil WeightsSource
 		equals:	WeightsSourceSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
@@ -1416,14 +1231,12 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testSoilStor
 		put:	modelRecord.
 
 	self
-		deny:	
-		modelSymbol
-			class
-			= Symbol.
+		deny:
+			modelSymbol class = Symbol.
 
 	self
 		assert:	modelSymbol
-		equals:	
+		equals:
 		(
 			root
 				symbolByName:	'mnist-8'
@@ -1431,15 +1244,14 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testSoilStor
 
 	self
 		assert:	modelSymbol hash
-		equals:	
+		equals:
 		(
 			root
 				symbolByName:	'mnist-8'
-		)
-			hash.
+		) hash.
 
 	self
-		assert:	
+		assert:
 		(
 			root
 				at:	modelSymbol
@@ -1447,10 +1259,10 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testSoilStor
 		equals:	modelRecord.
 
 	self
-		assert:	
+		assert:
 		(
 			root
-				includesKey:	
+				includesKey:
 				(
 					root
 						symbolByName:	'mnist-8'
@@ -1458,25 +1270,25 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testSoilStor
 		).
 
 	self
-		assert:	
-		root
-			keys
-			asArray
-		equals:	{modelSymbol}.
+		assert:
+			root keys asArray
+		equals:
+		{
+			modelSymbol
+		}.
 
 	self
-		assert:	
-		root
-			values
-			asArray
-		equals:	{modelRecord}.
+		assert:
+			root values asArray
+		equals:
+		{
+			modelRecord
+		}.
 
 	self
-		assert:	
-		root
-			modelNames
-			asArray
-		equals:	#('mnist-8').
+		assert:
+			root modelNames asArray
+		equals:	#( 'mnist-8' ).
 ]
 
 { #category : 'as yet unclassified' }
@@ -1509,28 +1321,21 @@ ExternalFormatNamespaceNeuralNetworkMachineLearningRudesheimTest >> testTensorDe
 	nn := self targetClass.
 
 	descriptor :=
-		nn
-			Soil
-			TensorDescriptor
-			tensorKindClass:	
-			nn
-				Soil
-				Tensor
-				Weights
-			shape:	#(2 3)
-			payload:	#(#(1 2 3) #(4 5 6)).
+		nn Soil TensorDescriptor
+			tensorKindClass:
+				nn Soil Tensor Weights
+			shape:	#( 2 3 )
+			payload:	#( #(1 2 3) #(4 5 6) ).
 
 	self
-		assert:	
-		descriptor
-			tensorKindClass
-			== nn Soil Tensor Weights.
+		assert:
+			descriptor tensorKindClass == nn Soil Tensor Weights.
 
 	self
 		assert:	descriptor shape
-		equals:	#(2 3).
+		equals:	#( 2 3 ).
 
 	self
 		assert:	descriptor payload
-		equals:	#(#(1 2 3) #(4 5 6)).
+		equals:	#( #(1 2 3) #(4 5 6) ).
 ]

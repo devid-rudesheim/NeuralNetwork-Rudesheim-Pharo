@@ -6,58 +6,51 @@ Trait {
 	#package : 'Rudesheim-NeuralNetwork-Private'
 }
 
-{ #category : 'instance creation' }
-TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
-
-	^ self
-		neuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim
-		backend:				self backend
-]
-
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim classSide >> backend [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'instance creation' }
-TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim
-backend:						aTBackendNeuralNetworkMachineLearningRudesheim [
+TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers: aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
+	^ self
+		neuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim
+		backend:	self backend.
+]
 
+{ #category : 'instance creation' }
+TModelNeuralNetworkMachineLearningRudesheim classSide >> neuralNetworkLayers: aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim
+backend: aTBackendNeuralNetworkMachineLearningRudesheim [
 	^ super new
 		setNeuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim;
-		setBackend:				aTBackendNeuralNetworkMachineLearningRudesheim;
+		setBackend:	aTBackendNeuralNetworkMachineLearningRudesheim;
 		yourself.
 ]
 
 { #category : 'instance creation' }
-TModelNeuralNetworkMachineLearningRudesheim classSide >> outputNode:	aTNodeNeuralNetworkMachineLearningRudesheim [
-
+TModelNeuralNetworkMachineLearningRudesheim classSide >> outputNode: aTNodeNeuralNetworkMachineLearningRudesheim [
 	^ self
 		outputNode:	aTNodeNeuralNetworkMachineLearningRudesheim
-		backend:		self backend
+		backend:	self backend.
 ]
 
 { #category : 'instance creation' }
-TModelNeuralNetworkMachineLearningRudesheim classSide >> outputNode:	aTNodeNeuralNetworkMachineLearningRudesheim
-backend:					aTBackendNeuralNetworkMachineLearningRudesheim [
-
+TModelNeuralNetworkMachineLearningRudesheim classSide >> outputNode: aTNodeNeuralNetworkMachineLearningRudesheim
+backend: aTBackendNeuralNetworkMachineLearningRudesheim [
 	^ super new
 		setOutputNode:	aTNodeNeuralNetworkMachineLearningRudesheim;
-		setBackend:		aTBackendNeuralNetworkMachineLearningRudesheim;
+		setBackend:	aTBackendNeuralNetworkMachineLearningRudesheim;
 		yourself.
-]
-
-{ #category : 'accessing' }
-TModelNeuralNetworkMachineLearningRudesheim >> backend [
-
-	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim classSide >> species [
-
 	^ Rudesheim MachineLearning NeuralNetwork Model.
+]
+
+{ #category : 'accessing' }
+TModelNeuralNetworkMachineLearningRudesheim >> backend [
+	^ self subclassResponsibility.
 ]
 
 { #category : 'evaluating' }
@@ -67,7 +60,6 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 	Every cached node value, including the final one, is released once this pass is
 	done reading from it; the returned value is always a plain materialized Array,
 	identical to what value: returns (value: is a plain alias for this method)."
-
 	|
 		aValueCacheIdentityDictionary
 		result
@@ -78,7 +70,7 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 	result :=
 		self outputNode
 			resolvedValueGivenInput:	anInputNumbersSequencialCollection
-			cache:						aValueCacheIdentityDictionary.
+			cache:	aValueCacheIdentityDictionary.
 
 	aValueCacheIdentityDictionary
 		valuesDo:
@@ -100,45 +92,38 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 		].
 ]
 
-{ #category : 'evaluating' }
-TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
-
-	^ self
-		forward:	aSequenceableCollection.
-]
-
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayers [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> outputNode [
-
-	^ self subclassResponsibility.
-]
-
-{ #category : 'initialization' }
-TModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
 TModelNeuralNetworkMachineLearningRudesheim >> setBackend: aTBackendNeuralNetworkMachineLearningRudesheim [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TModelNeuralNetworkMachineLearningRudesheim >> setOutputNode:	aTNodeNeuralNetworkMachineLearningRudesheim [
+TModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers: aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
+	^ self subclassResponsibility.
+]
 
+{ #category : 'initialization' }
+TModelNeuralNetworkMachineLearningRudesheim >> setOutputNode: aTNodeNeuralNetworkMachineLearningRudesheim [
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> species [
-
 	^ self class species.
+]
+
+{ #category : 'evaluating' }
+TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
+	^ self
+		forward:	aSequenceableCollection.
 ]

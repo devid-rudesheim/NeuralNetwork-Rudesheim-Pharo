@@ -36,7 +36,7 @@ ONNXNeuralNetworkMachineLearningRudesheim class >> knownLayerClassesForBackend: 
 
 { #category : 'as yet unclassified' }
 ONNXNeuralNetworkMachineLearningRudesheim class >> knownLayerKindSelectors [
-	^ #(#LinearTransform #ReLU #Conv2D #MaxPool2D #Add #BatchNormalization #GlobalAveragePool).
+	^ #( #LinearTransform #ReLU #Conv2D #MaxPool2D #Add #BatchNormalization #GlobalAveragePool ).
 ]
 
 { #category : 'as yet unclassified' }
@@ -56,9 +56,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	)
 		detect:
 		[ :eachLayerClass |
-			eachLayerClass
-				nameForONNX
-				= aNameString.
+			eachLayerClass nameForONNX = aNameString.
 		]
 		ifNone:
 		[

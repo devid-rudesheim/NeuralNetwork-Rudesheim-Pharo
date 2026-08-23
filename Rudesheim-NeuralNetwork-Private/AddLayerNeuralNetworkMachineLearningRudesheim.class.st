@@ -27,12 +27,15 @@ AddLayerNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSe
 		[ :i |
 			output
 				at:	i
-				put:	
+				put:
 				(
 					anInputNumbersSequencialCollection
 						at:	i
-				)
-					+ (anInputNumbersSequencialCollection at: half + i).
+				) +
+				(
+					anInputNumbersSequencialCollection
+						at:	half + i
+				).
 		].
 
 	^ output.
@@ -41,9 +44,4 @@ AddLayerNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSe
 { #category : 'as yet unclassified' }
 AddLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 	^ self.
-]
-
-{ #category : 'as yet unclassified' }
-AddLayerNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-	^ 'Add'.
 ]

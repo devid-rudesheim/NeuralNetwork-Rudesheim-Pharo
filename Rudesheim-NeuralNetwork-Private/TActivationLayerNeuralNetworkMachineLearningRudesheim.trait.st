@@ -7,8 +7,7 @@ Trait {
 }
 
 { #category : 'converting' }
-TActivationLayerNeuralNetworkMachineLearningRudesheim classSide >> withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-learningRate:				aRateFloat [
-				
+TActivationLayerNeuralNetworkMachineLearningRudesheim classSide >> withUpdatedWeightsRows: aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
+learningRate: aRateFloat [
 	^ self.
 ]

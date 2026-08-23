@@ -8,48 +8,41 @@ Trait {
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classSide >> species [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'instance creation' }
-TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classSide >> weightsRows:	aWeightRowsSequencialCollection
-biases:		aBiasesSequencialCollection [
-
+TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classSide >> weightsRows: aWeightRowsSequencialCollection
+biases: aBiasesSequencialCollection [
 	^ super new
 		setWeightsRows:	aWeightRowsSequencialCollection
-		biases:			aBiasesSequencialCollection.
+		biases:	aBiasesSequencialCollection.
 ]
 
 { #category : 'instance creation' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classSide >> weightsSource: aTWeightsSourceNeuralNetworkMachineLearningRudesheim [
-
 	^ self
 		weightsRows:	aTWeightsSourceNeuralNetworkMachineLearningRudesheim weightsRows
-		biases:			aTWeightsSourceNeuralNetworkMachineLearningRudesheim biases
+		biases:	aTWeightsSourceNeuralNetworkMachineLearningRudesheim biases.
 ]
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> biases [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows:	aWeightRowsSequencialCollection
-biases:			aBiasesSequencialCollection [
-
+TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows: aWeightRowsSequencialCollection
+biases: aBiasesSequencialCollection [
 	self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> species [
-
 	^ self class species.
 ]
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> weightsRows [
-
 	^ self subclassResponsibility.
 ]

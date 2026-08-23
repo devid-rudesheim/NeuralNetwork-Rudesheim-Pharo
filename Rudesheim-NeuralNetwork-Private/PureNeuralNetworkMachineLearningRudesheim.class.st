@@ -9,18 +9,15 @@ Class {
 
 { #category : 'namespace' }
 PureNeuralNetworkMachineLearningRudesheim class >> Criterion [
-
-	^ CriterionNeuralNetworkMachineLearningRudesheim
+	^ CriterionNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 PureNeuralNetworkMachineLearningRudesheim class >> Layer [
-
-	^ LayerNeuralNetworkMachineLearningRudesheim
+	^ LayerNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 PureNeuralNetworkMachineLearningRudesheim class >> Model [
-
-	^ ModelPureNeuralNetworkMachineLearningRudesheim
+	^ ModelPureNeuralNetworkMachineLearningRudesheim.
 ]

@@ -24,26 +24,6 @@ toSoil: aSoil [
 	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
-{ #category : 'converting' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelKeyFromFileReference: aFileReferenceObject [
-	^ aFileReferenceObject asFileReference withoutExtension basename.
-]
-
-{ #category : 'accessing' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelRecordAt: aKeyString
-inRoot: aStoreRootSoilNeuralNetworkMachineLearningRudesheim [
-	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim
-		at:
-		(
-			aStoreRootSoilNeuralNetworkMachineLearningRudesheim
-				symbolByName:	aKeyString
-		)
-		ifAbsentPut:
-		[
-			ModelRecordSoilNeuralNetworkMachineLearningRudesheim new.
-		].
-]
-
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject [
@@ -68,19 +48,6 @@ at: aKeyString [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
-toSoil: aSoilFileReferenceObject
-backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
-	^ self
-		file:	aFileReferenceObject
-		toSoil:	aSoilFileReferenceObject
-		progress:
-		[ :event :object |
-		]
-		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
-]
-
 { #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
@@ -96,50 +63,6 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
 ]
 
-{ #category : 'as yet unclassified' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
-toSoil: aSoilFileReferenceObject
-progress: aBlock [
-	|
-		fileReference
-		soilFileReference
-	|
-
-	fileReference := aFileReferenceObject asFileReference.
-	soilFileReference := aSoilFileReferenceObject asFileReference.
-
-	fileReference exists
-		ifFalse:
-		[
-			self
-				notifyProgress:	aBlock
-				event:	#failed
-				object:	fileReference.
-
-			self
-				error:	'ONNX file does not exist: ' , fileReference fullName.
-		].
-
-	^
-	(
-		Soil
-			ensureOnPath:	soilFileReference
-	)
-		intoRHScope
-		do:
-		[ :soil |
-			fileReference
-				binaryReadStreamDo:
-				[ :readStream |
-					self
-						readStream:	readStream
-						toSoil:	soil
-						sourceFileReference:	fileReference
-						progress:	aBlock.
-				].
-		].
-]
-
 { #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
@@ -169,8 +92,7 @@ progress: aBlock [
 	(
 		Soil
 			ensureOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			fileReference
@@ -186,9 +108,10 @@ progress: aBlock [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
+at: aKeyString
 progress: aBlock
 backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	|
@@ -215,8 +138,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	(
 		Soil
 			ensureOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			fileReference
@@ -225,6 +147,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 					self
 						readStream:	readStream
 						toSoil:	soil
+						at:	aKeyString
 						sourceFileReference:	fileReference
 						progress:	aBlock
 						backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
@@ -232,10 +155,65 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		].
 ]
 
-{ #category : 'converting' }
+{ #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
 toSoil: aSoilFileReferenceObject
-at: aKeyString
+backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
+	^ self
+		file:	aFileReferenceObject
+		toSoil:	aSoilFileReferenceObject
+		progress:
+		[ :event :object |
+		]
+		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
+toSoil: aSoilFileReferenceObject
+progress: aBlock [
+	|
+		fileReference
+		soilFileReference
+	|
+
+	fileReference := aFileReferenceObject asFileReference.
+	soilFileReference := aSoilFileReferenceObject asFileReference.
+
+	fileReference exists
+		ifFalse:
+		[
+			self
+				notifyProgress:	aBlock
+				event:	#failed
+				object:	fileReference.
+
+			self
+				error:	'ONNX file does not exist: ' , fileReference fullName.
+		].
+
+	^
+	(
+		Soil
+			ensureOnPath:	soilFileReference
+	) intoRHScope
+		do:
+		[ :soil |
+			fileReference
+				binaryReadStreamDo:
+				[ :readStream |
+					self
+						readStream:	readStream
+						toSoil:	soil
+						sourceFileReference:	fileReference
+						progress:	aBlock.
+				].
+		].
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> file: aFileReferenceObject
+toSoil: aSoilFileReferenceObject
 progress: aBlock
 backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	|
@@ -262,8 +240,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	(
 		Soil
 			ensureOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			fileReference
@@ -272,7 +249,6 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 					self
 						readStream:	readStream
 						toSoil:	soil
-						at:	aKeyString
 						sourceFileReference:	fileReference
 						progress:	aBlock
 						backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
@@ -310,18 +286,14 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 	windowArray := aSTONNodeEntryArray fourth.
 
 	record :=
-		Rudesheim
-			MachineLearning
-			NeuralNetwork
-			Soil
-			GraphNodeRecord
-			layerClass:	
+		Rudesheim MachineLearning NeuralNetwork Soil GraphNodeRecord
+			layerClass:
 			(
 				ONNXNeuralNetworkMachineLearningRudesheim
 					layerClassForName:	layerName
 					backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass
 			)
-			predecessorRecords:	
+			predecessorRecords:
 			(
 				predecessorIndices
 					collect:
@@ -330,7 +302,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 							at:	eachIndex.
 					]
 			)
-			tensorDescriptorRecords:	
+			tensorDescriptorRecords:
 			(
 				tensorIndices
 					collect:
@@ -341,7 +313,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 			).
 
 	record
-		layerAttributesRecords:	
+		layerAttributesRecords:
 		(
 			self
 				layerAttributesRecordsFromSTONWindowArray:	windowArray
@@ -357,6 +329,26 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> layerAttributesRecor
 		[ :eachFieldsArray |
 			self
 				windowSpecificationFromSTONFieldsArray:	eachFieldsArray.
+		].
+]
+
+{ #category : 'converting' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelKeyFromFileReference: aFileReferenceObject [
+	^ aFileReferenceObject asFileReference withoutExtension basename.
+]
+
+{ #category : 'accessing' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> modelRecordAt: aKeyString
+inRoot: aStoreRootSoilNeuralNetworkMachineLearningRudesheim [
+	^ aStoreRootSoilNeuralNetworkMachineLearningRudesheim
+		at:
+		(
+			aStoreRootSoilNeuralNetworkMachineLearningRudesheim
+				symbolByName:	aKeyString
+		)
+		ifAbsentPut:
+		[
+			ModelRecordSoilNeuralNetworkMachineLearningRudesheim new.
 		].
 ]
 
@@ -377,14 +369,15 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> onnxToSTONScriptFile
 	(commonly registered as 'rudesheim') and for CI, where .smalltalk.ston's
 	#registerInIceberg : true registers the actions/checkout@v4 clone under whatever name that
 	checkout happens to have."
-
-	^ ( self onnxToSTONScriptRepositoryLocations
-		ifEmpty:
-		[
-			self
-				error:	'No Iceberg-registered repository found for package ' , self package name , '; ensure .smalltalk.ston sets #registerInIceberg : true.'.
-		] )
-		first / 'tool' / 'onnx_to_ston.py'.
+	^
+	(
+		self onnxToSTONScriptRepositoryLocations
+			ifEmpty:
+			[
+				self
+					error:	'No Iceberg-registered repository found for package ' , self package name , '; ensure .smalltalk.ston sets #registerInIceberg : true.'.
+			]
+	) first / 'tool' / 'onnx_to_ston.py'.
 ]
 
 { #category : 'as yet unclassified' }
@@ -393,11 +386,21 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> onnxToSTONScriptRepo
 		repository
 	|
 
-	repository := IceRepository registeredRepositoryIncludingPackage: self package.
+	repository :=
+		IceRepository
+			registeredRepositoryIncludingPackage:	self package.
 
 	^ repository
-		ifNil:		[ #() ]
-		ifNotNil:	[ { repository location } ].
+		ifNil:
+		[
+			#(  ).
+		]
+		ifNotNil:
+		[
+			{
+				repository location
+			}.
+		].
 ]
 
 { #category : 'as yet unclassified' }
@@ -431,9 +434,7 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> payloadFromModelReco
 				error:	'ONNX source file does not exist: ' , sourceFileReference fullName.
 		].
 
-	^ sourceFileReference
-		binaryReadStream
-		contents.
+	^ sourceFileReference binaryReadStream contents.
 ]
 
 { #category : 'as yet unclassified' }
@@ -487,7 +488,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 			do:
 			[ :eachEntry |
 				nodeRecords
-					add:	
+					add:
 					(
 						self
 							graphNodeRecordFromSTONEntry:	eachEntry
@@ -512,7 +513,7 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 			].
 
 		aModelRecordSoilNeuralNetworkMachineLearningRudesheim
-			outputGraphNodeRecord:	
+			outputGraphNodeRecord:
 			(
 				nodeRecords
 					at:	outputNodeIndex
@@ -532,34 +533,6 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
-toSoil: aSoil
-sourceFileReference: aFileReference [
-	^ self
-		readStream:	aReadStream
-		toSoil:	aSoil
-		sourceFileReference:	aFileReference
-		progress:
-		[ :event :object |
-		].
-]
-
-{ #category : 'converting' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
-toSoil: aSoil
-at: aKeyString
-sourceFileReference: aFileReference [
-	^ self
-		readStream:	aReadStream
-		toSoil:	aSoil
-		at:	aKeyString
-		sourceFileReference:	aFileReference
-		progress:
-		[ :event :object |
-		].
-]
-
 { #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
@@ -573,17 +546,19 @@ progress: aBlock [
 		progress:	aBlock.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
 toSoil: aSoil
-sourceFileReference: aFileReference
-progress: aBlock [
+at: aKeyString
+sourceFileReference: aFileReference [
 	^ self
 		readStream:	aReadStream
 		toSoil:	aSoil
+		at:	aKeyString
 		sourceFileReference:	aFileReference
-		progress:	aBlock
-		backend:	PureNeuralNetworkMachineLearningRudesheim.
+		progress:
+		[ :event :object |
+		].
 ]
 
 { #category : 'converting' }
@@ -599,28 +574,6 @@ progress: aBlock [
 		sourceFileReference:	aFileReference
 		progress:	aBlock
 		backend:	PureNeuralNetworkMachineLearningRudesheim.
-]
-
-{ #category : 'as yet unclassified' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
-toSoil: aSoil
-sourceFileReference: aFileReference
-progress: aBlock
-backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
-	aFileReference
-		ifNil:
-		[
-			self
-				error:	'A source ONNX file reference is required to derive the model key; use the at: variant instead.'.
-		].
-
-	^ self
-		readStream:	aReadStream
-		toSoil:	aSoil
-		at:	(self modelKeyFromFileReference: aFileReference)
-		sourceFileReference:	aFileReference
-		progress:	aBlock
-		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
 ]
 
 { #category : 'converting' }
@@ -699,12 +652,62 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
 ]
 
 { #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
+toSoil: aSoil
+sourceFileReference: aFileReference [
+	^ self
+		readStream:	aReadStream
+		toSoil:	aSoil
+		sourceFileReference:	aFileReference
+		progress:
+		[ :event :object |
+		].
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
+toSoil: aSoil
+sourceFileReference: aFileReference
+progress: aBlock [
+	^ self
+		readStream:	aReadStream
+		toSoil:	aSoil
+		sourceFileReference:	aFileReference
+		progress:	aBlock
+		backend:	PureNeuralNetworkMachineLearningRudesheim.
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> readStream: aReadStream
+toSoil: aSoil
+sourceFileReference: aFileReference
+progress: aBlock
+backend: aTBackendNeuralNetworkMachineLearningRudesheimClass [
+	aFileReference
+		ifNil:
+		[
+			self
+				error:	'A source ONNX file reference is required to derive the model key; use the at: variant instead.'.
+		].
+
+	^ self
+		readStream:	aReadStream
+		toSoil:	aSoil
+		at:
+		(
+			self
+				modelKeyFromFileReference:	aFileReference
+		)
+		sourceFileReference:	aFileReference
+		progress:	aBlock
+		backend:	aTBackendNeuralNetworkMachineLearningRudesheimClass.
+]
+
+{ #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> rootFromSoil: aSoil [
 	^
 	[
-		aSoil
-			newTransaction
-			root.
+		aSoil newTransaction root.
 	]
 		on:	Error
 		do:
@@ -737,40 +740,6 @@ at: aKeyString [
 		].
 ]
 
-{ #category : 'as yet unclassified' }
-ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoilFileReferenceObject
-toFile: aFileReferenceObject
-progress: aBlock [
-	|
-		fileReference
-		soilFileReference
-	|
-
-	soilFileReference := aSoilFileReferenceObject asFileReference.
-	fileReference := aFileReferenceObject asFileReference.
-
-	^
-	(
-		Soil
-			openOnPath:	soilFileReference
-	)
-		intoRHScope
-		do:
-		[ :soil |
-			fileReference
-				binaryWriteStreamDo:
-				[ :writeStream |
-					self
-						soil:	soil
-						toWriteStream:	writeStream
-						at:	(self modelKeyFromFileReference: fileReference)
-						progress:	aBlock.
-
-					fileReference.
-				].
-		].
-]
-
 { #category : 'converting' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoilFileReferenceObject
 toFile: aFileReferenceObject
@@ -788,8 +757,7 @@ progress: aBlock [
 	(
 		Soil
 			openOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			fileReference
@@ -799,6 +767,43 @@ progress: aBlock [
 						soil:	soil
 						toWriteStream:	writeStream
 						at:	aKeyString
+						progress:	aBlock.
+
+					fileReference.
+				].
+		].
+]
+
+{ #category : 'as yet unclassified' }
+ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> soil: aSoilFileReferenceObject
+toFile: aFileReferenceObject
+progress: aBlock [
+	|
+		fileReference
+		soilFileReference
+	|
+
+	soilFileReference := aSoilFileReferenceObject asFileReference.
+	fileReference := aFileReferenceObject asFileReference.
+
+	^
+	(
+		Soil
+			openOnPath:	soilFileReference
+	) intoRHScope
+		do:
+		[ :soil |
+			fileReference
+				binaryWriteStreamDo:
+				[ :writeStream |
+					self
+						soil:	soil
+						toWriteStream:	writeStream
+						at:
+						(
+							self
+								modelKeyFromFileReference:	fileReference
+						)
 						progress:	aBlock.
 
 					fileReference.
@@ -843,9 +848,7 @@ progress: aBlock [
 			modelRecordAt:	aKeyString
 			inRoot:	root.
 
-	modelRecord
-		formatClass
-		= ONNXNeuralNetworkMachineLearningRudesheim
+	modelRecord formatClass = ONNXNeuralNetworkMachineLearningRudesheim
 		ifFalse:
 		[
 			self
@@ -926,12 +929,8 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> stonFileReferenceFor
 
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> tensorDescriptorFromSTONEntry: aSTONTensorEntryArray [
-	^ Rudesheim
-		MachineLearning
-		NeuralNetwork
-		Soil
-		TensorDescriptor
-		tensorKindClass:	
+	^ Rudesheim MachineLearning NeuralNetwork Soil TensorDescriptor
+		tensorKindClass:
 		(
 			self
 				tensorKindClassForToken:	aSTONTensorEntryArray first
@@ -943,12 +942,13 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> tensorDescriptorFrom
 { #category : 'as yet unclassified' }
 ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> tensorKindClassForToken: aTokenString [
 	^
-	{WeightsTensorSoilNeuralNetworkMachineLearningRudesheim .  BiasesTensorSoilNeuralNetworkMachineLearningRudesheim}
+	{
+		WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
+		BiasesTensorSoilNeuralNetworkMachineLearningRudesheim
+	}
 		detect:
 		[ :eachTensorKindClass |
-			eachTensorKindClass
-				tensorKindToken
-				= aTokenString.
+			eachTensorKindClass tensorKindToken = aTokenString.
 		]
 		ifNone:
 		[
@@ -966,31 +966,75 @@ ConvertorONNXNeuralNetworkMachineLearningRudesheim class >> windowSpecificationF
 	extentClass := Rudesheim Utility Extent.
 
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
-		inputChannels:	( aSTONWindowFieldsArray at: 1 )
+		inputChannels:
+		(
+			aSTONWindowFieldsArray
+				at:	1
+		)
 		inputExtent:
 		(
 			extentClass
-				width:	( aSTONWindowFieldsArray at: 3 )
-				height:	( aSTONWindowFieldsArray at: 2 )
+				width:
+				(
+					aSTONWindowFieldsArray
+						at:	3
+				)
+				height:
+				(
+					aSTONWindowFieldsArray
+						at:	2
+				)
 		)
 		kernelExtent:
 		(
 			extentClass
-				width:	( aSTONWindowFieldsArray at: 5 )
-				height:	( aSTONWindowFieldsArray at: 4 )
+				width:
+				(
+					aSTONWindowFieldsArray
+						at:	5
+				)
+				height:
+				(
+					aSTONWindowFieldsArray
+						at:	4
+				)
 		)
 		strideExtent:
 		(
 			extentClass
-				width:	( aSTONWindowFieldsArray at: 7 )
-				height:	( aSTONWindowFieldsArray at: 6 )
+				width:
+				(
+					aSTONWindowFieldsArray
+						at:	7
+				)
+				height:
+				(
+					aSTONWindowFieldsArray
+						at:	6
+				)
 		)
 		padding:
 		(
 			Margin
-				top:	( aSTONWindowFieldsArray at: 8 )
-				left:	( aSTONWindowFieldsArray at: 10 )
-				bottom:	( aSTONWindowFieldsArray at: 9 )
-				right:	( aSTONWindowFieldsArray at: 11 )
+				top:
+				(
+					aSTONWindowFieldsArray
+						at:	8
+				)
+				left:
+				(
+					aSTONWindowFieldsArray
+						at:	10
+				)
+				bottom:
+				(
+					aSTONWindowFieldsArray
+						at:	9
+				)
+				right:
+				(
+					aSTONWindowFieldsArray
+						at:	11
+				)
 		).
 ]

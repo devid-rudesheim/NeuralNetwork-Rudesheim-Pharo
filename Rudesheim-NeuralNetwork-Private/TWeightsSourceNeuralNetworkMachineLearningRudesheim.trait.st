@@ -6,12 +6,10 @@ Trait {
 
 { #category : 'accessing' }
 TWeightsSourceNeuralNetworkMachineLearningRudesheim >> biases [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TWeightsSourceNeuralNetworkMachineLearningRudesheim >> weightsRows [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]

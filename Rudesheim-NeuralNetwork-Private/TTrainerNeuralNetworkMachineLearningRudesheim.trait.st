@@ -6,62 +6,53 @@ Trait {
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim classSide >> criterion [
-	
 	^ self subclassResponsibility.
 ]
 
 { #category : 'instance creation' }
 TTrainerNeuralNetworkMachineLearningRudesheim classSide >> criterion: aTCriterionNeuralNetworkMachineLearningRudesheim [
-
 	^ super new
-		setCriterion: aTCriterionNeuralNetworkMachineLearningRudesheim;
-		yourself
+		setCriterion:	aTCriterionNeuralNetworkMachineLearningRudesheim;
+		yourself.
 ]
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim classSide >> epochs [
-	
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim classSide >> learningRate [
-	
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim >> criterion [
-	
 	^ self class criterion.
 ]
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim >> epochs [
-	
 	^ self class epochs.
 ]
 
 { #category : 'accessing' }
 TTrainerNeuralNetworkMachineLearningRudesheim >> learningRate [
-	
-	^ self class learningRate
+	^ self class learningRate.
 ]
 
 { #category : 'initialization' }
 TTrainerNeuralNetworkMachineLearningRudesheim >> setCriterion: aTCriterionNeuralNetworkMachineLearningRudesheim [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]
 
 { #category : 'training' }
-TTrainerNeuralNetworkMachineLearningRudesheim >> train:				aTModelNeuralNetworkMachineLearningRudesheim
-withDataset:		aSequencialCollection [
-
+TTrainerNeuralNetworkMachineLearningRudesheim >> train: aTModelNeuralNetworkMachineLearningRudesheim
+withDataset: aSequencialCollection [
 	^
 	(
 		1
-			to:	 self epochs
+			to:	self epochs
 	)
 		inject:
 		{
@@ -72,23 +63,30 @@ withDataset:		aSequencialCollection [
 		[ :state :unused |
 			self
 				trainOneEpoch:	state last
-				withDataset:		aSequencialCollection.
+				withDataset:	aSequencialCollection.
 		].
 ]
 
 { #category : 'training' }
-TTrainerNeuralNetworkMachineLearningRudesheim >> train:				aTModelNeuralNetworkMachineLearningRudesheim
-withDataset:		aSequencialCollection
-byCriterion:		aCriterionBlock [
-
-	^ ( self class criterion: ( aCriterionBlock value: aTModelNeuralNetworkMachineLearningRudesheim backend Criterion ) )
-		train:			aTModelNeuralNetworkMachineLearningRudesheim
-		withDataset:	aSequencialCollection
+TTrainerNeuralNetworkMachineLearningRudesheim >> train: aTModelNeuralNetworkMachineLearningRudesheim
+withDataset: aSequencialCollection
+byCriterion: aCriterionBlock [
+	^
+	(
+		self class
+			criterion:
+			(
+				aCriterionBlock
+					value:	aTModelNeuralNetworkMachineLearningRudesheim backend Criterion
+			)
+	)
+		train:	aTModelNeuralNetworkMachineLearningRudesheim
+		withDataset:	aSequencialCollection.
 ]
 
 { #category : 'training' }
-TTrainerNeuralNetworkMachineLearningRudesheim >> train:				aTModelNeuralNetworkMachineLearningRudesheim
-withExample:		aTPredictionsNeuralNetworkMachineLearningRudesheim [
+TTrainerNeuralNetworkMachineLearningRudesheim >> train: aTModelNeuralNetworkMachineLearningRudesheim
+withExample: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	"Delegates to TBackwardModel>>backward:usingCriterion: (reverse-mode autodiff over
 	aTModelNeuralNetworkMachineLearningRudesheim's outputNode graph) rather than walking
 	neuralNetworkLayers directly: defaultOutputNode turns a flat neuralNetworkLayers:
@@ -97,7 +95,6 @@ withExample:		aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	walk it in reverse) -- no separate flat-only code path is needed. The one thing this
 	method still owns is turning backward:usingCriterion:'s { node. delta } pairs into
 	the next epoch's Model, via Node>>rebuiltUsingParameterDeltas:learningRate:cache:."
-
 	|
 		result
 		parameterDeltasByNode
@@ -105,16 +102,17 @@ withExample:		aTPredictionsNeuralNetworkMachineLearningRudesheim [
 
 	result :=
 		aTModelNeuralNetworkMachineLearningRudesheim
-			backward:			aTPredictionsNeuralNetworkMachineLearningRudesheim
+			backward:	aTPredictionsNeuralNetworkMachineLearningRudesheim
 			usingCriterion:	self criterion.
 
 	parameterDeltasByNode := IdentityDictionary new.
+
 	result last
 		do:
 		[ :eachPair |
 			parameterDeltasByNode
-				at:		eachPair first
-				put:	eachPair last
+				at:	eachPair first
+				put:	eachPair last.
 		].
 
 	^
@@ -125,48 +123,49 @@ withExample:		aTPredictionsNeuralNetworkMachineLearningRudesheim [
 			(
 				aTModelNeuralNetworkMachineLearningRudesheim outputNode
 					rebuiltUsingParameterDeltas:	parameterDeltasByNode
-					learningRate:					self learningRate
-					cache:							IdentityDictionary new
+					learningRate:	self learningRate
+					cache:	IdentityDictionary new
 			)
 			backend:	aTModelNeuralNetworkMachineLearningRudesheim backend
-	}
+	}.
 ]
 
 { #category : 'training' }
-TTrainerNeuralNetworkMachineLearningRudesheim >> trainOneEpoch:	aTModelNeuralNetworkMachineLearningRudesheim
-withDataset:		aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim [
+TTrainerNeuralNetworkMachineLearningRudesheim >> trainOneEpoch: aTModelNeuralNetworkMachineLearningRudesheim
+withDataset: aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim [
 	|
 		result
 	|
-	
+
 	aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim
 		ifEmpty:
 		[
 			^ aTModelNeuralNetworkMachineLearningRudesheim.
-		].	
-
-	result := aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim
-		inject:
-		{
-			0.0.
-			aTModelNeuralNetworkMachineLearningRudesheim.
-		}
-		into:
-		[ :state :each |
-			|
-				nextState
-			|
-			
-			nextState :=
-				self
-					train:				state last
-					withExample:		each.
-			
-			{
-				nextState first + state first.
-				nextState last.
-			}
 		].
+
+	result :=
+		aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim
+			inject:
+			{
+				0.0.
+				aTModelNeuralNetworkMachineLearningRudesheim
+			}
+			into:
+			[ :state :each |
+				|
+					nextState
+				|
+
+				nextState :=
+					self
+						train:	state last
+						withExample:	each.
+
+				{
+					( nextState first + state first ).
+					nextState last
+				}.
+			].
 
 	"Every parameter-updated Layer/Node from every example this epoch (see
 	Node>>rebuiltUsingParameterDeltas:learningRate:cache:) is superseded and
@@ -181,7 +180,7 @@ withDataset:		aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningR
 
 	^
 	{
-		result first / aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim size.
-		result last.
+		( result first / aSequencialCollectionWithTPredictionsNeuralNetworkMachineLearningRudesheim size ).
+		result last
 	}.
 ]

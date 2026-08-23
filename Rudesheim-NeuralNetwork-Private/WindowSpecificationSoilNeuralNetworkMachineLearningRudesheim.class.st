@@ -20,36 +20,44 @@ Class {
 }
 
 { #category : 'instance creation' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim class >> inputChannels:	anInputChannelsInteger
-inputExtent:	anInputExtentUtilityRudesheim
-kernelExtent:	aKernelExtentUtilityRudesheim
-strideExtent:	aStrideExtentUtilityRudesheim
-padding:	aPaddingMargin [
-
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim class >> inputChannels: anInputChannelsInteger
+inputExtent: anInputExtentUtilityRudesheim
+kernelExtent: aKernelExtentUtilityRudesheim
+strideExtent: aStrideExtentUtilityRudesheim
+padding: aPaddingMargin [
 	^ super new
 		setInputChannels:	anInputChannelsInteger
-		inputExtent:		anInputExtentUtilityRudesheim
-		kernelExtent:		aKernelExtentUtilityRudesheim
-		strideExtent:		aStrideExtentUtilityRudesheim
-		padding:			aPaddingMargin;
-		yourself
+		inputExtent:	anInputExtentUtilityRudesheim
+		kernelExtent:	aKernelExtentUtilityRudesheim
+		strideExtent:	aStrideExtentUtilityRudesheim
+		padding:	aPaddingMargin;
+		yourself.
 ]
 
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputChannels [
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forInput:	self input.
+]
 
-	^ inputChannels
+{ #category : 'private' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
+	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
+		forOutput:	self output.
 ]
 
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> input [
+	^ input.
+]
 
-	^ input
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputChannels [
+	^ inputChannels.
 ]
 
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputLayout [
-
 	^ inputLayout
 		ifNil:
 		[
@@ -59,41 +67,18 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> inputLayout [
 
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> kernel [
-
-	^ kernel
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> stride [
-
-	^ stride
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padding [
-
-	^ padding
-]
-
-{ #category : 'accessing' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padded [
-
-	^ Rudesheim Utility Extent
-		width:	self input columns + self padding left + self padding right
-		height:	self input rows + self padding top + self padding bottom
+	^ kernel.
 ]
 
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> output [
-
 	^ Rudesheim Utility Extent
 		width:	( self padded columns - self kernel columns ) // self stride columns + 1
-		height:	( self padded rows - self kernel rows ) // self stride rows + 1
+		height:	( self padded rows - self kernel rows ) // self stride rows + 1.
 ]
 
 { #category : 'accessing' }
 WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
-
 	^ outputLayout
 		ifNil:
 		[
@@ -101,30 +86,32 @@ WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> outputLayout [
 		].
 ]
 
-{ #category : 'private' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultInputLayout [
-
-	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
-		forInput:	self input.
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padded [
+	^ Rudesheim Utility Extent
+		width:	self input columns + self padding left + self padding right
+		height:	self input rows + self padding top + self padding bottom.
 ]
 
-{ #category : 'private' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> defaultOutputLayout [
-
-	^ Rudesheim MachineLearning NeuralNetwork TensorLayout
-		forOutput:	self output.
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> padding [
+	^ padding.
 ]
 
 { #category : 'initialization' }
-WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> setInputChannels:	anInputChannelsInteger
-inputExtent:	anInputExtentUtilityRudesheim
-kernelExtent:	aKernelExtentUtilityRudesheim
-strideExtent:	aStrideExtentUtilityRudesheim
-padding:	aPaddingMargin [
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> setInputChannels: anInputChannelsInteger
+inputExtent: anInputExtentUtilityRudesheim
+kernelExtent: aKernelExtentUtilityRudesheim
+strideExtent: aStrideExtentUtilityRudesheim
+padding: aPaddingMargin [
+	inputChannels := anInputChannelsInteger.
+	input := anInputExtentUtilityRudesheim.
+	kernel := aKernelExtentUtilityRudesheim.
+	stride := aStrideExtentUtilityRudesheim.
+	padding := aPaddingMargin.
+]
 
-	inputChannels	:= anInputChannelsInteger.
-	input			:= anInputExtentUtilityRudesheim.
-	kernel			:= aKernelExtentUtilityRudesheim.
-	stride			:= aStrideExtentUtilityRudesheim.
-	padding			:= aPaddingMargin
+{ #category : 'accessing' }
+WindowSpecificationSoilNeuralNetworkMachineLearningRudesheim >> stride [
+	^ stride.
 ]

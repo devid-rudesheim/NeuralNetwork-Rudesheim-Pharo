@@ -7,14 +7,12 @@ Trait {
 }
 
 { #category : 'evaluating' }
-TLayerNeuralNetworkMachineLearningRudesheim classSide >> backward:		aTBackwardContextNeuralNetworkMachineLearningRudesheim [
-	
+TLayerNeuralNetworkMachineLearningRudesheim classSide >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 	^ self subclassResponsibility.
 ]
 
 { #category : 'evaluating' }
-TLayerNeuralNetworkMachineLearningRudesheim >> backward:		aBackwardContextNeuralNetworkMachineLearningRudesheim [
-
+TLayerNeuralNetworkMachineLearningRudesheim >> backward: aBackwardContextNeuralNetworkMachineLearningRudesheim [
 	^ self class
-		backward:		aBackwardContextNeuralNetworkMachineLearningRudesheim
+		backward:	aBackwardContextNeuralNetworkMachineLearningRudesheim.
 ]
