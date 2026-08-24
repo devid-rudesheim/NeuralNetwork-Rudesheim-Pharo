@@ -16,10 +16,7 @@ Class {
 { #category : 'as yet unclassified' }
 MaxPool2DLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 	^ self
-		window:	
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-			layerAttributesRecords
-			first.
+		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first.
 ]
 
 { #category : 'as yet unclassified' }
@@ -123,13 +120,7 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSe
 														[
 															value :=
 																anInputNumbersSequencialCollection
-																	at:	
-																	c
-																		* inputRows
-																		+ iy
-																		* inputColumns
-																		+ ix
-																		+ 1.
+																	at:	( c * inputRows + iy ) * inputColumns + ix + 1.
 
 															(
 																best isNil
@@ -147,7 +138,8 @@ MaxPool2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSe
 										].
 								].
 
-							flatOutputIndex := (c * outputRows + oy) * outputColumns + ox + 1.
+							flatOutputIndex :=
+							( ( c * outputRows + oy ) ) * outputColumns + ox + 1.
 
 							output
 								at:	flatOutputIndex

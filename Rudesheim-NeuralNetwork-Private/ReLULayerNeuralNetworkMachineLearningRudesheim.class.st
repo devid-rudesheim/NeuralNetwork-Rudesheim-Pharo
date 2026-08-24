@@ -8,40 +8,37 @@ Class {
 }
 
 { #category : 'instance creation' }
-ReLULayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self
+ReLULayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self.
 ]
 
 { #category : 'evaluating' }
-ReLULayerNeuralNetworkMachineLearningRudesheim class >> backward:		aTBackwardContextNeuralNetworkMachineLearningRudesheim [
-
+ReLULayerNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 	^
 	{
 		aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions
-			with: aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient
+			with:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient
 			collect:
 			[ :input :gradient |
 				0 < input
 					ifTrue:
 					[
-						gradient
+						gradient.
 					]
 					ifFalse:
 					[
-						0
-					]
-  			].
-	}
+						0.
+					].
+			]
+	}.
 ]
 
 { #category : 'evaluating' }
-ReLULayerNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNumbersSequencialCollection [
-	
+ReLULayerNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSequencialCollection [
 	^ anInputNumbersSequencialCollection
 		collect:
 		[ :each |
 			each
-				max:	0
-		]
+				max:	0.
+		].
 ]

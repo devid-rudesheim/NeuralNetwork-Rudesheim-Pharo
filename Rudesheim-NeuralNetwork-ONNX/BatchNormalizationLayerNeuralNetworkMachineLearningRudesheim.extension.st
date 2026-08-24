@@ -2,6 +2,5 @@ Extension { #name : 'BatchNormalizationLayerNeuralNetworkMachineLearningRudeshei
 
 { #category : '*Rudesheim-NeuralNetwork-ONNX' }
 BatchNormalizationLayerNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-
-	^ 'BatchNormalization'
+	^ 'BatchNormalization'.
 ]

@@ -52,7 +52,7 @@ TensorLayoutNeuralNetworkMachineLearningRudesheim >> extent [
 { #category : 'flattening' }
 TensorLayoutNeuralNetworkMachineLearningRudesheim >> flatIndexForChannel: aChannelIndexInteger
 position: aPositionPoint [
-	^ aChannelIndexInteger * self channelStride + (aPositionPoint x * self columnCount) + aPositionPoint y + 1.
+	^ aChannelIndexInteger * self channelStride + ( aPositionPoint x * self columnCount ) + aPositionPoint y + 1.
 ]
 
 { #category : 'initialization' }

@@ -14,47 +14,48 @@ Class {
 }
 
 { #category : 'instance creation' }
-WeightsSourceSoilNeuralNetworkMachineLearningRudesheim class >> tensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection [
-
+WeightsSourceSoilNeuralNetworkMachineLearningRudesheim class >> tensorDescriptorRecords: aTensorDescriptorRecordsSequenceableCollection [
 	^ super new
 		setTensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection;
-		yourself
+		yourself.
 ]
 
 { #category : 'accessing' }
 WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> biases [
-
-	^ self payloadForTensorKindClass: Rudesheim MachineLearning NeuralNetwork Soil Tensor Biases
+	^ self
+		payloadForTensorKindClass:	Rudesheim MachineLearning NeuralNetwork Soil Tensor Biases.
 ]
 
 { #category : 'private' }
-WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> descriptorForTensorKindClass:	aClass [
-
+WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> descriptorForTensorKindClass: aClass [
 	^ tensorDescriptorRecords
-		detect: [ :eachTensorDescriptorRecord | eachTensorDescriptorRecord tensorKindClass == aClass ]
+		detect:
+		[ :eachTensorDescriptorRecord |
+			eachTensorDescriptorRecord tensorKindClass == aClass.
+		].
 ]
 
 { #category : 'private' }
-WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> payloadForTensorKindClass:	aClass [
-
-	^ ( self descriptorForTensorKindClass: aClass ) payload
+WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> payloadForTensorKindClass: aClass [
+	^
+	(
+		self
+			descriptorForTensorKindClass:	aClass
+	) payload.
 ]
 
 { #category : 'initialization' }
-WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> setTensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection [
-
-	tensorDescriptorRecords := aTensorDescriptorRecordsSequenceableCollection
+WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> setTensorDescriptorRecords: aTensorDescriptorRecordsSequenceableCollection [
+	tensorDescriptorRecords := aTensorDescriptorRecordsSequenceableCollection.
 ]
 
 { #category : 'accessing' }
 WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> tensorDescriptorRecords [
-
-	^ tensorDescriptorRecords
+	^ tensorDescriptorRecords.
 ]
 
 { #category : 'accessing' }
 WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> weightsRows [
-
 	|
 		weightsDescriptor
 		flatWeights
@@ -62,16 +63,23 @@ WeightsSourceSoilNeuralNetworkMachineLearningRudesheim >> weightsRows [
 		columns
 	|
 
-	weightsDescriptor := self descriptorForTensorKindClass: Rudesheim MachineLearning NeuralNetwork Soil Tensor Weights.
+	weightsDescriptor :=
+		self
+			descriptorForTensorKindClass:	Rudesheim MachineLearning NeuralNetwork Soil Tensor Weights.
+
 	flatWeights := weightsDescriptor payload.
 	rows := weightsDescriptor shape first.
 	columns := weightsDescriptor shape second.
 
-	^ ( 1 to: rows )
+	^
+	(
+		1
+			to:	rows
+	)
 		collect:
 		[ :eachRowIndex |
 			flatWeights
 				copyFrom:	( eachRowIndex - 1 ) * columns + 1
-				to:			eachRowIndex * columns
-		]
+				to:	eachRowIndex * columns.
+		].
 ]

@@ -2,6 +2,5 @@ Extension { #name : 'GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRud
 
 { #category : '*Rudesheim-NeuralNetwork-ONNX-OpenCL' }
 GlobalAveragePoolLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-
-	^ 'GlobalAveragePool'
+	^ 'GlobalAveragePool'.
 ]

@@ -11,8 +11,7 @@ Class {
 }
 
 { #category : 'evaluating' }
-AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwardContextNeuralNetworkMachineLearningRudesheim [
-
+AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
 	|
 		cl
 		queue
@@ -25,30 +24,43 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	halfCount := aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient size.
 	queue := cl commandQueue.
+
 	gradientBuffer :=
 		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	inputGradientBuffer :=
 		cl context
 			newCLBufferForElementCount:	halfCount * 2
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	kernel :=
 		cl
-			kernelAt:				'AddBackward'
+			kernelAt:	'AddBackward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
 	[
 		queue
 			enqueueKernelAndWait:	kernel
-			forNDRange:				{ { halfCount } }
-			withArguments:			{ gradientBuffer. inputGradientBuffer. halfCount }.
+			forNDRange:
+			{
+				{
+					halfCount
+				}
+			}
+			withArguments:
+			{
+				gradientBuffer.
+				inputGradientBuffer.
+				halfCount
+			}.
 
 		"The graph-level backward traversal (TNode>>distributeGradient:toPredecessorGradients:)
 		splits this doubled-length input gradient back into the two predecessors' own
@@ -56,10 +68,10 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 		them going forward."
 		{
 			queue
-				readFrom:		inputGradientBuffer
-				count:			halfCount * 2
+				readFrom:	inputGradientBuffer
+				count:	halfCount * 2
 				elementType:	TFBasicType float
-		}
+		}.
 	]
 		ensure:
 		[
@@ -69,8 +81,7 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward:	aTBackwar
 ]
 
 { #category : 'evaluating' }
-AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNumbersSequencialCollection [
-
+AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSequencialCollection [
 	|
 		cl
 		queue
@@ -83,28 +94,33 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	queue := cl commandQueue.
+
 	"anInputNumbersSequencialCollection may already be an OpenCL buffer --
 	see the comment on this same pattern in ReLULayerOpenCL>>forward:."
 	inputBuffer :=
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
+
 	outputCount := inputBuffer count // 2.
+
 	outputBuffer :=
 		cl context
 			newCLBufferForElementCount:	outputCount
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	outputBuffer
-		count:		outputCount;
-		queue:		queue;
+		count:	outputCount;
+		queue:	queue;
 		context:	cl context.
+
 	kernel :=
 		cl
-			kernelAt:				'AddForward'
+			kernelAt:	'AddForward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
@@ -123,12 +139,17 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{ { outputCount } }
+				forNDRange:
+				{
+					{
+						outputCount
+					}
+				}
 				withArguments:
 				{
 					inputBuffer.
 					outputBuffer.
-					outputCount.
+					outputCount
 				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is
@@ -138,7 +159,7 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 		branches were already on the GPU (the common case), or a plain Array
 		when one or both weren't (see note/opencl-layer-buffer-passthrough-design.md,
 		'AddLayerの分岐合流')."
-		outputBuffer
+		outputBuffer.
 	]
 		ensure:
 		[
@@ -160,19 +181,18 @@ AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward:	anInputNum
 					kernelEvent wait.
 					inputBuffer release.
 				].
+
 			kernelEvent release.
 		].
 ]
 
 { #category : 'instance creation' }
-AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self
+AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self.
 ]
 
 { #category : 'converting' }
-AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-learningRate:				aRateFloat [
-
-	^ self
+AddLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> withUpdatedWeightsRows: aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
+learningRate: aRateFloat [
+	^ self.
 ]

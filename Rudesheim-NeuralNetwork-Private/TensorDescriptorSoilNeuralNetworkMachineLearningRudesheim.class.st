@@ -14,41 +14,36 @@ Class {
 }
 
 { #category : 'instance creation' }
-TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim class >> tensorKindClass:	aClass
-shape:	aShapeSequenceableCollection
-payload:	anObject [
-
+TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim class >> tensorKindClass: aClass
+shape: aShapeSequenceableCollection
+payload: anObject [
 	^ super new
 		setTensorKindClass:	aClass
-		shape:				aShapeSequenceableCollection
-		payload:			anObject;
-		yourself
+		shape:	aShapeSequenceableCollection
+		payload:	anObject;
+		yourself.
 ]
 
 { #category : 'accessing' }
 TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim >> payload [
-
-	^ payload
+	^ payload.
 ]
 
 { #category : 'initialization' }
-TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim >> setTensorKindClass:	aClass
-shape:	aShapeSequenceableCollection
-payload:	anObject [
-
-	tensorKindClass	:=	aClass.
-	shape			:=	aShapeSequenceableCollection.
-	payload			:=	anObject
+TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim >> setTensorKindClass: aClass
+shape: aShapeSequenceableCollection
+payload: anObject [
+	tensorKindClass := aClass.
+	shape := aShapeSequenceableCollection.
+	payload := anObject.
 ]
 
 { #category : 'accessing' }
 TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim >> shape [
-
-	^ shape
+	^ shape.
 ]
 
 { #category : 'accessing' }
 TensorDescriptorSoilNeuralNetworkMachineLearningRudesheim >> tensorKindClass [
-
-	^ tensorKindClass
+	^ tensorKindClass.
 ]

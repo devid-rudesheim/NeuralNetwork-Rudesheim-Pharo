@@ -17,54 +17,50 @@ Class {
 }
 
 { #category : 'instance creation' }
-GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim class >> layerClass:	aClass
-predecessorRecords:	aPredecessorRecordsSequenceableCollection
-tensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection [
-
+GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim class >> layerClass: aClass
+predecessorRecords: aPredecessorRecordsSequenceableCollection
+tensorDescriptorRecords: aTensorDescriptorRecordsSequenceableCollection [
 	^ super new
-		setLayerClass:				aClass
-		predecessorRecords:		aPredecessorRecordsSequenceableCollection
+		setLayerClass:	aClass
+		predecessorRecords:	aPredecessorRecordsSequenceableCollection
 		tensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection;
-		yourself
+		yourself.
 ]
 
 { #category : 'accessing' }
 GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> layerAttributesRecords [
-
 	^ layerAttributesRecords
-		ifNil: [ layerAttributesRecords := OrderedCollection new ]
+		ifNil:
+		[
+			layerAttributesRecords := OrderedCollection new.
+		].
 ]
 
 { #category : 'accessing' }
 GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> layerAttributesRecords: aLayerAttributesRecordsSequenceableCollection [
-
-	layerAttributesRecords := aLayerAttributesRecordsSequenceableCollection
+	layerAttributesRecords := aLayerAttributesRecordsSequenceableCollection.
 ]
 
 { #category : 'accessing' }
 GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> layerClass [
-
-	^ layerClass
+	^ layerClass.
 ]
 
 { #category : 'accessing' }
 GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> predecessorRecords [
-
-	^ predecessorRecords
+	^ predecessorRecords.
 ]
 
 { #category : 'initialization' }
-GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> setLayerClass:	aClass
-predecessorRecords:	aPredecessorRecordsSequenceableCollection
-tensorDescriptorRecords:	aTensorDescriptorRecordsSequenceableCollection [
-
-	layerClass				:=	aClass.
-	predecessorRecords		:=	aPredecessorRecordsSequenceableCollection.
-	tensorDescriptorRecords	:=	aTensorDescriptorRecordsSequenceableCollection
+GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> setLayerClass: aClass
+predecessorRecords: aPredecessorRecordsSequenceableCollection
+tensorDescriptorRecords: aTensorDescriptorRecordsSequenceableCollection [
+	layerClass := aClass.
+	predecessorRecords := aPredecessorRecordsSequenceableCollection.
+	tensorDescriptorRecords := aTensorDescriptorRecordsSequenceableCollection.
 ]
 
 { #category : 'accessing' }
 GraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim >> tensorDescriptorRecords [
-
-	^ tensorDescriptorRecords
+	^ tensorDescriptorRecords.
 ]

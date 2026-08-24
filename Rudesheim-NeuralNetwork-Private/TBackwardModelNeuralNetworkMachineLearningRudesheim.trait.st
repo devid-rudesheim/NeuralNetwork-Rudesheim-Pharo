@@ -7,8 +7,8 @@ Trait {
 }
 
 { #category : 'training' }
-TBackwardModelNeuralNetworkMachineLearningRudesheim >> backward:	aTPredictionsNeuralNetworkMachineLearningRudesheim
-usingCriterion:		aTCriterionNeuralNetworkMachineLearningRudesheim [
+TBackwardModelNeuralNetworkMachineLearningRudesheim >> backward: aTPredictionsNeuralNetworkMachineLearningRudesheim
+usingCriterion: aTCriterionNeuralNetworkMachineLearningRudesheim [
 	"Reverse-mode autodiff over the whole graph (reachable from outputNode), generalizing the
 	single-predecessor-chain-only backward that used to live directly in Trainer. Runs one
 	forward pass (via TNode>>forwardTraceGivenInput:cache:order:) to get both a node ->
@@ -27,7 +27,6 @@ usingCriterion:		aTCriterionNeuralNetworkMachineLearningRudesheim [
 	whose layer returned a delta from backward:, i.e. has learned parameters), in the same
 	reverse-topological order they were computed -- mirroring the { layer. delta } pairs
 	TTrainer>>train:withExample: used to build from its traceCollection."
-
 	|
 		valueCache
 		order
@@ -41,47 +40,68 @@ usingCriterion:		aTCriterionNeuralNetworkMachineLearningRudesheim [
 
 	self outputNode
 		forwardTraceGivenInput:	aTPredictionsNeuralNetworkMachineLearningRudesheim inputPredictions
-		cache:				valueCache
-		order:				order.
+		cache:	valueCache
+		order:	order.
 
 	criterionResult :=
 		aTCriterionNeuralNetworkMachineLearningRudesheim
-			predictions:	( ( valueCache at: self outputNode ) outputPredictions ) asArray
-			targets:			aTPredictionsNeuralNetworkMachineLearningRudesheim outputPredictions.
+			predictions:
+			(
+				(
+					valueCache
+						at:	self outputNode
+				) outputPredictions
+			) asArray
+			targets:	aTPredictionsNeuralNetworkMachineLearningRudesheim outputPredictions.
 
 	gradients := IdentityDictionary new.
-	gradients at: self outputNode put: criterionResult gradient.
+
+	gradients
+		at:	self outputNode
+		put:	criterionResult gradient.
 
 	parameterDeltas :=
 		OrderedCollection
 			streamContents:
 			[ :writeStream |
-				order reverseDo:
-				[ :eachNode |
-					|
+				order
+					reverseDo:
+					[ :eachNode |
+						|
+							backwardResult
+						|
+
+						backwardResult :=
+							eachNode layer
+								backward:
+								(
+									(
+										valueCache
+											at:	eachNode
+									)
+										backwardContextWithGradient:
+										(
+											gradients
+												at:	eachNode
+										)
+								).
+
 						backwardResult
-					|
+							ifNotEmpty:
+							[
+								writeStream
+									nextPut:
+									{
+										eachNode.
+										backwardResult last
+									}.
+							].
 
-					backwardResult :=
-						eachNode layer
-							backward:
-							(
-								( valueCache at: eachNode )
-									backwardContextWithGradient: ( gradients at: eachNode )
-							).
-
-					backwardResult
-						ifNotEmpty:
-						[
-							writeStream
-								nextPut:	{ eachNode. backwardResult last }
-						].
-
-					eachNode
-						distributeGradient:			backwardResult first
-						toPredecessorGradients:	gradients
-						usingValueCache:				valueCache.
-				]
+						eachNode
+							distributeGradient:	backwardResult first
+							toPredecessorGradients:	gradients
+							usingValueCache:	valueCache.
+					].
 			].
 
 	"Every node's forward input/output may be a live OpenCL buffer (buffer-passthrough
@@ -103,6 +123,6 @@ usingCriterion:		aTCriterionNeuralNetworkMachineLearningRudesheim [
 	^
 	{
 		criterionResult loss.
-		parameterDeltas.
-	}
+		parameterDeltas
+	}.
 ]

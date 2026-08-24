@@ -2,6 +2,5 @@ Extension { #name : 'LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudes
 
 { #category : '*Rudesheim-NeuralNetwork-ONNX-OpenCL' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-
-	^ 'Gemm'
+	^ 'Gemm'.
 ]

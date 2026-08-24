@@ -50,7 +50,6 @@ backend:					aTBackendNeuralNetworkMachineLearningRudesheim [
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> backend [
-
 	^ self subclassResponsibility.
 ]
 
@@ -67,7 +66,6 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 	Every cached node value, including the final one, is released once this pass is
 	done reading from it; the returned value is always a plain materialized Array,
 	identical to what value: returns (value: is a plain alias for this method)."
-
 	|
 		aValueCacheIdentityDictionary
 		result
@@ -78,7 +76,7 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 	result :=
 		self outputNode
 			resolvedValueGivenInput:	anInputNumbersSequencialCollection
-			cache:						aValueCacheIdentityDictionary.
+			cache:	aValueCacheIdentityDictionary.
 
 	aValueCacheIdentityDictionary
 		valuesDo:
@@ -102,43 +100,36 @@ TModelNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencial
 
 { #category : 'evaluating' }
 TModelNeuralNetworkMachineLearningRudesheim >> value: aSequenceableCollection [
-
 	^ self
 		forward:	aSequenceableCollection.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayers [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> outputNode [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers:	aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
-
+TModelNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayers: aSequencialCollectionWIthTLayerNeuralNetworkMachineLearningRudesheim [
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
 TModelNeuralNetworkMachineLearningRudesheim >> setBackend: aTBackendNeuralNetworkMachineLearningRudesheim [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TModelNeuralNetworkMachineLearningRudesheim >> setOutputNode:	aTNodeNeuralNetworkMachineLearningRudesheim [
-
+TModelNeuralNetworkMachineLearningRudesheim >> setOutputNode: aTNodeNeuralNetworkMachineLearningRudesheim [
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TModelNeuralNetworkMachineLearningRudesheim >> species [
-
 	^ self class species.
 ]

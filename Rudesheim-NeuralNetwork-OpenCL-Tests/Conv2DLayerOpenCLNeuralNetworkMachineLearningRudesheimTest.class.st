@@ -8,13 +8,11 @@ Class {
 
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
-
 	|
 		extentClass
 	|
@@ -23,10 +21,32 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	1
-		inputExtent:	(extentClass width: 4 height: 4)
-		kernelExtent:	(extentClass width: 3 height: 3)
-		strideExtent:	(extentClass width: 1 height: 1)
-		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
+		inputExtent:
+		(
+			extentClass
+				width:	4
+				height:	4
+		)
+		kernelExtent:
+		(
+			extentClass
+				width:	3
+				height:	3
+		)
+		strideExtent:
+		(
+			extentClass
+				width:	1
+				height:	1
+		)
+		padding:
+		(
+			Margin
+				top:	0
+				left:	0
+				bottom:	0
+				right:	0
+		).
 ]
 
 { #category : 'tests' }
@@ -48,7 +68,6 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatche
 	of scope to fix here. Using Pure avoids GPU buffers entirely for the sampling
 	side, while the analytic gradient under test still comes from the OpenCL
 	backward: exactly once."
-
 	|
 		window
 		weights
@@ -78,24 +97,53 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatche
 			pureLayer
 			output
 		|
+
 		pureLayer :=
 			Rudesheim MachineLearning NeuralNetwork Pure Layer Conv2D
 				weights:	aWeightsSequenceableCollection
-				biases:		aBiasesSequenceableCollection
-				window:		window.
-		output := pureLayer forward: anInputSequenceableCollection.
-		( output with: gradient collect: [ :each :eachGradient | each * eachGradient ] )
+				biases:	aBiasesSequenceableCollection
+				window:	window.
+
+		output :=
+			pureLayer
+				forward:	anInputSequenceableCollection.
+
+		(
+			output
+				with:	gradient
+				collect:
+				[ :each :eachGradient |
+					each * eachGradient.
+				]
+		)
 			inject:	0
-			into:		[ :total :each | total + each ]
+			into:
+			[ :total :each |
+				total + each.
+			].
 	].
 
-	layer := self targetClass weights: weights biases: biases window: window.
+	layer :=
+		self targetClass
+			weights:	weights
+			biases:	biases
+			window:	window.
+
 	context :=
-		( Rudesheim MachineLearning NeuralNetwork Predictions
+	(
+		Rudesheim MachineLearning NeuralNetwork Predictions
 			inputPredictions:	input
-			outputPredictions:	( layer forward: input ) asArray )
-			backwardContextWithGradient:	gradient.
-	result := layer backward: context.
+			outputPredictions:
+			(
+				layer
+					forward:	input
+			) asArray
+	)
+		backwardContextWithGradient:	gradient.
+
+	result :=
+		layer
+			backward:	context.
 
 	1
 		to:	input size
@@ -106,16 +154,49 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatche
 				perturbedMinus
 				numericGradient
 			|
+
 			perturbedPlus := input copy.
-			perturbedPlus at: index put: ( input at: index ) + epsilon.
+
+			perturbedPlus
+				at:	index
+				put:
+				(
+					input
+						at:	index
+				) + epsilon.
+
 			perturbedMinus := input copy.
-			perturbedMinus at: index put: ( input at: index ) - epsilon.
+
+			perturbedMinus
+				at:	index
+				put:
+				(
+					input
+						at:	index
+				) - epsilon.
+
 			numericGradient :=
-				( ( lossFor value: weights value: biases value: perturbedPlus )
-					- ( lossFor value: weights value: biases value: perturbedMinus ) )
-					/ ( 2 * epsilon ).
+			(
+				(
+					lossFor
+						value:	weights
+						value:	biases
+						value:	perturbedPlus
+				) -
+				(
+					lossFor
+						value:	weights
+						value:	biases
+						value:	perturbedMinus
+				)
+			) / ( 2 * epsilon ).
+
 			self
-				assert:	( result first at: index )
+				assert:
+				(
+					result first
+						at:	index
+				)
 				closeTo:	numericGradient
 				precision:	0.05.
 		].
@@ -129,16 +210,49 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatche
 				perturbedMinus
 				numericGradient
 			|
+
 			perturbedPlus := weights copy.
-			perturbedPlus at: index put: ( weights at: index ) + epsilon.
+
+			perturbedPlus
+				at:	index
+				put:
+				(
+					weights
+						at:	index
+				) + epsilon.
+
 			perturbedMinus := weights copy.
-			perturbedMinus at: index put: ( weights at: index ) - epsilon.
+
+			perturbedMinus
+				at:	index
+				put:
+				(
+					weights
+						at:	index
+				) - epsilon.
+
 			numericGradient :=
-				( ( lossFor value: perturbedPlus value: biases value: input )
-					- ( lossFor value: perturbedMinus value: biases value: input ) )
-					/ ( 2 * epsilon ).
+			(
+				(
+					lossFor
+						value:	perturbedPlus
+						value:	biases
+						value:	input
+				) -
+				(
+					lossFor
+						value:	perturbedMinus
+						value:	biases
+						value:	input
+				)
+			) / ( 2 * epsilon ).
+
 			self
-				assert:	( result last weights at: index )
+				assert:
+				(
+					result last weights
+						at:	index
+				)
 				closeTo:	numericGradient
 				precision:	0.05.
 		].
@@ -152,29 +266,76 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatche
 				perturbedMinus
 				numericGradient
 			|
+
 			perturbedPlus := biases copy.
-			perturbedPlus at: index put: ( biases at: index ) + epsilon.
+
+			perturbedPlus
+				at:	index
+				put:
+				(
+					biases
+						at:	index
+				) + epsilon.
+
 			perturbedMinus := biases copy.
-			perturbedMinus at: index put: ( biases at: index ) - epsilon.
+
+			perturbedMinus
+				at:	index
+				put:
+				(
+					biases
+						at:	index
+				) - epsilon.
+
 			numericGradient :=
-				( ( lossFor value: weights value: perturbedPlus value: input )
-					- ( lossFor value: weights value: perturbedMinus value: input ) )
-					/ ( 2 * epsilon ).
+			(
+				(
+					lossFor
+						value:	weights
+						value:	perturbedPlus
+						value:	input
+				) -
+				(
+					lossFor
+						value:	weights
+						value:	perturbedMinus
+						value:	input
+				)
+			) / ( 2 * epsilon ).
+
 			self
-				assert:	( result last biases at: index )
+				assert:
+				(
+					result last biases
+						at:	index
+				)
 				closeTo:	numericGradient
 				precision:	0.05.
 		].
 
-	( layer instVarNamed: 'weightsBuffer' ) release.
-	( layer instVarNamed: 'biasesBuffer' ) release.
-	( result last instVarNamed: 'weightsBuffer' ) release.
-	( result last instVarNamed: 'biasesBuffer' ) release
+	(
+		layer
+			instVarNamed:	'weightsBuffer'
+	) release.
+
+	(
+		layer
+			instVarNamed:	'biasesBuffer'
+	) release.
+
+	(
+		result last
+			instVarNamed:	'weightsBuffer'
+	) release.
+
+	(
+		result last
+			instVarNamed:	'biasesBuffer'
+	) release.
 ]
 
 { #category : 'tests' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithUpdatedWeightsRowsMatchesHandComputedSGDStep [
-
 	|
 		window
 		layer
@@ -183,31 +344,48 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithUpdatedWei
 	|
 
 	window := self defaultWindow.
+
 	layer :=
 		self targetClass
 			weights:	#( 0.1 0.2 -0.1 0.05 0.3 -0.2 0.15 -0.05 0.25 )
-			biases:		#( 0.1 )
-			window:		window.
+			biases:	#( 0.1 )
+			window:	window.
+
 	gradientLayer :=
 		self targetClass
 			weights:	#( 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 )
-			biases:		#( 0.5 )
-			window:		window.
+			biases:	#( 0.5 )
+			window:	window.
 
-	updated := layer withUpdatedWeightsRows: gradientLayer learningRate: 0.1.
+	updated :=
+		layer
+			withUpdatedWeightsRows:	gradientLayer
+			learningRate:	0.1.
 
 	"left - rate*right, same SGD shape as LinearTransformLayerOpenCL"
 	updated weights
 		with:	#( 0.0 0.0 -0.4 -0.35 -0.2 -0.8 -0.55 -0.85 -0.65 )
-		do:		[ :left :right | self assert: left closeTo: right precision: 0.0001 ].
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
+
 	updated biases
 		with:	#( 0.05 )
-		do:		[ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]
 
 { #category : 'tests' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedSumKernel [
-
 	|
 		extentClass
 		window
@@ -221,26 +399,54 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatches
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputExtent:	(extentClass width: 4 height: 4)
-			kernelExtent:	(extentClass width: 3 height: 3)
-			strideExtent:	(extentClass width: 1 height: 1)
-			padding:	(Margin top: 0 left: 0 bottom: 0 right: 0).
+			inputExtent:
+			(
+				extentClass
+					width:	4
+					height:	4
+			)
+			kernelExtent:
+			(
+				extentClass
+					width:	3
+					height:	3
+			)
+			strideExtent:
+			(
+				extentClass
+					width:	1
+					height:	1
+			)
+			padding:
+			(
+				Margin
+					top:	0
+					left:	0
+					bottom:	0
+					right:	0
+			).
 
 	layer :=
 		self targetClass
-			weights: #(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
-			biases: #(0.0)
-			window: window.
+			weights:	#( 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 )
+			biases:	#( 0.0 )
+			window:	window.
 
-	input := #(1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0).
-	output := (layer forward: input) asArray.
+	input := #( 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 ).
 
-	self assert: output equals: #(54.0 63.0 90.0 99.0)
+	output :=
+	(
+		layer
+			forward:	input
+	) asArray.
+
+	self
+		assert:	output
+		equals:	#( 54.0 63.0 90.0 99.0 ).
 ]
 
 { #category : 'tests' }
 Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSamePaddingIncludesBias [
-
 	|
 		extentClass
 		window
@@ -253,18 +459,46 @@ Conv2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardWithSam
 	window :=
 		Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 			inputChannels:	1
-			inputExtent:	(extentClass width: 2 height: 2)
-			kernelExtent:	(extentClass width: 3 height: 3)
-			strideExtent:	(extentClass width: 1 height: 1)
-			padding:	(Margin top: 1 left: 1 bottom: 1 right: 1).
+			inputExtent:
+			(
+				extentClass
+					width:	2
+					height:	2
+			)
+			kernelExtent:
+			(
+				extentClass
+					width:	3
+					height:	3
+			)
+			strideExtent:
+			(
+				extentClass
+					width:	1
+					height:	1
+			)
+			padding:
+			(
+				Margin
+					top:	1
+					left:	1
+					bottom:	1
+					right:	1
+			).
 
 	layer :=
 		self targetClass
-			weights: #(1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0)
-			biases: #(0.5)
-			window: window.
+			weights:	#( 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 )
+			biases:	#( 0.5 )
+			window:	window.
 
-	output := (layer forward: #(1.0 2.0 3.0 4.0)) asArray.
+	output :=
+	(
+		layer
+			forward:	#( 1.0 2.0 3.0 4.0 )
+	) asArray.
 
-	self assert: output equals: #(10.5 10.5 10.5 10.5)
+	self
+		assert:	output
+		equals:	#( 10.5 10.5 10.5 10.5 ).
 ]

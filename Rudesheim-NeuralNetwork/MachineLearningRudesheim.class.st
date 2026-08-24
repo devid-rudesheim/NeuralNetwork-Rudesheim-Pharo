@@ -8,6 +8,5 @@ Class {
 
 { #category : 'namespace' }
 MachineLearningRudesheim class >> NeuralNetwork [
-
-	^ NeuralNetworkMachineLearningRudesheim
+	^ NeuralNetworkMachineLearningRudesheim.
 ]

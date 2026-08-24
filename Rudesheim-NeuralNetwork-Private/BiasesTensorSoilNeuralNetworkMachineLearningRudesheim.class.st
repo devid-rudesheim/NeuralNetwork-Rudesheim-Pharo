@@ -10,6 +10,5 @@ Class {
 
 { #category : 'accessing' }
 BiasesTensorSoilNeuralNetworkMachineLearningRudesheim class >> tensorKindToken [
-
-	^ 'Biases'
+	^ 'Biases'.
 ]

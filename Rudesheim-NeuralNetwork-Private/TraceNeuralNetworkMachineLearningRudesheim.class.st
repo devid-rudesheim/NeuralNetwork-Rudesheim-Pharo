@@ -15,43 +15,36 @@ Class {
 
 { #category : 'accessing' }
 TraceNeuralNetworkMachineLearningRudesheim class >> defaultNeuralNetworkLayer [
-
-	^ 0
+	^ 0.
 ]
 
 { #category : 'accessing' }
 TraceNeuralNetworkMachineLearningRudesheim >> defaultNeuralNetworkLayer [
-
 	^ self class defaultNeuralNetworkLayer.
 ]
 
 { #category : 'accessing' }
 TraceNeuralNetworkMachineLearningRudesheim >> inputPredictions [
-
-	^ predictions inputPredictions
+	^ predictions inputPredictions.
 ]
 
 { #category : 'accessing' }
 TraceNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayer [
-
 	^ neuralNetworkLayer
 		ifNil:
 		[
 			neuralNetworkLayer := self defaultNeuralNetworkLayer.
 		].
-
 ]
 
 { #category : 'accessing' }
 TraceNeuralNetworkMachineLearningRudesheim >> outputPredictions [
-
-	^ predictions outputPredictions
+	^ predictions outputPredictions.
 ]
 
 { #category : 'initialization' }
-TraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer:	aTLayerNeuralNetworkMachineLearningRudesheim
-predictions:					aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
-	neuralNetworkLayer	:=	aTLayerNeuralNetworkMachineLearningRudesheim.
-	predictions			:= aTPredictionsNeuralNetworkMachineLearningRudesheim.
+TraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer: aTLayerNeuralNetworkMachineLearningRudesheim
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
+	neuralNetworkLayer := aTLayerNeuralNetworkMachineLearningRudesheim.
+	predictions := aTPredictionsNeuralNetworkMachineLearningRudesheim.
 ]

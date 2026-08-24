@@ -27,12 +27,15 @@ AddLayerNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSe
 		[ :i |
 			output
 				at:	i
-				put:	
+				put:
 				(
 					anInputNumbersSequencialCollection
 						at:	i
-				)
-					+ (anInputNumbersSequencialCollection at: half + i).
+				) +
+				(
+					anInputNumbersSequencialCollection
+						at:	half + i
+				).
 		].
 
 	^ output.

@@ -65,13 +65,12 @@ OpenCLNeuralNetworkMachineLearningRudesheim class >> driver [
 ]
 
 { #category : 'class initialization' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> initialize [ 
-
+OpenCLNeuralNetworkMachineLearningRudesheim class >> initialize [
 	self
-		startUp: true.
-	
+		startUp:	true.
+
 	SessionManager default
-		registerSystemClassNamed: self name
+		registerSystemClassNamed:	self name.
 ]
 
 { #category : 'accessing' }
@@ -841,12 +840,14 @@ kernel void BatchNormalizationParamGradient
 OpenCLNeuralNetworkMachineLearningRudesheim class >> program [
 	^ self context
 		cachedCLProgramFor:	self devices
-		fromSources:	{self kernelSource}
+		fromSources:
+		{
+			self kernelSource
+		}
 		withOptions:	''.
 ]
 
 { #category : 'class initialization' }
-OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp:	anIsImageStartingBoolean [
-
+OpenCLNeuralNetworkMachineLearningRudesheim class >> startUp: anIsImageStartingBoolean [
 	driver := nil.
 ]

@@ -23,28 +23,165 @@ ONNXConversionNeuralNetworkMachineLearningRudesheimTest class >> syntheticGemmOn
 	LinearTransformLayerNeuralNetworkMachineLearningRudesheim reshapes into weight rows
 	[[2.0 0.0] [0.0 3.0]] -- so forward: #(1.0 2.0) computes
 	{ (2.0*1.0 + 0.0*2.0) + 1.0.  (0.0*1.0 + 3.0*2.0) + 1.0 } = #(3.0 7.0)."
-
 	^ #[
-		58 147 1 10 42 10 5 105 110 112 117 116
-		10 6 119 101 105 103 104 116 10 4 98 105
-		97 115 18 6 111 117 116 112 117 116 26 5
-		103 101 109 109 49 34 4 71 101 109 109 18
-		18 83 121 110 116 104 101 116 105 99 71 101
-		109 109 71 114 97 112 104 42 32 8 2 8
-		2 16 1 66 6 119 101 105 103 104 116 74
-		16 0 0 0 64 0 0 0 0 0 0 0
-		0 0 0 64 64 42 20 8 2 16 1 66
-		4 98 105 97 115 74 8 0 0 128 63 0
-		0 128 63 90 25 10 5 105 110 112 117 116
-		18 16 10 14 18 12 10 2 8 1 10 2
-		8 1 10 2 8 2
-	]
+		58
+		147
+		1
+		10
+		42
+		10
+		5
+		105
+		110
+		112
+		117
+		116
+		10
+		6
+		119
+		101
+		105
+		103
+		104
+		116
+		10
+		4
+		98
+		105
+		97
+		115
+		18
+		6
+		111
+		117
+		116
+		112
+		117
+		116
+		26
+		5
+		103
+		101
+		109
+		109
+		49
+		34
+		4
+		71
+		101
+		109
+		109
+		18
+		18
+		83
+		121
+		110
+		116
+		104
+		101
+		116
+		105
+		99
+		71
+		101
+		109
+		109
+		71
+		114
+		97
+		112
+		104
+		42
+		32
+		8
+		2
+		8
+		2
+		16
+		1
+		66
+		6
+		119
+		101
+		105
+		103
+		104
+		116
+		74
+		16
+		0
+		0
+		0
+		64
+		0
+		0
+		0
+		0
+		0
+		0
+		0
+		0
+		0
+		0
+		64
+		64
+		42
+		20
+		8
+		2
+		16
+		1
+		66
+		4
+		98
+		105
+		97
+		115
+		74
+		8
+		0
+		0
+		128
+		63
+		0
+		0
+		128
+		63
+		90
+		25
+		10
+		5
+		105
+		110
+		112
+		117
+		116
+		18
+		16
+		10
+		14
+		18
+		12
+		10
+		2
+		8
+		1
+		10
+		2
+		8
+		1
+		10
+		2
+		8
+		2
+	].
 ]
 
 { #category : 'running' }
 ONNXConversionNeuralNetworkMachineLearningRudesheimTest >> onnxFileReference [
-
-	^ FileReference newTempFilePrefix: 'rudesheim-synthetic-gemm' suffix: '.onnx'
+	^ FileReference
+		newTempFilePrefix:	'rudesheim-synthetic-gemm'
+		suffix:	'.onnx'.
 ]
 
 { #category : 'tests' }
@@ -58,25 +195,26 @@ ONNXConversionNeuralNetworkMachineLearningRudesheimTest >> testForwardsThroughSy
 
 	nn := Rudesheim MachineLearning NeuralNetwork.
 	onnxFileReference := self onnxFileReference.
+
 	onnxFileReference
 		binaryWriteStreamDo:
 		[ :stream |
 			stream
 				nextPutAll:	self class syntheticGemmOnnxBytes.
 		].
-	soilFileReference := onnxFileReference withExtension: 'soil'.
 
-	nn
-		ONNX
-		Convertor
+	soilFileReference :=
+		onnxFileReference
+			withExtension:	'soil'.
+
+	nn ONNX Convertor
 		file:	onnxFileReference
 		toSoil:	soilFileReference.
 
 	(
 		Soil
 			openOnPath:	soilFileReference
-	)
-		intoRHScope
+	) intoRHScope
 		do:
 		[ :soil |
 			|
@@ -94,9 +232,7 @@ ONNXConversionNeuralNetworkMachineLearningRudesheimTest >> testForwardsThroughSy
 						root
 							symbolByName:
 							(
-								nn
-									ONNX
-									Convertor
+								nn ONNX Convertor
 									modelKeyFromFileReference:	onnxFileReference
 							)
 					).
@@ -109,20 +245,20 @@ ONNXConversionNeuralNetworkMachineLearningRudesheimTest >> testForwardsThroughSy
 				(
 					modelRecord metadata
 						includesKey:	#graphPopulationError
-				)
-					not.
+				) not.
 
 			model :=
 				modelRecord
-					nextModelAs:
-					nn
-						Pure
-						Model.
+					nextModelAs:	nn Pure Model.
 
-			prediction := ( model forward: #( 1.0 2.0 ) ) asArray.
+			prediction :=
+			(
+				model
+					forward:	#( 1.0 2.0 )
+			) asArray.
 		].
 
 	self
 		assert:	prediction
-		equals:	#( 3.0 7.0 )
+		equals:	#( 3.0 7.0 ).
 ]

@@ -13,8 +13,7 @@ TLayerNeuralNetworkMachineLearningRudesheim classSide >> backward:		aTBackwardCo
 ]
 
 { #category : 'evaluating' }
-TLayerNeuralNetworkMachineLearningRudesheim >> backward:		aBackwardContextNeuralNetworkMachineLearningRudesheim [
-
+TLayerNeuralNetworkMachineLearningRudesheim >> backward: aBackwardContextNeuralNetworkMachineLearningRudesheim [
 	^ self class
-		backward:		aBackwardContextNeuralNetworkMachineLearningRudesheim
+		backward:	aBackwardContextNeuralNetworkMachineLearningRudesheim.
 ]
