@@ -8,13 +8,11 @@ Class {
 
 { #category : 'accessing' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
-
 	|
 		extentClass
 	|
@@ -23,35 +21,77 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
 
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	1
-		inputExtent:	(extentClass width: 4 height: 4)
-		kernelExtent:	(extentClass width: 2 height: 2)
-		strideExtent:	(extentClass width: 2 height: 2)
-		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
+		inputExtent:
+		(
+			extentClass
+				width:	4
+				height:	4
+		)
+		kernelExtent:
+		(
+			extentClass
+				width:	2
+				height:	2
+		)
+		strideExtent:
+		(
+			extentClass
+				width:	2
+				height:	2
+		)
+		padding:
+		(
+			Margin
+				top:	0
+				left:	0
+				bottom:	0
+				right:	0
+		).
 ]
 
 { #category : 'tests' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardRoutesGradientToArgMaxPositionsOnly [
-
 	|
 		layer
 		context
 		inputGradient
 	|
 
-	layer := self targetClass window: self defaultWindow.
-	context :=
-		( Rudesheim MachineLearning NeuralNetwork Predictions
-			inputPredictions:
-				#(
-					1.0 3.0 2.0 4.0
-					5.0 2.0 8.0 1.0
-					9.0 0.0 1.0 2.0
-					3.0 4.0 5.0 6.0
-				)
-			outputPredictions:	#( 5.0 8.0 9.0 6.0 ) )
-			backwardContextWithGradient:	#( 1.0 2.0 3.0 4.0 ).
+	layer :=
+		self targetClass
+			window:	self defaultWindow.
 
-	inputGradient := ( layer backward: context ) first.
+	context :=
+	(
+		Rudesheim MachineLearning NeuralNetwork Predictions
+			inputPredictions:
+			#(
+				1.0
+				3.0
+				2.0
+				4.0
+				5.0
+				2.0
+				8.0
+				1.0
+				9.0
+				0.0
+				1.0
+				2.0
+				3.0
+				4.0
+				5.0
+				6.0
+			)
+			outputPredictions:	#( 5.0 8.0 9.0 6.0 )
+	)
+		backwardContextWithGradient:	#( 1.0 2.0 3.0 4.0 ).
+
+	inputGradient :=
+	(
+		layer
+			backward:	context
+	) first.
 
 	"Each output cell's gradient is routed only to the input position that
 	was its arg-max in the forward pass -- row1col0=5.0 (winner of the
@@ -60,48 +100,82 @@ MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardRou
 	self
 		assert:	inputGradient
 		equals:
-			#(
-				0.0 0.0 0.0 0.0
-				1.0 0.0 2.0 0.0
-				3.0 0.0 0.0 0.0
-				0.0 0.0 0.0 4.0
-			)
+		#(
+			0.0
+			0.0
+			0.0
+			0.0
+			1.0
+			0.0
+			2.0
+			0.0
+			3.0
+			0.0
+			0.0
+			0.0
+			0.0
+			0.0
+			0.0
+			4.0
+		).
 ]
 
 { #category : 'tests' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithUpdatedWeightsRowsIsNoOpForParameterlessLayer [
-
 	|
 		layer
 	|
 
-	layer := self targetClass window: self defaultWindow.
+	layer :=
+		self targetClass
+			window:	self defaultWindow.
 
 	self
-		assert:	( layer withUpdatedWeightsRows: nil learningRate: 0.01 )
-		equals:	layer
+		assert:
+		(
+			layer
+				withUpdatedWeightsRows:	nil
+				learningRate:	0.01
+		)
+		equals:	layer.
 ]
 
 { #category : 'tests' }
 MaxPool2DLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedMax [
-
 	|
 		layer
 		output
 	|
 
-	layer := self targetClass window: self defaultWindow.
+	layer :=
+		self targetClass
+			window:	self defaultWindow.
 
 	output :=
-		(
-			layer forward:
-				#(
-					1.0 3.0 2.0 4.0
-					5.0 2.0 8.0 1.0
-					9.0 0.0 1.0 2.0
-					3.0 4.0 5.0 6.0
-				)
-		) asArray.
+	(
+		layer
+			forward:
+			#(
+				1.0
+				3.0
+				2.0
+				4.0
+				5.0
+				2.0
+				8.0
+				1.0
+				9.0
+				0.0
+				1.0
+				2.0
+				3.0
+				4.0
+				5.0
+				6.0
+			)
+	) asArray.
 
-	self assert: output equals: #(5.0 8.0 9.0 6.0)
+	self
+		assert:	output
+		equals:	#( 5.0 8.0 9.0 6.0 ).
 ]

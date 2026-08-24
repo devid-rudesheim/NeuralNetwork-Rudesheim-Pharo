@@ -17,9 +17,13 @@ AddLayerNeuralNetworkMachineLearningRudesheimTest >> testForwardAddsConcatenated
 		output
 	|
 
-	output := (self targetClass forward: #(1.0 2.0 3.0 4.0 10.0 20.0 30.0 40.0)) asArray.
+	output :=
+	(
+		self targetClass
+			forward:	#( 1.0 2.0 3.0 4.0 10.0 20.0 30.0 40.0 )
+	) asArray.
 
 	self
 		assert:	output
-		equals:	#(11.0 22.0 33.0 44.0).
+		equals:	#( 11.0 22.0 33.0 44.0 ).
 ]

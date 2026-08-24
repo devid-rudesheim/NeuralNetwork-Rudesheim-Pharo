@@ -15,19 +15,16 @@ targets:			aTargetSequencialCollection [
 
 { #category : 'accessing' }
 TCriterionNeuralNetworkMachineLearningRudesheim >> gradient [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TCriterionNeuralNetworkMachineLearningRudesheim >> loss [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TCriterionNeuralNetworkMachineLearningRudesheim >> setPredictions:		aPredictionsSequencialCollection
-targets:				aTargetSequencialCollection [
-
+TCriterionNeuralNetworkMachineLearningRudesheim >> setPredictions: aPredictionsSequencialCollection
+targets: aTargetSequencialCollection [
 	^ self subclassResponsibility.
 ]

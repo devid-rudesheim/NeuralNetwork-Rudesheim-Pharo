@@ -36,9 +36,7 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultCommandQueue [
 
 { #category : 'accessing' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultContext [
-	^ Rudesheim
-		OpenCL
-		Context
+	^ Rudesheim OpenCL Context
 		clContextFor:	self devices.
 ]
 
@@ -49,9 +47,7 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheim >> defaultDevices [
 
 { #category : 'accessing' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheim >> device [
-	^ self
-		devices
-		first.
+	^ self devices first.
 ]
 
 { #category : 'accessing' }

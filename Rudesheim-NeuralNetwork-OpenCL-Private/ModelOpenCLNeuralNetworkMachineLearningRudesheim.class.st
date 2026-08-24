@@ -7,6 +7,5 @@ Class {
 
 { #category : 'accessing' }
 ModelOpenCLNeuralNetworkMachineLearningRudesheim class >> backend [
-
-	^ OpenCLNeuralNetworkMachineLearningRudesheim
+	^ OpenCLNeuralNetworkMachineLearningRudesheim.
 ]

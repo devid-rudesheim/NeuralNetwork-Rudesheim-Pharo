@@ -7,6 +7,5 @@ Class {
 
 { #category : 'namespace' }
 ArchitectureNeuralNetworkMachineLearningRudesheim class >> MLP [
-
-	^ MLPNeuralNetworkMachineLearningRudesheim
+	^ MLPNeuralNetworkMachineLearningRudesheim.
 ]

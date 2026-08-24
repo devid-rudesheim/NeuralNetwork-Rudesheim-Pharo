@@ -18,18 +18,15 @@ learningRate:				aRateFloat [
 ]
 
 { #category : 'evaluating' }
-TModuleNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
-	
+TModuleNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 	^ self class
-		forward:	anInputNumbersSequencialCollection
+		forward:	anInputNumbersSequencialCollection.
 ]
 
 { #category : 'converting' }
-TModuleNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-learningRate:				aRateFloat [
-	
+TModuleNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows: aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
+learningRate: aRateFloat [
 	^ self class
 		withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-		learningRate:				aRateFloat
-
+		learningRate:	aRateFloat.
 ]

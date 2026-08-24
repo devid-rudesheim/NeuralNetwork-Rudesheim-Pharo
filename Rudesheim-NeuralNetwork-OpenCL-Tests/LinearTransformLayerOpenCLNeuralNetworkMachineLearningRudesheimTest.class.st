@@ -8,29 +8,25 @@ Class {
 
 { #category : 'accessing' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultBasicTarget [
-
 	^ self targetClass
-		weightsRows:	#( #( 0.5 0.3 -0.2 ) #( -0.1 0.4 0.6 ) )
-		biases:			#( 0.1 -0.2 )
+		weightsRows:	#( #(0.5 0.3 -0.2) #(-0.1 0.4 0.6) )
+		biases:	#( 0.1 -0.2 ).
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> pureTarget [
-
 	^ Rudesheim MachineLearning NeuralNetwork Pure Layer LinearTransform
-		weightsRows:	#( #( 0.5 0.3 -0.2 ) #( -0.1 0.4 0.6 ) )
-		biases:			#( 0.1 -0.2 )
+		weightsRows:	#( #(0.5 0.3 -0.2) #(-0.1 0.4 0.6) )
+		biases:	#( 0.1 -0.2 ).
 ]
 
 { #category : 'tests' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatchesPure [
-
 	|
 		context
 		oclResult
@@ -44,27 +40,54 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackw
 
 	oclResult :=
 		self basicTarget
-			backward:	( context backwardContextWithGradient: #( 0.2 -0.1 ) ).
+			backward:
+			(
+				context
+					backwardContextWithGradient:	#( 0.2 -0.1 )
+			).
+
 	pureResult :=
 		self pureTarget
-			backward:	( context backwardContextWithGradient: #( 0.2 -0.1 ) ).
+			backward:
+			(
+				context
+					backwardContextWithGradient:	#( 0.2 -0.1 )
+			).
 
 	oclResult first
-		with: pureResult first
-		do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ].
+		with:	pureResult first
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 
 	oclResult last weightsRows
-		with: pureResult last weightsRows
+		with:	pureResult last weightsRows
 		do:
 		[ :oclRow :pureRow |
 			oclRow
-				with: pureRow
-				do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+				with:	pureRow
+				do:
+				[ :left :right |
+					self
+						assert:	left
+						closeTo:	right
+						precision:	0.0001.
+				].
 		].
 
 	oclResult last biases
-		with: pureResult last biases
-		do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		with:	pureResult last biases
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]
 
 { #category : 'tests' }
@@ -73,24 +96,38 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwa
 	adjacent OpenCL Layer can consume it directly -- see
 	note/opencl-layer-buffer-passthrough-design.md -- so asArray it here to
 	compare against the Pure backend's plain Array result."
-
 	|
 		oclOutput
 		pureOutput
 	|
 
-	oclOutput := (self basicTarget forward: #( 1.0 2.0 0.5 )) asArray.
-	pureOutput := self pureTarget forward: #( 1.0 2.0 0.5 ).
+	oclOutput :=
+	(
+		self basicTarget
+			forward:	#( 1.0 2.0 0.5 )
+	) asArray.
 
-	self assert: oclOutput size equals: pureOutput size.
+	pureOutput :=
+		self pureTarget
+			forward:	#( 1.0 2.0 0.5 ).
+
+	self
+		assert:	oclOutput size
+		equals:	pureOutput size.
+
 	oclOutput
-		with: pureOutput
-		do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		with:	pureOutput
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]
 
 { #category : 'tests' }
 LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithUpdatedWeightsRowsMatchesPure [
-
 	|
 		gradientLayer
 		oclUpdated
@@ -99,33 +136,46 @@ LinearTransformLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithU
 
 	gradientLayer :=
 		self targetClass
-			weightsRows:	#( #( 0.01 -0.02 0.03 ) #( 0.04 0.05 -0.06 ) )
-			biases:			#( 0.01 -0.02 ).
+			weightsRows:	#( #(0.01 -0.02 0.03) #(0.04 0.05 -0.06) )
+			biases:	#( 0.01 -0.02 ).
 
 	oclUpdated :=
 		self basicTarget
 			withUpdatedWeightsRows:	gradientLayer
-			learningRate:				0.1.
+			learningRate:	0.1.
+
 	pureUpdated :=
 		self pureTarget
 			withUpdatedWeightsRows:
 			(
 				Rudesheim MachineLearning NeuralNetwork Pure Layer LinearTransform
-					weightsRows:	#( #( 0.01 -0.02 0.03 ) #( 0.04 0.05 -0.06 ) )
-					biases:			#( 0.01 -0.02 )
+					weightsRows:	#( #(0.01 -0.02 0.03) #(0.04 0.05 -0.06) )
+					biases:	#( 0.01 -0.02 )
 			)
-			learningRate:				0.1.
+			learningRate:	0.1.
 
 	oclUpdated weightsRows
-		with: pureUpdated weightsRows
+		with:	pureUpdated weightsRows
 		do:
 		[ :oclRow :pureRow |
 			oclRow
-				with: pureRow
-				do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+				with:	pureRow
+				do:
+				[ :left :right |
+					self
+						assert:	left
+						closeTo:	right
+						precision:	0.0001.
+				].
 		].
 
 	oclUpdated biases
-		with: pureUpdated biases
-		do: [ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		with:	pureUpdated biases
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]

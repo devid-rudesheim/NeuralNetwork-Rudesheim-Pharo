@@ -12,6 +12,5 @@ TModelReaderNeuralNetworkMachineLearningRudesheim classSide >> nextModelAs: aCla
 
 { #category : 'reading' }
 TModelReaderNeuralNetworkMachineLearningRudesheim >> nextModelAs: aClass [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]

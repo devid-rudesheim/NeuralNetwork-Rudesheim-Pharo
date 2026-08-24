@@ -7,84 +7,70 @@ Class {
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Architecture [
-
-	^ ArchitectureNeuralNetworkMachineLearningRudesheim
+	^ ArchitectureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> BackwardContext [
-
-	^ BackwardContextNeuralNetworkMachineLearningRudesheim
+	^ BackwardContextNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Criterion [
-
 	^ CriterionNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Layer [
-
 	^ LayerNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Model [
-
-	^ ModelNeuralNetworkMachineLearningRudesheim
+	^ ModelNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> ONNX [
-
-	^ ONNXNeuralNetworkMachineLearningRudesheim
+	^ ONNXNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Node [
-
-	^ NodeNeuralNetworkMachineLearningRudesheim
+	^ NodeNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Predictions [
-
-	^ PredictionsNeuralNetworkMachineLearningRudesheim
+	^ PredictionsNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Pure [
-
-	^ PureNeuralNetworkMachineLearningRudesheim
+	^ PureNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Soil [
-
-	^ SoilNeuralNetworkMachineLearningRudesheim
+	^ SoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> TensorLayout [
-
 	^ TensorLayoutNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Trace [
-
 	^ TraceNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> Trainer [
-
-	^ TrainerNeuralNetworkMachineLearningRudesheim
+	^ TrainerNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 NeuralNetworkMachineLearningRudesheim class >> WeightsSource [
-
-	^ WeightsSourceNeuralNetworkMachineLearningRudesheim
+	^ WeightsSourceNeuralNetworkMachineLearningRudesheim.
 ]

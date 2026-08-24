@@ -31,25 +31,21 @@ TLinearTransformLayerNeuralNetworkMachineLearningRudesheim classSide >> weightsS
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> biases [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows:	aWeightRowsSequencialCollection
-biases:			aBiasesSequencialCollection [
-
+TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows: aWeightRowsSequencialCollection
+biases: aBiasesSequencialCollection [
 	self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> species [
-
 	^ self class species.
 ]
 
 { #category : 'accessing' }
 TLinearTransformLayerNeuralNetworkMachineLearningRudesheim >> weightsRows [
-
 	^ self subclassResponsibility.
 ]

@@ -2,6 +2,5 @@ Extension { #name : 'BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRu
 
 { #category : '*Rudesheim-NeuralNetwork-ONNX-OpenCL' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim class >> nameForONNX [
-
-	^ 'BatchNormalization'
+	^ 'BatchNormalization'.
 ]

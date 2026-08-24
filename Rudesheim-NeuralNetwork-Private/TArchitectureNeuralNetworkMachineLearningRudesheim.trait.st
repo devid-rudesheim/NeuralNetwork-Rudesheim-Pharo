@@ -43,33 +43,31 @@ backend: aTBackendNeuralNetworkMachineLearningRudesheim [
 
 { #category : 'accessing' }
 TArchitectureNeuralNetworkMachineLearningRudesheim >> criterion [
-
 	^ self class criterion.
 ]
 
 { #category : 'accessing' }
 TArchitectureNeuralNetworkMachineLearningRudesheim >> criterion: aTBackendNeuralNetworkMachineLearningRudesheim [
-
-	^ self class criterion: aTBackendNeuralNetworkMachineLearningRudesheim.
+	^ self class
+		criterion:	aTBackendNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 TArchitectureNeuralNetworkMachineLearningRudesheim >> layerSpecifications: aTBackendNeuralNetworkMachineLearningRudesheim [
-
-	^ self class layerSpecifications: aTBackendNeuralNetworkMachineLearningRudesheim.
+	^ self class
+		layerSpecifications:	aTBackendNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'reading' }
 TArchitectureNeuralNetworkMachineLearningRudesheim >> nextModelAs: aClass [
-
-	^ self class nextModelAs: aClass
+	^ self class
+		nextModelAs:	aClass.
 ]
 
 { #category : 'reading' }
 TArchitectureNeuralNetworkMachineLearningRudesheim >> nextModelAs: aClass
 backend: aTBackendNeuralNetworkMachineLearningRudesheim [
-
 	^ self class
 		nextModelAs:	aClass
-		backend:		aTBackendNeuralNetworkMachineLearningRudesheim
+		backend:	aTBackendNeuralNetworkMachineLearningRudesheim.
 ]

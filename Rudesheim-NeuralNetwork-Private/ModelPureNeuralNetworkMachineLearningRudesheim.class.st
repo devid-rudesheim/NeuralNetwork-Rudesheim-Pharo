@@ -7,6 +7,5 @@ Class {
 
 { #category : 'accessing' }
 ModelPureNeuralNetworkMachineLearningRudesheim class >> backend [
-
-	^ PureNeuralNetworkMachineLearningRudesheim
+	^ PureNeuralNetworkMachineLearningRudesheim.
 ]

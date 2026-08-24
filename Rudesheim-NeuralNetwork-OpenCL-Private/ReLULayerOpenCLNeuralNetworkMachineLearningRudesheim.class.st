@@ -9,7 +9,6 @@ Class {
 
 { #category : 'evaluating' }
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwardContextNeuralNetworkMachineLearningRudesheim [
-
 	|
 		cl
 		queue
@@ -27,42 +26,57 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 	for a value that's already a plain Array) before ever asking its size."
 	count := aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray size.
 	queue := cl commandQueue.
+
 	inputBuffer :=
 		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim inputPredictions asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	gradientBuffer :=
 		cl context
 			newCLBufferWith:	aTBackwardContextNeuralNetworkMachineLearningRudesheim gradient asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	inputGradientBuffer :=
 		cl context
 			newCLBufferForElementCount:	count
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	kernel :=
 		cl
-			kernelAt:				'ReluBackward'
+			kernelAt:	'ReluBackward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
 				TFBasicType pointer.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
 	[
 		queue
 			enqueueKernelAndWait:	kernel
-			forNDRange:				{ { count } }
-			withArguments:			{ inputBuffer. gradientBuffer. inputGradientBuffer. count }.
+			forNDRange:
+			{
+				{
+					count
+				}
+			}
+			withArguments:
+			{
+				inputBuffer.
+				gradientBuffer.
+				inputGradientBuffer.
+				count
+			}.
 
 		{
 			queue
-				readFrom:		inputGradientBuffer
-				count:			count
+				readFrom:	inputGradientBuffer
+				count:	count
 				elementType:	TFBasicType float
-		}
+		}.
 	]
 		ensure:
 		[
@@ -74,7 +88,6 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> backward: aTBackwa
 
 { #category : 'evaluating' }
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNumbersSequencialCollection [
-
 	|
 		cl
 		queue
@@ -87,6 +100,7 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	queue := cl commandQueue.
+
 	"anInputNumbersSequencialCollection may already be an OpenCL buffer
 	passed through from an upstream Layer, which doesn't understand #size --
 	read the element count off inputBuffer (an Array upload tags itself with
@@ -94,23 +108,27 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 	inputBuffer :=
 		anInputNumbersSequencialCollection
 			asOpenCLBufferRudesheim:	cl context.
+
 	count := inputBuffer count.
+
 	outputBuffer :=
 		cl context
 			newCLBufferForElementCount:	count
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	outputBuffer
-		count:		count;
-		queue:		queue;
+		count:	count;
+		queue:	queue;
 		context:	cl context.
+
 	kernel :=
 		cl
-			kernelAt:				'ReluForward'
+			kernelAt:	'ReluForward'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
@@ -122,12 +140,22 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 		kernelEvent :=
 			queue
 				enqueueKernel:	kernel
-				forNDRange:		{ { count } }
-				withArguments:	{ inputBuffer. outputBuffer. count }.
+				forNDRange:
+				{
+					{
+						count
+					}
+				}
+				withArguments:
+				{
+					inputBuffer.
+					outputBuffer.
+					count
+				}.
 
 		"See LinearTransformLayerOpenCL>>forward: for why outputBuffer is
 		returned live and inputBuffer's release is conditional."
-		outputBuffer
+		outputBuffer.
 	]
 		ensure:
 		[
@@ -149,12 +177,12 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> forward: anInputNu
 					kernelEvent wait.
 					inputBuffer release.
 				].
+
 			kernelEvent release.
 		].
 ]
 
 { #category : 'instance creation' }
-ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self
+ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self.
 ]

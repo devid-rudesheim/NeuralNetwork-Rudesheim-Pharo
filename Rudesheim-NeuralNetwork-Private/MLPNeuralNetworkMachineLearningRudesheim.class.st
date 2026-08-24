@@ -9,19 +9,17 @@ Class {
 
 { #category : 'accessing' }
 MLPNeuralNetworkMachineLearningRudesheim class >> criterion [
-
-	^ self criterion: TBackendNeuralNetworkMachineLearningRudesheim default.
+	^ self
+		criterion:	TBackendNeuralNetworkMachineLearningRudesheim default.
 ]
 
 { #category : 'accessing' }
 MLPNeuralNetworkMachineLearningRudesheim class >> criterion: aTBackendNeuralNetworkMachineLearningRudesheim [
-
 	^ aTBackendNeuralNetworkMachineLearningRudesheim Criterion MSE.
 ]
 
 { #category : 'accessing' }
 MLPNeuralNetworkMachineLearningRudesheim class >> layerSpecifications: aTBackendNeuralNetworkMachineLearningRudesheim [
-
 	|
 		nn
 		layer
@@ -32,9 +30,28 @@ MLPNeuralNetworkMachineLearningRudesheim class >> layerSpecifications: aTBackend
 	layer := aTBackendNeuralNetworkMachineLearningRudesheim Layer.
 	weightsSource := nn WeightsSource Random.
 
-	^ {
-		[ layer LinearTransform weightsSource: ( weightsSource rows: 4 columns: 2 ) ].
-		[ layer ReLU ].
-		[ layer LinearTransform weightsSource: ( weightsSource rows: 2 columns: 4 ) ].
-	}
+	^
+	{
+		[
+			layer LinearTransform
+				weightsSource:
+				(
+					weightsSource
+						rows:	4
+						columns:	2
+				).
+		].
+		[
+			layer ReLU.
+		].
+		[
+			layer LinearTransform
+				weightsSource:
+				(
+					weightsSource
+						rows:	2
+						columns:	4
+				).
+		]
+	}.
 ]

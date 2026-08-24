@@ -8,13 +8,11 @@ Class {
 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultWindow [
-
 	|
 		extentClass
 	|
@@ -23,49 +21,79 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaul
 
 	^ Rudesheim MachineLearning NeuralNetwork Soil WindowSpecification
 		inputChannels:	2
-		inputExtent:	(extentClass width: 2 height: 1)
-		kernelExtent:	(extentClass width: 1 height: 1)
-		strideExtent:	(extentClass width: 1 height: 1)
-		padding:	(Margin top: 0 left: 0 bottom: 0 right: 0)
+		inputExtent:
+		(
+			extentClass
+				width:	2
+				height:	1
+		)
+		kernelExtent:
+		(
+			extentClass
+				width:	1
+				height:	1
+		)
+		strideExtent:
+		(
+			extentClass
+				width:	1
+				height:	1
+		)
+		padding:
+		(
+			Margin
+				top:	0
+				left:	0
+				bottom:	0
+				right:	0
+		).
 ]
 
 { #category : 'accessing' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> defaultLayer [
-
 	^ self targetClass
 		scale:	#( 2.0 0.5 )
 		shift:	#( 1.0 -1.0 )
-		window:	self defaultWindow
+		window:	self defaultWindow.
 ]
 
 { #category : 'tests' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatchesHandComputedAffineGradients [
-
 	|
 		context
 		result
 	|
 
 	context :=
-		( Rudesheim MachineLearning NeuralNetwork Predictions
+	(
+		Rudesheim MachineLearning NeuralNetwork Predictions
 			inputPredictions:	#( 1.0 2.0 4.0 8.0 )
-			outputPredictions:	#( 3.0 5.0 1.0 3.0 ) )
-			backwardContextWithGradient:	#( 1.0 2.0 0.5 -1.0 ).
+			outputPredictions:	#( 3.0 5.0 1.0 3.0 )
+	)
+		backwardContextWithGradient:	#( 1.0 2.0 0.5 -1.0 ).
 
-	result := self defaultLayer backward: context.
+	result :=
+		self defaultLayer
+			backward:	context.
 
 	"input_gradient[i] = gradient[i] * scale[channel(i)]"
-	self assert: result first equals: #( 2.0 4.0 0.25 -0.5 ).
+	self
+		assert:	result first
+		equals:	#( 2.0 4.0 0.25 -0.5 ).
 
 	"scale_gradient[c] = sum over p of gradient[c,p] * input[c,p];
 	shift_gradient[c] = sum over p of gradient[c,p]"
-	self assert: result last scale equals: #( 5.0 -6.0 ).
-	self assert: result last shift equals: #( 3.0 -0.5 )
+	self
+		assert:	result last scale
+		equals:	#( 5.0 -6.0 ).
+
+	self
+		assert:	result last shift
+		equals:	#( 3.0 -0.5 ).
 ]
 
 { #category : 'tests' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWithUpdatedWeightsRowsMatchesHandComputedSGDStep [
-
 	|
 		gradientLayer
 		updated
@@ -80,7 +108,7 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWi
 	updated :=
 		self defaultLayer
 			withUpdatedWeightsRows:	gradientLayer
-			learningRate:				0.1.
+			learningRate:	0.1.
 
 	"left - rate*right, same SGD shape as LinearTransformLayerOpenCL. Compared
 	with closeTo:precision: rather than equals: since the OpenCL kernel
@@ -88,15 +116,27 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testWi
 	1.100000023841858."
 	updated scale
 		with:	#( 1.5 1.1 )
-		do:		[ :left :right | self assert: left closeTo: right precision: 0.0001 ].
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
+
 	updated shift
 		with:	#( 0.7 -0.95 )
-		do:		[ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]
 
 { #category : 'tests' }
 BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesHandComputedPerChannelAffine [
-
 	|
 		layer
 		output
@@ -105,13 +145,18 @@ BatchNormalizationLayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testFo
 	layer := self defaultLayer.
 
 	output :=
-		(
-			layer forward:
-				#(
-					1.0 2.0
-					4.0 8.0
-				)
-		) asArray.
+	(
+		layer
+			forward:
+			#(
+				1.0
+				2.0
+				4.0
+				8.0
+			)
+	) asArray.
 
-	self assert: output equals: #(3.0 5.0 1.0 3.0)
+	self
+		assert:	output
+		equals:	#( 3.0 5.0 1.0 3.0 ).
 ]

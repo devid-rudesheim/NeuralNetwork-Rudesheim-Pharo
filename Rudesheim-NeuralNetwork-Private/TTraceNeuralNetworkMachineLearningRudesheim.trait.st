@@ -18,13 +18,11 @@ predictions:				aTPredictionsNeuralNetworkMachineLearningRudesheim [
 
 { #category : 'accessing' }
 TTraceNeuralNetworkMachineLearningRudesheim >> neuralNetworkLayer [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TTraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer:	aTLayerNeuralNetworkMachineLearningRudesheim
-predictions:					aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
+TTraceNeuralNetworkMachineLearningRudesheim >> setNeuralNetworkLayer: aTLayerNeuralNetworkMachineLearningRudesheim
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	self subclassResponsibility.
 ]

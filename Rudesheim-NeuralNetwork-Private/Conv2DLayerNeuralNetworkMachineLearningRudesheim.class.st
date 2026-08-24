@@ -27,27 +27,20 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecor
 		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
 			detect:
 			[ :each |
-				each
-					tensorKindClass
-					= WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
+				each tensorKindClass = WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
 			].
 
 	biasesDescriptor :=
 		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
 			detect:
 			[ :each |
-				each
-					tensorKindClass
-					= BiasesTensorSoilNeuralNetworkMachineLearningRudesheim.
+				each tensorKindClass = BiasesTensorSoilNeuralNetworkMachineLearningRudesheim.
 			].
 
 	^ self
 		weights:	weightsDescriptor payload
 		biases:	biasesDescriptor payload
-		window:	
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-			layerAttributesRecords
-			first.
+		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first.
 ]
 
 { #category : 'as yet unclassified' }
@@ -89,72 +82,84 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 	outputLayout := window outputLayout.
 
 	validKernelPositionsByOutputPositionFor :=
-		[ :anOutputRange :anExtentSelector :aPaddingSelector |
-			|
-				kernelSize
-				stride
-				paddingOffset
-				inputBound
-			|
-			kernelSize :=
-				anExtentSelector
-					value:	window kernel.
+	[ :anOutputRange :anExtentSelector :aPaddingSelector |
+		|
+			kernelSize
+			stride
+			paddingOffset
+			inputBound
+		|
 
-			stride :=
-				anExtentSelector
-					value:	window stride.
+		kernelSize :=
+			anExtentSelector
+				value:	window kernel.
 
-			paddingOffset :=
-				aPaddingSelector
-					value:	window padding.
+		stride :=
+			anExtentSelector
+				value:	window stride.
 
-			inputBound :=
-				anExtentSelector
-					value:	window input.
+		paddingOffset :=
+			aPaddingSelector
+				value:	window padding.
 
-			anOutputRange
-				collect:
-				[ :anOutputPosition |
-					(0 to: kernelSize - 1)
-						collect:
-						[ :eachKernelOffset |
-							Point
-								x:	eachKernelOffset
-								y:	anOutputPosition * stride + eachKernelOffset - paddingOffset.
-						]
-						thenSelect:
-						[ :eachKernelPosition |
-							(eachKernelPosition y >= 0)
-								and:
-								[
-									eachKernelPosition y < inputBound.
-								].
-						].
-				].
-		].
+		inputBound :=
+			anExtentSelector
+				value:	window input.
+
+		anOutputRange
+			collect:
+			[ :anOutputPosition |
+				(
+					0
+						to:	kernelSize - 1
+				)
+					collect:
+					[ :eachKernelOffset |
+						Point
+							x:	eachKernelOffset
+							y:	anOutputPosition * stride + eachKernelOffset - paddingOffset.
+					]
+					thenSelect:
+					[ :eachKernelPosition |
+						eachKernelPosition y >= 0
+							and:
+							[
+								eachKernelPosition y < inputBound.
+							].
+					].
+			].
+	].
 
 	ranges :=
-		{
-			outputLayout extent rows.
-			outputLayout extent columns.
-			outChannels.
-			window inputChannels.
-		}
-			collect:
-			[ :each |
-				0
-					to:	each - 1.
-			].
+	{
+		outputLayout extent rows.
+		outputLayout extent columns.
+		outChannels.
+		window inputChannels
+	}
+		collect:
+		[ :each |
+			0
+				to:	each - 1.
+		].
 
 	validKernelRowPositionsByOutputRow :=
 		validKernelPositionsByOutputPositionFor
-			value:	(ranges at: 1)
+			value:
+			(
+				ranges
+					at:	1
+			)
 			value:	#rows
 			value:	#top.
 
 	validKernelColumnPositionsByOutputColumn :=
 		validKernelPositionsByOutputPositionFor
-			value:	(ranges at: 2)
+			value:
+			(
+				ranges
+					at:	2
+			)
 			value:	#columns
 			value:	#left.
 
@@ -162,15 +167,24 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 		Array
 			new:	outChannels * outputLayout channelStride.
 
-	(ranges at: 1)
+	(
+		ranges
+			at:	1
+	)
 		with:	validKernelRowPositionsByOutputRow
 		do:
 		[ :oy :validKernelRowPositions |
-			(ranges at: 2)
+			(
+				ranges
+					at:	2
+			)
 				with:	validKernelColumnPositionsByOutputColumn
 				do:
 				[ :ox :validKernelColumnPositions |
-					(ranges at: 3)
+					(
+						ranges
+							at:	3
+					)
 						do:
 						[ :oc |
 							|
@@ -181,54 +195,65 @@ Conv2DLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSeque
 							flatOutputIndex :=
 								outputLayout
 									flatIndexForChannel:	oc
-									position:	(oy @ ox).
+									position:	oy @ ox.
 
 							total :=
-								(ranges at: 4)
-									inject:	0
-									into:
-									[ :channelTotal :ic |
-										channelTotal +
-										(
-											validKernelRowPositions
-												inject:	0
-												into:
-												[ :rowTotal :eachKernelRowPosition |
-													rowTotal +
-													(
-														validKernelColumnPositions
-															inject:	0
-															into:
-															[ :columnTotal :eachKernelColumnPosition |
-																value :=
-																	anInputNumbersSequencialCollection
-																		at:
-																		(
-																			inputLayout
-																				flatIndexForChannel:	ic
-																				position:	(eachKernelRowPosition y @ eachKernelColumnPosition y)
-																		).
+							(
+								ranges
+									at:	4
+							)
+								inject:	0
+								into:
+								[ :channelTotal :ic |
+									channelTotal +
+									(
+										validKernelRowPositions
+											inject:	0
+											into:
+											[ :rowTotal :eachKernelRowPosition |
+												rowTotal +
+												(
+													validKernelColumnPositions
+														inject:	0
+														into:
+														[ :columnTotal :eachKernelColumnPosition |
+															value :=
+																anInputNumbersSequencialCollection
+																	at:
+																	(
+																		inputLayout
+																			flatIndexForChannel:	ic
+																			position:	eachKernelRowPosition y @ eachKernelColumnPosition y
+																	).
 
-																weight :=
+															weight :=
+															(
 																(
 																	(
-																		(weights at: oc + 1)
-																			at: ic + 1
+																		weights
+																			at:	oc + 1
 																	)
-																		at: eachKernelRowPosition x + 1
+																		at:	ic + 1
 																)
-																	at: eachKernelColumnPosition x + 1.
+																	at:	eachKernelRowPosition x + 1
+															)
+																at:	eachKernelColumnPosition x + 1.
 
-																columnTotal + (weight * value)
-															]
-													)
-												]
-										)
-									].
+															columnTotal + ( weight * value ).
+														]
+												).
+											]
+									).
+								].
 
 							output
 								at:	flatOutputIndex
-								put:	total + (biases at: oc + 1).
+								put:
+									total +
+									(
+										biases
+											at:	oc + 1
+									).
 						].
 				].
 		].
@@ -251,22 +276,41 @@ window: aWindowSpecificationSoilNeuralNetworkMachineLearningRudesheim [
 	inChannels := window inputChannels.
 	kernelRows := window kernel rows.
 	kernelColumns := window kernel columns.
-	outChannels := aWeightsSequenceableCollection size / (inChannels * kernelRows * kernelColumns).
-
+	outChannels := aWeightsSequenceableCollection size / ( inChannels * kernelRows * kernelColumns ).
 	position := 1.
+
 	weights :=
-		(1 to: outChannels) collect:
+	(
+		1
+			to:	outChannels
+	)
+		collect:
 		[ :eachOutChannelIndex |
-			(1 to: inChannels) collect:
-			[ :eachInChannelIndex |
-				(1 to: kernelRows) collect:
-				[ :eachKernelRowIndex |
-					| row |
-					row := aWeightsSequenceableCollection copyFrom: position to: position + kernelColumns - 1.
-					position := position + kernelColumns.
-					row
-				]
-			]
+			(
+				1
+					to:	inChannels
+			)
+				collect:
+				[ :eachInChannelIndex |
+					(
+						1
+							to:	kernelRows
+					)
+						collect:
+						[ :eachKernelRowIndex |
+							|
+								row
+							|
+
+							row :=
+								aWeightsSequenceableCollection
+									copyFrom:	position
+									to:	position + kernelColumns - 1.
+
+							position := position + kernelColumns.
+							row.
+						].
+				].
 		].
 
 	biases := aBiasesSequenceableCollection.
