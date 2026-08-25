@@ -7,6 +7,5 @@ Class {
 
 { #category : 'namespace' }
 CriterionOpenCLNeuralNetworkMachineLearningRudesheim class >> MSE [
-
-	^ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim
+	^ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim.
 ]

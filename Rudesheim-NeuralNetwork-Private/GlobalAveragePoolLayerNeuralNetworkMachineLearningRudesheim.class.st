@@ -16,10 +16,7 @@ Class {
 { #category : 'as yet unclassified' }
 GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
 	^ self
-		window:	
-		aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim
-			layerAttributesRecords
-			first.
+		window:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim layerAttributesRecords first.
 ]
 
 { #category : 'as yet unclassified' }
@@ -65,7 +62,12 @@ GlobalAveragePoolLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputN
 				to:	count
 				do:
 				[ :p |
-					total := total + (anInputNumbersSequencialCollection at: (c - 1) * count + p).
+					total :=
+						total +
+						(
+							anInputNumbersSequencialCollection
+								at:	( c - 1 ) * count + p
+						).
 				].
 
 			output

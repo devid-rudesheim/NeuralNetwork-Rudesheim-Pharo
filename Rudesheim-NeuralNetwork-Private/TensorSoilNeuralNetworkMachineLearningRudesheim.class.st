@@ -10,12 +10,10 @@ Class {
 
 { #category : 'namespace' }
 TensorSoilNeuralNetworkMachineLearningRudesheim class >> Biases [
-
-	^ BiasesTensorSoilNeuralNetworkMachineLearningRudesheim
+	^ BiasesTensorSoilNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'namespace' }
 TensorSoilNeuralNetworkMachineLearningRudesheim class >> Weights [
-
-	^ WeightsTensorSoilNeuralNetworkMachineLearningRudesheim
+	^ WeightsTensorSoilNeuralNetworkMachineLearningRudesheim.
 ]

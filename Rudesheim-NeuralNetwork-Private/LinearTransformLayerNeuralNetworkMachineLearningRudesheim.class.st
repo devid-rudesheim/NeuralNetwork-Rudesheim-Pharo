@@ -13,41 +13,38 @@ Class {
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim class >> defaultBiases [
-
-	^ OrderedCollection new
+	^ OrderedCollection new.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim class >> defaultWeightsRows [
-
-	^ OrderedCollection new
+	^ OrderedCollection new.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim class >> species [
-
-	^ LinearTransformLayerNeuralNetworkMachineLearningRudesheim
+	^ LinearTransformLayerNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'instance creation' }
-LinearTransformLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
-
-	^ self weightsSource:
+LinearTransformLayerNeuralNetworkMachineLearningRudesheim class >> fromSoilGraphNodeRecord: aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim [
+	^ self
+		weightsSource:
 		(
 			Rudesheim MachineLearning NeuralNetwork Soil WeightsSource
 				tensorDescriptorRecords:	aGraphNodeRecordSoilNeuralNetworkMachineLearningRudesheim tensorDescriptorRecords
-		)
+		).
 ]
 
 { #category : 'evaluating' }
-LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> backward:		aBackwordContextNeuralNetworkMachineLearningRudesheim [
+LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> backward: aBackwordContextNeuralNetworkMachineLearningRudesheim [
 	|
 		gradient
 		inputs
 	|
 
-	gradient	:= aBackwordContextNeuralNetworkMachineLearningRudesheim gradient.
-	inputs		:= aBackwordContextNeuralNetworkMachineLearningRudesheim inputPredictions.
+	gradient := aBackwordContextNeuralNetworkMachineLearningRudesheim gradient.
+	inputs := aBackwordContextNeuralNetworkMachineLearningRudesheim inputPredictions.
 
 	^
 	{
@@ -65,9 +62,9 @@ LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> backward:		aBackwor
 										at:	gradientIndex
 								)
 									at:	inputsIndex
-							) * each
+							) * each.
 						]
-				) sum
+				) sum.
 			].
 		self species
 			weightsRows:
@@ -76,88 +73,78 @@ LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> backward:		aBackwor
 				gradient
 					collect:
 					[ :each0 |
-						inputs * each0
+						inputs * each0.
 					]
 			)
-			biases:			gradient.
-	}
+			biases:	gradient
+	}.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> biases [
-
 	^ biases
 		ifNil:
 		[
 			biases := self defaultBiases.
 		].
-
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> defaultBiases [
-
 	^ self class defaultBiases.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> defaultWeightsRows [
-
 	^ self class defaultWeightsRows.
 ]
 
 { #category : 'evaluating' }
-LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> forward:	anInputNumbersSequencialCollection [
-
+LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> forward: anInputNumbersSequencialCollection [
 	"Affine transform"
-
 	^
 	(
 		self weightsRows
 			collect:
 			[ :weightRow |
-				( weightRow * anInputNumbersSequencialCollection ) sum
+				( weightRow * anInputNumbersSequencialCollection ) sum.
 			]
-	) + self biases
+	) + self biases.
 ]
 
 { #category : 'initialization' }
-LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows:	aWeightRowsSequencialCollection
-biases:			aBiasesSequencialCollection [
-
-	weightsRows	:= aWeightRowsSequencialCollection.
-	biases			:=aBiasesSequencialCollection.
-
+LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> setWeightsRows: aWeightRowsSequencialCollection
+biases: aBiasesSequencialCollection [
+	weightsRows := aWeightRowsSequencialCollection.
+	biases := aBiasesSequencialCollection.
 ]
 
 { #category : 'accessing' }
 LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> weightsRows [
-
 	^ weightsRows
 		ifNil:
 		[
 			weightsRows := self defaultWeightsRows.
 		].
-
 ]
 
 { #category : 'converting' }
-LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
-learningRate:				aRateFloat [
+LinearTransformLayerNeuralNetworkMachineLearningRudesheim >> withUpdatedWeightsRows: aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim
+learningRate: aRateFloat [
 	|
 		adjust
 	|
 
 	adjust :=
 	[ :left :right |
-		left - ( aRateFloat * right )
+		left - ( aRateFloat * right ).
 	].
 
 	^ self species
 		weightsRows:
 		(
 			self weightsRows
-				with:		aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim weightsRows
+				with:	aTLinearTransformLayerNeuralNetworkMachineLearningRudesheim weightsRows
 				collect:	adjust
 		)
 		biases:

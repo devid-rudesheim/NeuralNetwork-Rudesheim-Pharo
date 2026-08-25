@@ -10,6 +10,5 @@ Class {
 
 { #category : 'accessing' }
 WeightsTensorSoilNeuralNetworkMachineLearningRudesheim class >> tensorKindToken [
-
-	^ 'Weights'
+	^ 'Weights'.
 ]

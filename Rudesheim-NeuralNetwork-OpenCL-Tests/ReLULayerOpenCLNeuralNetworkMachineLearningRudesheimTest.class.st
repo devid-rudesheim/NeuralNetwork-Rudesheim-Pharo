@@ -8,13 +8,11 @@ Class {
 
 { #category : 'accessing' }
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim
+	^ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'tests' }
 ReLULayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatchesPure [
-
 	|
 		context
 		oclResult
@@ -28,14 +26,29 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testBackwardMatchesP
 
 	oclResult :=
 		self targetClass
-			backward:	( context backwardContextWithGradient: #( 0.5 -0.25 1.0 -0.5 ) ).
+			backward:
+			(
+				context
+					backwardContextWithGradient:	#( 0.5 -0.25 1.0 -0.5 )
+			).
+
 	pureResult :=
 		Rudesheim MachineLearning NeuralNetwork Pure Layer ReLU
-			backward:	( context backwardContextWithGradient: #( 0.5 -0.25 1.0 -0.5 ) ).
+			backward:
+			(
+				context
+					backwardContextWithGradient:	#( 0.5 -0.25 1.0 -0.5 )
+			).
 
 	oclResult first
 		with:	pureResult first
-		do:		[ :left :right | self assert: left closeTo: right precision: 0.0001 ]
+		do:
+		[ :left :right |
+			self
+				assert:	left
+				closeTo:	right
+				precision:	0.0001.
+		].
 ]
 
 { #category : 'tests' }
@@ -44,8 +57,15 @@ ReLULayerOpenCLNeuralNetworkMachineLearningRudesheimTest >> testForwardMatchesPu
 	adjacent OpenCL Layer can consume it directly -- see
 	note/opencl-layer-buffer-passthrough-design.md -- so asArray it here to
 	compare against the Pure backend's plain Array result."
-
 	self
-		assert:	( ( self targetClass forward: #( -1.0 2.0 -3.0 4.0 ) ) asArray )
-		equals:	( Rudesheim MachineLearning NeuralNetwork Pure Layer ReLU forward: #( -1.0 2.0 -3.0 4.0 ) )
+		assert:
+		(
+			self targetClass
+				forward:	#( -1.0 2.0 -3.0 4.0 )
+		) asArray
+		equals:
+		(
+			Rudesheim MachineLearning NeuralNetwork Pure Layer ReLU
+				forward:	#( -1.0 2.0 -3.0 4.0 )
+		).
 ]

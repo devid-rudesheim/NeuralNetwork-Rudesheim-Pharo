@@ -13,7 +13,6 @@ Class {
 
 { #category : 'accessing' }
 MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
-
 	|
 		cl
 		queue
@@ -27,41 +26,57 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 	cl := Rudesheim MachineLearning NeuralNetwork OpenCL.
 	count := predictions size.
 	queue := cl commandQueue.
+
 	predictionsBuffer :=
 		cl context
 			newCLBufferWith:	predictions asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	targetsBuffer :=
 		cl context
 			newCLBufferWith:	targets asArray
-			elementType:		TFBasicType float.
+			elementType:	TFBasicType float.
+
 	gradientBuffer :=
 		cl context
 			newCLBufferForElementCount:	count
-			elementType:				TFBasicType float.
+			elementType:	TFBasicType float.
+
 	kernel :=
 		cl
-			kernelAt:				'CriterionGradientScale'
+			kernelAt:	'CriterionGradientScale'
 			parameterTypes:
 			{
 				TFBasicType pointer.
 				TFBasicType pointer.
 				TFBasicType pointer.
 				TFBasicType float.
-				TFBasicType uint.
+				TFBasicType uint
 			}.
 
 	^
 	[
 		queue
 			enqueueKernelAndWait:	kernel
-			forNDRange:				{ { count } }
-			withArguments:			{ predictionsBuffer. targetsBuffer. gradientBuffer. ( 2.0 / count ). count }.
+			forNDRange:
+			{
+				{
+					count
+				}
+			}
+			withArguments:
+			{
+				predictionsBuffer.
+				targetsBuffer.
+				gradientBuffer.
+				( 2.0 / count ).
+				count
+			}.
 
 		queue
-			readFrom:		gradientBuffer
-			count:			count
-			elementType:	TFBasicType float
+			readFrom:	gradientBuffer
+			count:	count
+			elementType:	TFBasicType float.
 	]
 		ensure:
 		[
@@ -73,22 +88,24 @@ MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> gradient [
 
 { #category : 'accessing' }
 MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> loss [
-
 	|
 		squaredErrors
 	|
 
 	squaredErrors :=
 		predictions
-			with:		targets
-			collect:	[ :prediction :target | ( prediction - target ) squared ].
+			with:	targets
+			collect:
+			[ :prediction :target |
+				( prediction - target ) squared.
+			].
 
-	^ squaredErrors sum / squaredErrors size
+	^ squaredErrors sum / squaredErrors size.
 ]
 
 { #category : 'initialization' }
-MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> setPredictions: aPredictionsSequencialCollection targets: aTargetSequencialCollection [
-
+MSECriterionOpenCLNeuralNetworkMachineLearningRudesheim >> setPredictions: aPredictionsSequencialCollection
+targets: aTargetSequencialCollection [
 	predictions := aPredictionsSequencialCollection.
-	targets := aTargetSequencialCollection
+	targets := aTargetSequencialCollection.
 ]

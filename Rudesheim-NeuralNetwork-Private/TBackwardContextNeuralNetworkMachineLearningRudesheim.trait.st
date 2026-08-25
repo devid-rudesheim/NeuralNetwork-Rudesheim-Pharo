@@ -18,13 +18,11 @@ predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim [
 
 { #category : 'accessing' }
 TBackwardContextNeuralNetworkMachineLearningRudesheim >> gradient [
-
 	^ self subclassResponsibility.
 ]
 
 { #category : 'initialization' }
-TBackwardContextNeuralNetworkMachineLearningRudesheim >> setGradient:	aGradientSequencialCollection
-predictions:	aTPredictionsNeuralNetworkMachineLearningRudesheim [
-
+TBackwardContextNeuralNetworkMachineLearningRudesheim >> setGradient: aGradientSequencialCollection
+predictions: aTPredictionsNeuralNetworkMachineLearningRudesheim [
 	self subclassResponsibility.
 ]

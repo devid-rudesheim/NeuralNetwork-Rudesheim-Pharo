@@ -6,6 +6,5 @@ Trait {
 
 { #category : 'writing' }
 TModelWriterNeuralNetworkMachineLearningRudesheim >> nextPutModel: aTModelNeuralNetworkMachineLearningRudesheim [
-
-	^ self subclassResponsibility
+	^ self subclassResponsibility.
 ]

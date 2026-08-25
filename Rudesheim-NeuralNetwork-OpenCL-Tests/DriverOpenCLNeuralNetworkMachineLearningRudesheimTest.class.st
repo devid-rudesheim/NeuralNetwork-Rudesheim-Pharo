@@ -7,13 +7,11 @@ Class {
 
 { #category : 'accessing' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
-
-	^ DriverOpenCLNeuralNetworkMachineLearningRudesheim
+	^ DriverOpenCLNeuralNetworkMachineLearningRudesheim.
 ]
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueIsMemoized [
-
 	self
 		assert:	self basicTarget commandQueue
 		equals:	self basicTarget commandQueue.
@@ -21,7 +19,6 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueIsMemoi
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextIsMemoized [
-
 	self
 		assert:	self basicTarget context
 		equals:	self basicTarget context.
@@ -29,7 +26,6 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextIsMemoized [
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testDeviceIsFirstOfDevices [
-
 	self
 		assert:	self basicTarget device
 		equals:	self basicTarget devices first.
@@ -37,10 +33,9 @@ DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testDeviceIsFirstOfDevi
 
 { #category : 'tests' }
 DriverOpenCLNeuralNetworkMachineLearningRudesheimTest >> testDevicesIsMemoized [
-
 	self
 		deny:	self basicTarget devices isEmpty.
 
 	self
-		assert:	( self basicTarget devices == self basicTarget devices ).
+		assert:	self basicTarget devices == self basicTarget devices.
 ]
