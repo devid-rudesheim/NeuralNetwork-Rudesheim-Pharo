@@ -39,6 +39,12 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 					spec
 						repository:	'github://devid-rudesheim/OpenCL-Rudesheim-Pharo:develop'.
 				];
+				baseline:	'RudesheimMachineLearning'
+				with:
+				[
+					spec
+						repository:	'github://devid-rudesheim/MachineLearning-Rudesheim-Pharo:develop'.
+				];
 				baseline:	'Soil'
 				with:
 				[
@@ -68,7 +74,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				with:
 				[
 					spec
-						requires:	#( 'Rudesheim-NeuralNetwork-Private' ).
+						requires:	#( 'Rudesheim-NeuralNetwork-Private' 'RudesheimMachineLearning' ).
 				];
 				package:	'Rudesheim-NeuralNetwork-ONNX'
 				with:
