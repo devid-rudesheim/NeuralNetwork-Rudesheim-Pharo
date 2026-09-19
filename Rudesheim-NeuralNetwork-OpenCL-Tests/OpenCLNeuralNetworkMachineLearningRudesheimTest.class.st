@@ -1,13 +1,18 @@
 Class {
 	#name : 'OpenCLNeuralNetworkMachineLearningRudesheimTest',
-	#superclass : 'TestCase',
+	#superclass : 'BasicRudesheimTest',
 	#category : 'Rudesheim-NeuralNetwork-OpenCL-Tests',
 	#package : 'Rudesheim-NeuralNetwork-OpenCL-Tests'
 }
 
+{ #category : 'accessing' }
+OpenCLNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
+	^ OpenCLNeuralNetworkMachineLearningRudesheim.
+]
+
 { #category : 'running' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> tearDown [
-	OpenCLNeuralNetworkMachineLearningRudesheim
+	self basicTarget class
 		startUp:	false.
 
 	super tearDown.
@@ -16,15 +21,15 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> tearDown [
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testCommandQueueDelegatesToDriver [
 	self
-		assert:	OpenCLNeuralNetworkMachineLearningRudesheim commandQueue
-		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver commandQueue.
+		assert:	self basicTarget class commandQueue
+		equals:	self basicTarget class driver commandQueue.
 ]
 
 { #category : 'tests' }
 OpenCLNeuralNetworkMachineLearningRudesheimTest >> testContextDelegatesToDriver [
 	self
-		assert:	OpenCLNeuralNetworkMachineLearningRudesheim context
-		equals:	OpenCLNeuralNetworkMachineLearningRudesheim driver context.
+		assert:	self basicTarget class context
+		equals:	self basicTarget class driver context.
 ]
 
 { #category : 'tests' }
@@ -33,12 +38,12 @@ OpenCLNeuralNetworkMachineLearningRudesheimTest >> testStartUpResetsDriver [
 		firstContext
 	|
 
-	firstContext := OpenCLNeuralNetworkMachineLearningRudesheim context.
+	firstContext := self basicTarget class context.
 
-	OpenCLNeuralNetworkMachineLearningRudesheim
+	self basicTarget class
 		startUp:	false.
 
 	self
-		deny:	OpenCLNeuralNetworkMachineLearningRudesheim context
+		deny:	self basicTarget class context
 		equals:	firstContext.
 ]

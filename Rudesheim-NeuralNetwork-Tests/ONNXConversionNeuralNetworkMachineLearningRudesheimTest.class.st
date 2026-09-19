@@ -1,10 +1,15 @@
 Class {
 	#name : 'ONNXConversionNeuralNetworkMachineLearningRudesheimTest',
-	#superclass : 'TestCase',
+	#superclass : 'BasicRudesheimTest',
 	#category : 'Rudesheim-NeuralNetwork-Tests-IO',
 	#package : 'Rudesheim-NeuralNetwork-Tests',
 	#tag : 'IO'
 }
+
+{ #category : 'accessing' }
+ONNXConversionNeuralNetworkMachineLearningRudesheimTest class >> targetClass [
+	^ ConvertorONNXNeuralNetworkMachineLearningRudesheim.
+]
 
 { #category : 'fixtures' }
 ONNXConversionNeuralNetworkMachineLearningRudesheimTest class >> syntheticGemmOnnxBytes [
