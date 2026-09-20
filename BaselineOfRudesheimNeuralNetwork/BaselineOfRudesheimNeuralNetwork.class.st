@@ -20,18 +20,18 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 					spec
 						repository:	'github://devid-rudesheim/Utility-Rudesheim-Pharo:develop'.
 				];
-				project:	'RudesheimUtilityTests'
-				copyFrom:	'RudesheimUtility'
-				with:
-				[
-					spec
-						loads:	#( 'tests' ).
-				];
 				baseline:	'RudesheimKernel'
 				with:
 				[
 					spec
 						repository:	'github://devid-rudesheim/Kernel-Rudesheim-Pharo:develop'.
+				];
+				project:	'RudesheimKernelTests'
+				copyFrom:	'RudesheimKernel'
+				with:
+				[
+					spec
+						loads:	#( 'tests' ).
 				];
 				baseline:	'RudesheimOpenCL'
 				with:
@@ -98,7 +98,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				with:
 				[
 					spec
-						requires:	#( 'Rudesheim-NeuralNetwork' 'Rudesheim-NeuralNetwork-ONNX' 'RudesheimUtilityTests' ).
+						requires:	#( 'Rudesheim-NeuralNetwork' 'Rudesheim-NeuralNetwork-ONNX' 'RudesheimKernelTests' ).
 				];
 				package:	'Rudesheim-NeuralNetwork-OpenCL-Tests'
 				with:
@@ -110,7 +110,7 @@ BaselineOfRudesheimNeuralNetwork >> baseline: spec [
 				with:
 				[
 					spec
-						requires:	#( 'Rudesheim-NeuralNetwork' 'RudesheimUtilityTests' ).
+						requires:	#( 'Rudesheim-NeuralNetwork' 'RudesheimKernelTests' ).
 				];
 				group:	#core
 				with:	#( 'Rudesheim-NeuralNetwork-Private' 'Rudesheim-NeuralNetwork' );
